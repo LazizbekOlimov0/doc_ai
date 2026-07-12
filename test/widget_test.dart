@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:doc_ai/core/models/app_user.dart';
 import 'package:doc_ai/features/auth/data/auth_error_mapper.dart';
 
@@ -42,26 +43,52 @@ void main() {
   });
 
   group('Auth error mapper', () {
-    test('maps known error codes', () {
+    test('maps known FirebaseAuthException codes', () {
       expect(
-          mapFirebaseAuthError('invalid-email'), 'auth_error.invalid_email');
+        mapFirebaseError(FirebaseAuthException(code: 'invalid-email')),
+        contains('email'),
+      );
       expect(
-          mapFirebaseAuthError('wrong-password'), 'auth_error.wrong_password');
-      expect(mapFirebaseAuthError('user-not-found'),
-          'auth_error.user_not_found');
-      expect(mapFirebaseAuthError('email-already-in-use'),
-          'auth_error.email_already_in_use');
+        mapFirebaseError(FirebaseAuthException(code: 'wrong-password')),
+        contains('parol'),
+      );
       expect(
-          mapFirebaseAuthError('weak-password'), 'auth_error.weak_password');
-      expect(mapFirebaseAuthError('too-many-requests'),
-          'auth_error.too_many_requests');
-      expect(mapFirebaseAuthError('network-request-failed'),
-          'auth_error.network_error');
+        mapFirebaseError(FirebaseAuthException(code: 'user-not-found')),
+        contains('topilmadi'),
+      );
+      expect(
+        mapFirebaseError(FirebaseAuthException(code: 'email-already-in-use')),
+        contains('band'),
+      );
+      expect(
+        mapFirebaseError(FirebaseAuthException(code: 'weak-password')),
+        contains('oddiy'),
+      );
+      expect(
+        mapFirebaseError(FirebaseAuthException(code: 'too-many-requests')),
+        contains('urinish'),
+      );
+      expect(
+        mapFirebaseError(FirebaseAuthException(code: 'network-request-failed')),
+        contains('tarmoq'),
+      );
     });
 
-    test('maps unknown codes to unknown_error', () {
-      expect(mapFirebaseAuthError('some-unknown-code'),
-          'auth_error.unknown_error');
+    test('maps unknown codes with code in message', () {
+      final result =
+          mapFirebaseError(FirebaseAuthException(code: 'some-unknown'));
+      expect(result, contains('some-unknown'));
+    });
+
+    test('maps bare error codes', () {
+      expect(
+        mapFirebaseAuthError('invalid-email'),
+        contains('email'),
+      );
+      expect(
+        mapFirebaseAuthError('wrong-password'),
+        contains('parol'),
+      );
     });
   });
 }

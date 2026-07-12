@@ -1,39 +1,56 @@
+import 'package:firebase_auth/firebase_auth.dart';
+
 String mapFirebaseAuthError(String code) {
   switch (code) {
     case 'invalid-email':
     case 'invalid-credential':
-      return 'auth_error.invalid_email';
+      return 'Noto\'g\'ri email manzil';
     case 'user-disabled':
-      return 'auth_error.user_disabled';
+      return 'Bu foydalanuvchi bloklangan';
     case 'user-not-found':
-      return 'auth_error.user_not_found';
+      return 'Bunday foydalanuvchi topilmadi';
     case 'wrong-password':
-      return 'auth_error.wrong_password';
+    case 'invalid-password':
+      return 'Noto\'g\'ri parol';
     case 'email-already-in-use':
-      return 'auth_error.email_already_in_use';
+      return 'Bu email allaqachon band';
     case 'weak-password':
-      return 'auth_error.weak_password';
+      return 'Parol juda oddiy, kamida 6 ta belgi';
     case 'operation-not-allowed':
-      return 'auth_error.operation_not_allowed';
+      return 'Bu amalga ruxsat berilmagan';
     case 'too-many-requests':
-      return 'auth_error.too_many_requests';
+      return 'Juda ko\'p urinish, keyinroq qayta urinib ko\'ring';
     case 'network-request-failed':
-      return 'auth_error.network_error';
+      return 'Internet aloqasi yo\'q, tarmoqni tekshiring';
+    case 'channel-error':
+      return 'Firebase ulanmagan. Iltimos ilovani qayta yuklang.';
+    case 'requires-recent-login':
+      return 'Iltimos qaytadan tizimga kiring';
+    case 'account-exists-with-different-credential':
+      return 'Bu email boshqa usul bilan ro\'yxatdan o\'tgan';
+    case 'provider-already-linked':
+      return 'Bu akkaunt allaqachon bog\'langan';
+    case 'credential-already-in-use':
+      return 'Bu hisob ma\'lumotlari allaqachon ishlatilgan';
     default:
-      return 'auth_error.unknown_error';
+      return 'Xatolik yuz berdi. Qayta urinib ko\'ring. ($code)';
   }
 }
 
 String mapFirebaseError(dynamic error) {
-  if (error is Exception) {
-    final code =
-        error.toString().contains('[') ? _extractCode(error.toString()) : '';
-    return mapFirebaseAuthError(code);
+  if (error is FirebaseAuthException) {
+    return mapFirebaseAuthError(error.code);
   }
-  return 'auth_error.unknown_error';
-}
-
-String _extractCode(String message) {
-  final match = RegExp(r'\[(.*?)\]').firstMatch(message);
-  return match?.group(1) ?? '';
+  if (error is FirebaseException) {
+    return mapFirebaseAuthError(error.code);
+  }
+  if (error is Exception) {
+    final message = error.toString();
+    final match = RegExp(r'\[(.*?)\]').firstMatch(message);
+    final code = match?.group(1) ?? '';
+    if (code.isNotEmpty) {
+      return mapFirebaseAuthError(code);
+    }
+  }
+  return 'Noma\'lum xatolik yuz berdi';
 }

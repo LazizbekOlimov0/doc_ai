@@ -1,0 +1,22 @@
+{
+  "auth_error": {
+    "invalid_email": "Неверный email адрес",
+    "user_disabled": "Пользователь заблокирован",
+    "user_not_found": "Пользователь не найден",
+    "wrong_password": "Неверный пароль",
+    "email_already_in_use": "Этот email уже занят",
+    "weak_password": "Слишком простой пароль, минимум 6 символов",
+    "operation_not_allowed": "Действие не разрешено",
+    "too_many_requests": "Слишком много попыток, попробуйте позже",
+    "network_error": "Нет интернета, проверьте подключение",
+    "unknown_error": "Неизвестная ошибка"
+  },
+  "auth": {
+    "login": "Вход",
+    "register": "Регистрация",
+    "logout": "Выход",
+    "email": "Email",
+    "password": "Пароль",
+    "name": "Имя"
+  }
+}

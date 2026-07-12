@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "519920360499",
+    "project_id": "docai-78b74",
+    "storage_bucket": "docai-78b74.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:519920360499:android:6561f483ccf84484e89746",
+        "android_client_info": {
+          "package_name": "com.example.doc_ai"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCHCVdZRTpuXR6GxA-cKGigcnrzoWzaS8s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

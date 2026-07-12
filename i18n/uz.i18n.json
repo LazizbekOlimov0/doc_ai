@@ -1,0 +1,22 @@
+{
+  "auth_error": {
+    "invalid_email": "Noto'g'ri email manzil",
+    "user_disabled": "Bu foydalanuvchi bloklangan",
+    "user_not_found": "Bunday foydalanuvchi topilmadi",
+    "wrong_password": "Noto'g'ri parol",
+    "email_already_in_use": "Bu email allaqachon band",
+    "weak_password": "Parol juda oddiy, kamida 6 ta belgi",
+    "operation_not_allowed": "Bu amalga ruxsat berilmagan",
+    "too_many_requests": "Juda ko'p urinish, keyinroq qayta urinib ko'ring",
+    "network_error": "Internet aloqasi yo'q, tarmoqni tekshiring",
+    "unknown_error": "Noma'lum xatolik yuz berdi"
+  },
+  "auth": {
+    "login": "Kirish",
+    "register": "Ro'yxatdan o'tish",
+    "logout": "Chiqish",
+    "email": "Email",
+    "password": "Parol",
+    "name": "Ism"
+  }
+}

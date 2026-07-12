@@ -1,0 +1,22 @@
+{
+  "auth_error": {
+    "invalid_email": "Invalid email address",
+    "user_disabled": "This user has been disabled",
+    "user_not_found": "User not found",
+    "wrong_password": "Wrong password",
+    "email_already_in_use": "This email is already in use",
+    "weak_password": "Password is too weak, at least 6 characters",
+    "operation_not_allowed": "Operation not allowed",
+    "too_many_requests": "Too many attempts, try again later",
+    "network_error": "No internet connection, check your network",
+    "unknown_error": "An unknown error occurred"
+  },
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout",
+    "email": "Email",
+    "password": "Password",
+    "name": "Name"
+  }
+}

@@ -31,31 +31,40 @@ class SettingsCubit extends Cubit<SettingsState> {
   }
 
   Future<void> _load() async {
-    final prefs = await SharedPreferences.getInstance();
-    final themeStr = prefs.getString(_themeKey) ?? 'light';
-    final localeStr = prefs.getString(_localeKey) ?? 'uz';
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final themeStr = prefs.getString(_themeKey) ?? 'light';
+      final localeStr = prefs.getString(_localeKey) ?? 'uz';
 
-    final themeMode = themeStr == 'dark' ? ThemeMode.dark : ThemeMode.light;
-    final locale = AppLocale.values.firstWhere(
-      (l) => l.languageCode == localeStr,
-      orElse: () => AppLocale.uz,
-    );
+      final themeMode =
+          themeStr == 'dark' ? ThemeMode.dark : ThemeMode.light;
+      final locale = AppLocale.values.firstWhere(
+        (l) => l.languageCode == localeStr,
+        orElse: () => AppLocale.uz,
+      );
 
-    LocaleSettings.setLocale(locale);
-    emit(SettingsState(themeMode: themeMode, locale: locale));
+      LocaleSettings.setLocale(locale);
+      emit(SettingsState(themeMode: themeMode, locale: locale));
+    } catch (_) {
+      emit(const SettingsState());
+    }
   }
 
   Future<void> toggleTheme() async {
     final newMode = state.isDark ? ThemeMode.light : ThemeMode.dark;
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(
-        _themeKey, newMode == ThemeMode.dark ? 'dark' : 'light');
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString(
+          _themeKey, newMode == ThemeMode.dark ? 'dark' : 'light');
+    } catch (_) {}
     emit(state.copyWith(themeMode: newMode));
   }
 
   Future<void> setLocale(AppLocale locale) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(_localeKey, locale.languageCode);
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString(_localeKey, locale.languageCode);
+    } catch (_) {}
     LocaleSettings.setLocale(locale);
     emit(state.copyWith(locale: locale));
   }

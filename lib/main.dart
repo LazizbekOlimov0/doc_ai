@@ -21,7 +21,10 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  final prefs = await SharedPreferences.getInstance();
+  SharedPreferences? prefs;
+  try {
+    prefs = await SharedPreferences.getInstance();
+  } catch (_) {}
 
   LocaleSettings.useDeviceLocale();
 
@@ -29,7 +32,7 @@ Future<void> main() async {
 }
 
 class DocAIApp extends StatelessWidget {
-  final SharedPreferences prefs;
+  final SharedPreferences? prefs;
 
   const DocAIApp({super.key, required this.prefs});
 
@@ -37,7 +40,7 @@ class DocAIApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final authCubit = AuthCubit();
     final router = createRouter(authCubit);
-    final settingsCubit = SettingsCubit(prefs);
+    final settingsCubit = SettingsCubit(prefs: prefs);
 
     return MultiBlocProvider(
       providers: [

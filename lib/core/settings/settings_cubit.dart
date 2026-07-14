@@ -26,27 +26,17 @@ class SettingsCubit extends Cubit<SettingsState> {
   static const _themeKey = 'theme_mode';
   static const _localeKey = 'app_locale';
 
-  final SharedPreferences _prefs;
+  SharedPreferences? _prefs;
+  final Map<String, dynamic> _memory = {};
 
-  SettingsCubit(this._prefs) : super(const SettingsState()) {
+  SettingsCubit({SharedPreferences? prefs}) : super(const SettingsState()) {
+    _prefs = prefs;
     _load();
   }
 
-  Future<SettingsState> loadInitial() async {
-    final themeStr = _prefs.getString(_themeKey) ?? 'light';
-    final localeStr = _prefs.getString(_localeKey) ?? 'uz';
-
-    final themeMode = themeStr == 'dark' ? ThemeMode.dark : ThemeMode.light;
-    final locale = AppLocale.values.firstWhere(
-      (l) => l.languageCode == localeStr,
-      orElse: () => AppLocale.uz,
-    );
-    return SettingsState(themeMode: themeMode, locale: locale);
-  }
-
   void _load() {
-    final themeStr = _prefs.getString(_themeKey) ?? 'light';
-    final localeStr = _prefs.getString(_localeKey) ?? 'uz';
+    final themeStr = _getString(_themeKey) ?? 'light';
+    final localeStr = _getString(_localeKey) ?? 'uz';
 
     final themeMode = themeStr == 'dark' ? ThemeMode.dark : ThemeMode.light;
     final locale = AppLocale.values.firstWhere(
@@ -58,15 +48,30 @@ class SettingsCubit extends Cubit<SettingsState> {
     emit(SettingsState(themeMode: themeMode, locale: locale));
   }
 
+  String? _getString(String key) {
+    try {
+      return _prefs?.getString(key) ?? _memory[key] as String?;
+    } catch (_) {
+      return _memory[key] as String?;
+    }
+  }
+
+  Future<void> _setString(String key, String value) async {
+    _memory[key] = value;
+    try {
+      await _prefs?.setString(key, value);
+    } catch (_) {}
+  }
+
   Future<void> toggleTheme() async {
     final newMode = state.isDark ? ThemeMode.light : ThemeMode.dark;
-    await _prefs.setString(
+    await _setString(
         _themeKey, newMode == ThemeMode.dark ? 'dark' : 'light');
     emit(state.copyWith(themeMode: newMode));
   }
 
   Future<void> setLocale(AppLocale locale) async {
-    await _prefs.setString(_localeKey, locale.languageCode);
+    await _setString(_localeKey, locale.languageCode);
     LocaleSettings.setLocale(locale);
     emit(state.copyWith(locale: locale));
   }

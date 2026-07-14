@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../core/models/app_user.dart';
+import '../../../core/settings/settings_cubit.dart';
+import '../../../gen/strings.g.dart';
 import '../../auth/bloc/auth_cubit.dart';
 import '../../auth/data/auth_repository.dart';
 import '../bloc/profile_cubit.dart';
@@ -14,7 +16,6 @@ class PatientProfileScreen extends StatefulWidget {
 }
 
 class _PatientProfileScreenState extends State<PatientProfileScreen> {
-  bool _isDarkMode = false;
   final _nameController = TextEditingController();
   final _ageController = TextEditingController();
   final _allergiesController = TextEditingController();
@@ -68,7 +69,8 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
                 const SizedBox(height: 12),
                 TextField(
                   controller: _bloodTypeController,
-                  decoration: const InputDecoration(labelText: 'Qon guruhi'),
+                  decoration:
+                      const InputDecoration(labelText: 'Qon guruhi'),
                 ),
               ],
             ),
@@ -103,7 +105,6 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
             bloodType: _bloodTypeController.text.trim(),
           );
 
-      // Refresh auth cubit user data
       context.read<AuthCubit>().refreshUser();
     }
   }
@@ -115,6 +116,7 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
 
     final authState = context.watch<AuthCubit>().state;
     final appUser = authState.user;
+    final settingsState = context.watch<SettingsCubit>().state;
 
     return BlocProvider<ProfileCubit>(
       create: (_) => ProfileCubit(repository: AuthRepository())
@@ -134,7 +136,8 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
                         ? const SizedBox(
                             width: 20,
                             height: 20,
-                            child: CircularProgressIndicator(strokeWidth: 2),
+                            child:
+                                CircularProgressIndicator(strokeWidth: 2),
                           )
                         : const Icon(Icons.edit),
                     onPressed:
@@ -163,7 +166,9 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
                         ),
                         const SizedBox(height: 12),
                         Text(
-                          user.name.isNotEmpty ? user.name : 'Ism kiritilmagan',
+                          user.name.isNotEmpty
+                              ? user.name
+                              : 'Ism kiritilmagan',
                           style: textTheme.headlineSmall?.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
@@ -212,13 +217,14 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
                             children: [
                               SwitchListTile(
                                 title: const Text('Dark mode'),
-                                subtitle: const Text('Quyuq mavzu yoqish'),
-                                value: _isDarkMode,
-                                onChanged: (value) {
-                                  setState(() => _isDarkMode = value);
-                                },
+                                subtitle:
+                                    const Text('Quyuq mavzu yoqish'),
+                                value: settingsState.isDark,
+                                onChanged: (_) => context
+                                    .read<SettingsCubit>()
+                                    .toggleTheme(),
                                 secondary: Icon(
-                                  _isDarkMode
+                                  settingsState.isDark
                                       ? Icons.dark_mode
                                       : Icons.light_mode,
                                   color: colorScheme.primary,
@@ -229,16 +235,19 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
                                 leading: Icon(Icons.language,
                                     color: colorScheme.primary),
                                 title: const Text('Til'),
-                                subtitle: const Text('O\'zbekcha'),
-                                trailing: const Icon(Icons.chevron_right),
-                                onTap: () {},
+                                subtitle: Text(_localeName(
+                                    settingsState.locale)),
+                                trailing:
+                                    const Icon(Icons.chevron_right),
+                                onTap: () => _showLanguagePicker(),
                               ),
                               const Divider(height: 1),
                               ListTile(
                                 leading: Icon(Icons.help_outline,
                                     color: colorScheme.primary),
                                 title: const Text('Yordam'),
-                                trailing: const Icon(Icons.chevron_right),
+                                trailing:
+                                    const Icon(Icons.chevron_right),
                                 onTap: () {},
                               ),
                               const Divider(height: 1),
@@ -247,7 +256,8 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
                                     color: colorScheme.primary),
                                 title: const Text('Ilova haqida'),
                                 subtitle: const Text('v1.0.0'),
-                                trailing: const Icon(Icons.chevron_right),
+                                trailing:
+                                    const Icon(Icons.chevron_right),
                                 onTap: () {},
                               ),
                             ],
@@ -264,7 +274,8 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
                             label: const Text('Chiqish'),
                             style: OutlinedButton.styleFrom(
                               foregroundColor: colorScheme.error,
-                              side: BorderSide(color: colorScheme.error),
+                              side: BorderSide(
+                                  color: colorScheme.error),
                             ),
                           ),
                         ),
@@ -276,6 +287,73 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
         },
       ),
     );
+  }
+
+  void _showLanguagePicker() {
+    showModalBottomSheet(
+      context: context,
+      builder: (ctx) {
+        return SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Padding(
+                padding: EdgeInsets.all(16),
+                child: Text(
+                  'Tilni tanlang',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+              ListTile(
+                leading: const Text('🇺🇿'),
+                title: const Text('O\'zbekcha'),
+                selected: context.watch<SettingsCubit>().state.locale ==
+                    AppLocale.uz,
+                onTap: () {
+                  context.read<SettingsCubit>().setLocale(AppLocale.uz);
+                  Navigator.pop(ctx);
+                },
+              ),
+              ListTile(
+                leading: const Text('🇷🇺'),
+                title: const Text('Русский'),
+                selected: context.watch<SettingsCubit>().state.locale ==
+                    AppLocale.ru,
+                onTap: () {
+                  context.read<SettingsCubit>().setLocale(AppLocale.ru);
+                  Navigator.pop(ctx);
+                },
+              ),
+              ListTile(
+                leading: const Text('🇬🇧'),
+                title: const Text('English'),
+                selected: context.watch<SettingsCubit>().state.locale ==
+                    AppLocale.en,
+                onTap: () {
+                  context.read<SettingsCubit>().setLocale(AppLocale.en);
+                  Navigator.pop(ctx);
+                },
+              ),
+              const SizedBox(height: 8),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  String _localeName(AppLocale locale) {
+    switch (locale) {
+      case AppLocale.uz:
+        return 'O\'zbekcha';
+      case AppLocale.ru:
+        return 'Русский';
+      case AppLocale.en:
+        return 'English';
+    }
   }
 }
 

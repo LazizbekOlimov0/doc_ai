@@ -36,7 +36,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
     if (email.isEmpty || password.isEmpty) return;
     if (password.length < 6) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Parol kamida 6 ta belgidan iborat bo\'lishi kerak')),
+        const SnackBar(
+          content:
+              Text('Parol kamida 6 ta belgidan iborat bo\'lishi kerak'),
+        ),
       );
       return;
     }
@@ -58,14 +61,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
       listenWhen: (prev, curr) =>
           curr.status == AuthStatus.error && curr.errorKey != null,
       listener: (context, state) {
-        if (state.errorKey != null) {
-          ScaffoldMessenger.of(context).showSnackBar(
+        ScaffoldMessenger.of(context)
+          ..hideCurrentSnackBar()
+          ..showSnackBar(
             SnackBar(
               content: Text(state.errorKey!),
               backgroundColor: colorScheme.error,
+              duration: const Duration(seconds: 4),
+              action: SnackBarAction(
+                label: 'OK',
+                textColor: colorScheme.onError,
+                onPressed: () {
+                  context.read<AuthCubit>().clearError();
+                },
+              ),
             ),
           );
-        }
+        context.read<AuthCubit>().clearError();
       },
       builder: (context, state) {
         final isLoading = state.status == AuthStatus.loading;
@@ -101,6 +113,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   TextField(
                     controller: _nameController,
                     enabled: !isLoading,
+                    textInputAction: TextInputAction.next,
                     decoration: const InputDecoration(
                       labelText: 'Ism familiya',
                       prefixIcon: Icon(Icons.person_outline),
@@ -111,6 +124,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
                     enabled: !isLoading,
+                    textInputAction: TextInputAction.next,
                     decoration: const InputDecoration(
                       labelText: 'Email',
                       prefixIcon: Icon(Icons.email_outlined),
@@ -121,6 +135,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     controller: _passwordController,
                     obscureText: _obscurePassword,
                     enabled: !isLoading,
+                    textInputAction: TextInputAction.done,
+                    onSubmitted:
+                        isLoading ? null : (_) => _handleRegister(),
                     decoration: InputDecoration(
                       labelText: 'Parol',
                       prefixIcon: const Icon(Icons.lock_outlined),

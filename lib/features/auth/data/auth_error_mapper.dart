@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 
 String mapFirebaseAuthError(String code) {
   switch (code) {
@@ -17,13 +18,15 @@ String mapFirebaseAuthError(String code) {
     case 'weak-password':
       return 'Parol juda oddiy, kamida 6 ta belgi';
     case 'operation-not-allowed':
-      return 'Bu amalga ruxsat berilmagan';
+      return 'Email/parol orqali kirish hali yoqilmagan. Firebase Console > Authentication > Sign-in method bo\'limidan Email/Password ni yoqing.';
     case 'too-many-requests':
       return 'Juda ko\'p urinish, keyinroq qayta urinib ko\'ring';
     case 'network-request-failed':
       return 'Internet aloqasi yo\'q, tarmoqni tekshiring';
     case 'channel-error':
       return 'Firebase ulanmagan. Iltimos ilovani qayta yuklang.';
+    case 'internal-error':
+      return 'Firebase serverida ichki xatolik. Email/Parol autentifikatsiyasi Firebase Console\'da yoqilganligini tekshiring.';
     case 'requires-recent-login':
       return 'Iltimos qaytadan tizimga kiring';
     case 'account-exists-with-different-credential':
@@ -39,18 +42,22 @@ String mapFirebaseAuthError(String code) {
 
 String mapFirebaseError(dynamic error) {
   if (error is FirebaseAuthException) {
+    debugPrint('FirebaseAuthException: code=${error.code}, message=${error.message}');
     return mapFirebaseAuthError(error.code);
   }
   if (error is FirebaseException) {
+    debugPrint('FirebaseException: code=${error.code}, message=${error.message}');
     return mapFirebaseAuthError(error.code);
   }
   if (error is Exception) {
     final message = error.toString();
+    debugPrint('Exception: $message');
     final match = RegExp(r'\[(.*?)\]').firstMatch(message);
     final code = match?.group(1) ?? '';
     if (code.isNotEmpty) {
       return mapFirebaseAuthError(code);
     }
   }
+  debugPrint('Unknown error type: ${error.runtimeType} - $error');
   return 'Noma\'lum xatolik yuz berdi';
 }

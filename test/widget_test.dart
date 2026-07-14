@@ -72,6 +72,14 @@ void main() {
         mapFirebaseError(FirebaseAuthException(code: 'network-request-failed')),
         contains('tarmoq'),
       );
+      expect(
+        mapFirebaseError(FirebaseAuthException(code: 'internal-error')),
+        contains('ichki'),
+      );
+      expect(
+        mapFirebaseError(FirebaseAuthException(code: 'operation-not-allowed')),
+        contains('Email'),
+      );
     });
 
     test('maps unknown codes with code in message', () {
@@ -81,14 +89,9 @@ void main() {
     });
 
     test('maps bare error codes', () {
-      expect(
-        mapFirebaseAuthError('invalid-email'),
-        contains('email'),
-      );
-      expect(
-        mapFirebaseAuthError('wrong-password'),
-        contains('parol'),
-      );
+      expect(mapFirebaseAuthError('invalid-email'), contains('email'));
+      expect(mapFirebaseAuthError('wrong-password'), contains('parol'));
+      expect(mapFirebaseAuthError('internal-error'), contains('ichki'));
     });
   });
 }

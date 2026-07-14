@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../core/models/app_user.dart';
 import '../data/auth_repository.dart';
@@ -12,13 +13,19 @@ class AuthCubit extends Cubit<AuthState> {
   AuthCubit({AuthRepository? repository})
       : _repository = repository ?? AuthRepository(),
         super(const AuthState()) {
-    _authSubscription = _repository.authStateChanges().listen((firebaseUser) {
-      if (firebaseUser != null) {
-        _onUserLoggedIn(firebaseUser.uid);
-      } else {
+    _authSubscription = _repository.authStateChanges().listen(
+      (firebaseUser) {
+        if (firebaseUser != null) {
+          _onUserLoggedIn(firebaseUser.uid);
+        } else {
+          emit(const AuthState(status: AuthStatus.unauthenticated));
+        }
+      },
+      onError: (error) {
+        debugPrint('authStateChanges error: $error');
         emit(const AuthState(status: AuthStatus.unauthenticated));
-      }
-    });
+      },
+    );
   }
 
   Future<void> _onUserLoggedIn(String uid) async {
@@ -34,6 +41,7 @@ class AuthCubit extends Cubit<AuthState> {
         user: userData,
       ));
     } catch (e) {
+      debugPrint('_onUserLoggedIn error: $e');
       emit(const AuthState(status: AuthStatus.unauthenticated));
     }
   }
@@ -44,7 +52,7 @@ class AuthCubit extends Cubit<AuthState> {
     required UserRole role,
     String name = '',
   }) async {
-    emit(state.copyWith(status: AuthStatus.loading));
+    emit(state.copyWith(status: AuthStatus.loading, errorKey: null));
     try {
       final appUser = await _repository.signUp(
         email: email,
@@ -57,13 +65,10 @@ class AuthCubit extends Cubit<AuthState> {
         user: appUser,
       ));
     } catch (e) {
+      debugPrint('signUp error: $e');
       emit(AuthState(
         status: AuthStatus.error,
         errorKey: mapFirebaseError(e),
-      ));
-      emit(state.copyWith(
-        status: AuthStatus.unauthenticated,
-        errorKey: null,
       ));
     }
   }
@@ -72,7 +77,7 @@ class AuthCubit extends Cubit<AuthState> {
     required String email,
     required String password,
   }) async {
-    emit(state.copyWith(status: AuthStatus.loading));
+    emit(state.copyWith(status: AuthStatus.loading, errorKey: null));
     try {
       final appUser = await _repository.signIn(
         email: email,
@@ -83,14 +88,17 @@ class AuthCubit extends Cubit<AuthState> {
         user: appUser,
       ));
     } catch (e) {
+      debugPrint('signIn error: $e');
       emit(AuthState(
         status: AuthStatus.error,
         errorKey: mapFirebaseError(e),
       ));
-      emit(state.copyWith(
-        status: AuthStatus.unauthenticated,
-        errorKey: null,
-      ));
+    }
+  }
+
+  void clearError() {
+    if (state.status == AuthStatus.error) {
+      emit(state.copyWith(status: AuthStatus.unauthenticated, errorKey: null));
     }
   }
 

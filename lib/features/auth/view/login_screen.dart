@@ -41,16 +41,24 @@ class _LoginScreenState extends State<LoginScreen> {
       listenWhen: (prev, curr) =>
           curr.status == AuthStatus.error && curr.errorKey != null,
       listener: (context, state) {
-        if (state.errorKey != null) {
-          ScaffoldMessenger.of(context).showSnackBar(
+        ScaffoldMessenger.of(context)
+          ..hideCurrentSnackBar()
+          ..showSnackBar(
             SnackBar(
               content: Text(state.errorKey!),
               backgroundColor: colorScheme.error,
+              duration: const Duration(seconds: 4),
+              action: SnackBarAction(
+                label: 'OK',
+                textColor: colorScheme.onError,
+                onPressed: () {
+                  context.read<AuthCubit>().clearError();
+                },
+              ),
             ),
           );
-        }
+        context.read<AuthCubit>().clearError();
       },
-      buildWhen: (prev, curr) => true,
       builder: (context, state) {
         final isLoading = state.status == AuthStatus.loading;
 
@@ -88,6 +96,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   TextField(
                     controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
+                    textInputAction: TextInputAction.next,
                     enabled: !isLoading,
                     decoration: const InputDecoration(
                       labelText: 'Email',
@@ -98,7 +107,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   TextField(
                     controller: _passwordController,
                     obscureText: _obscurePassword,
+                    textInputAction: TextInputAction.done,
                     enabled: !isLoading,
+                    onSubmitted: isLoading ? null : (_) => _handleLogin(),
                     decoration: InputDecoration(
                       labelText: 'Parol',
                       prefixIcon: const Icon(Icons.lock_outlined),

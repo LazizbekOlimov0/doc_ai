@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'core/router/app_router.dart';
 import 'core/theme/app_theme.dart';
 import 'core/settings/settings_cubit.dart';
@@ -20,19 +21,23 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
+  final prefs = await SharedPreferences.getInstance();
+
   LocaleSettings.useDeviceLocale();
 
-  runApp(const DocAIApp());
+  runApp(DocAIApp(prefs: prefs));
 }
 
 class DocAIApp extends StatelessWidget {
-  const DocAIApp({super.key});
+  final SharedPreferences prefs;
+
+  const DocAIApp({super.key, required this.prefs});
 
   @override
   Widget build(BuildContext context) {
     final authCubit = AuthCubit();
     final router = createRouter(authCubit);
-    final settingsCubit = SettingsCubit();
+    final settingsCubit = SettingsCubit(prefs);
 
     return MultiBlocProvider(
       providers: [
@@ -52,7 +57,7 @@ class DocAIApp extends StatelessWidget {
               theme: AppTheme.lightTheme,
               darkTheme: AppTheme.darkTheme,
               themeMode: settings.themeMode,
-              locale: TranslationProvider.of(context).flutterLocale,
+              locale: settings.locale.flutterLocale,
               supportedLocales: AppLocaleUtils.supportedLocales,
               localizationsDelegates: const [
                 ...GlobalMaterialLocalizations.delegates,

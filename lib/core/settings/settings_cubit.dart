@@ -26,45 +26,47 @@ class SettingsCubit extends Cubit<SettingsState> {
   static const _themeKey = 'theme_mode';
   static const _localeKey = 'app_locale';
 
-  SettingsCubit() : super(const SettingsState()) {
+  final SharedPreferences _prefs;
+
+  SettingsCubit(this._prefs) : super(const SettingsState()) {
     _load();
   }
 
-  Future<void> _load() async {
-    try {
-      final prefs = await SharedPreferences.getInstance();
-      final themeStr = prefs.getString(_themeKey) ?? 'light';
-      final localeStr = prefs.getString(_localeKey) ?? 'uz';
+  Future<SettingsState> loadInitial() async {
+    final themeStr = _prefs.getString(_themeKey) ?? 'light';
+    final localeStr = _prefs.getString(_localeKey) ?? 'uz';
 
-      final themeMode =
-          themeStr == 'dark' ? ThemeMode.dark : ThemeMode.light;
-      final locale = AppLocale.values.firstWhere(
-        (l) => l.languageCode == localeStr,
-        orElse: () => AppLocale.uz,
-      );
+    final themeMode = themeStr == 'dark' ? ThemeMode.dark : ThemeMode.light;
+    final locale = AppLocale.values.firstWhere(
+      (l) => l.languageCode == localeStr,
+      orElse: () => AppLocale.uz,
+    );
+    return SettingsState(themeMode: themeMode, locale: locale);
+  }
 
-      LocaleSettings.setLocale(locale);
-      emit(SettingsState(themeMode: themeMode, locale: locale));
-    } catch (_) {
-      emit(const SettingsState());
-    }
+  void _load() {
+    final themeStr = _prefs.getString(_themeKey) ?? 'light';
+    final localeStr = _prefs.getString(_localeKey) ?? 'uz';
+
+    final themeMode = themeStr == 'dark' ? ThemeMode.dark : ThemeMode.light;
+    final locale = AppLocale.values.firstWhere(
+      (l) => l.languageCode == localeStr,
+      orElse: () => AppLocale.uz,
+    );
+
+    LocaleSettings.setLocale(locale);
+    emit(SettingsState(themeMode: themeMode, locale: locale));
   }
 
   Future<void> toggleTheme() async {
     final newMode = state.isDark ? ThemeMode.light : ThemeMode.dark;
-    try {
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setString(
-          _themeKey, newMode == ThemeMode.dark ? 'dark' : 'light');
-    } catch (_) {}
+    await _prefs.setString(
+        _themeKey, newMode == ThemeMode.dark ? 'dark' : 'light');
     emit(state.copyWith(themeMode: newMode));
   }
 
   Future<void> setLocale(AppLocale locale) async {
-    try {
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setString(_localeKey, locale.languageCode);
-    } catch (_) {}
+    await _prefs.setString(_localeKey, locale.languageCode);
     LocaleSettings.setLocale(locale);
     emit(state.copyWith(locale: locale));
   }

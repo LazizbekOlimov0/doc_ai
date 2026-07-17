@@ -14,6 +14,17 @@ import 'features/booking/bloc/booking_cubit.dart';
 import 'gen/strings.g.dart';
 import 'firebase_options.dart';
 
+Future<SharedPreferences?> _getPrefs() async {
+  for (int i = 0; i < 5; i++) {
+    try {
+      return await SharedPreferences.getInstance();
+    } catch (_) {
+      await Future.delayed(const Duration(milliseconds: 400));
+    }
+  }
+  return null;
+}
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -21,10 +32,7 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  SharedPreferences? prefs;
-  try {
-    prefs = await SharedPreferences.getInstance();
-  } catch (_) {}
+  final prefs = await _getPrefs();
 
   LocaleSettings.useDeviceLocale();
 
@@ -51,25 +59,24 @@ class DocAIApp extends StatelessWidget {
         BlocProvider(create: (_) => DoctorDashboardCubit()),
         BlocProvider(create: (_) => BookingCubit()),
       ],
-      child: TranslationProvider(
-        child: BlocBuilder<SettingsCubit, SettingsState>(
-          builder: (context, settings) {
-            return MaterialApp.router(
-              title: 'DocAI',
-              debugShowCheckedModeBanner: false,
-              theme: AppTheme.lightTheme,
-              darkTheme: AppTheme.darkTheme,
-              themeMode: settings.themeMode,
-              locale: settings.locale.flutterLocale,
-              supportedLocales: AppLocaleUtils.supportedLocales,
-              localizationsDelegates: const [
-                ...GlobalMaterialLocalizations.delegates,
-                GlobalWidgetsLocalizations.delegate,
-              ],
-              routerConfig: router,
-            );
-          },
-        ),
+      child: BlocBuilder<SettingsCubit, SettingsState>(
+        builder: (context, settings) {
+          return MaterialApp.router(
+            key: ValueKey(settings.locale),
+            title: 'DocAI',
+            debugShowCheckedModeBanner: false,
+            theme: AppTheme.lightTheme,
+            darkTheme: AppTheme.darkTheme,
+            themeMode: settings.themeMode,
+            locale: settings.locale.flutterLocale,
+            supportedLocales: AppLocaleUtils.supportedLocales,
+            localizationsDelegates: const [
+              ...GlobalMaterialLocalizations.delegates,
+              GlobalWidgetsLocalizations.delegate,
+            ],
+            routerConfig: router,
+          );
+        },
       ),
     );
   }

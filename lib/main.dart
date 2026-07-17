@@ -61,24 +61,26 @@ class DocAIApp extends StatelessWidget {
         BlocProvider(create: (_) => DoctorDashboardCubit()),
         BlocProvider(create: (_) => BookingCubit()),
       ],
-      child: BlocBuilder<SettingsCubit, SettingsState>(
-        builder: (context, settings) {
-          return MaterialApp.router(
-            key: ValueKey(settings.locale),
-            title: 'DocAI',
-            debugShowCheckedModeBanner: false,
-            theme: AppTheme.lightTheme,
-            darkTheme: AppTheme.darkTheme,
-            themeMode: settings.themeMode,
-            locale: settings.locale.flutterLocale,
-            supportedLocales: AppLocaleUtils.supportedLocales,
-            localizationsDelegates: const [
-              ...GlobalMaterialLocalizations.delegates,
-              GlobalWidgetsLocalizations.delegate,
-            ],
-            routerConfig: router,
-          );
-        },
+      child: TranslationProvider(
+        child: BlocBuilder<SettingsCubit, SettingsState>(
+          builder: (context, settings) {
+            return MaterialApp.router(
+              key: ValueKey(settings.locale),
+              title: 'DocAI',
+              debugShowCheckedModeBanner: false,
+              theme: AppTheme.lightTheme,
+              darkTheme: AppTheme.darkTheme,
+              themeMode: settings.themeMode,
+              locale: settings.locale.flutterLocale,
+              supportedLocales: AppLocaleUtils.supportedLocales,
+              localizationsDelegates: const [
+                ...GlobalMaterialLocalizations.delegates,
+                GlobalWidgetsLocalizations.delegate,
+              ],
+              routerConfig: router,
+            );
+          },
+        ),
       ),
     );
   }

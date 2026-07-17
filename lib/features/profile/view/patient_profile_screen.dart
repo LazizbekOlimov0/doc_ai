@@ -37,40 +37,39 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
     _bloodTypeController.text = user.bloodType ?? '';
   }
 
-  Future<void> _showEditDialog(AppUser user) async {
+  Future<void> _showEditDialog(AppUser user, Translations t) async {
     _loadFromUser(user);
 
     final result = await showDialog<bool>(
       context: context,
       builder: (ctx) {
         return AlertDialog(
-          title: const Text('Profilni tahrirlash'),
+          title: Text(t.profile.edit),
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 TextField(
                   controller: _nameController,
-                  decoration: const InputDecoration(labelText: 'Ism'),
+                  decoration: InputDecoration(labelText: t.profile.name),
                 ),
                 const SizedBox(height: 12),
                 TextField(
                   controller: _ageController,
                   keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(labelText: 'Yosh'),
+                  decoration: InputDecoration(labelText: t.profile.age),
                 ),
                 const SizedBox(height: 12),
                 TextField(
                   controller: _allergiesController,
-                  decoration: const InputDecoration(
-                    labelText: 'Allergiyalar (vergul bilan ajrating)',
-                  ),
+                  decoration:
+                      InputDecoration(labelText: t.profile.allergies_hint),
                 ),
                 const SizedBox(height: 12),
                 TextField(
                   controller: _bloodTypeController,
                   decoration:
-                      const InputDecoration(labelText: 'Qon guruhi'),
+                      InputDecoration(labelText: t.profile.blood_type),
                 ),
               ],
             ),
@@ -78,11 +77,11 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(ctx, false),
-              child: const Text('Bekor qilish'),
+              child: Text(t.cancel),
             ),
             FilledButton(
               onPressed: () => Navigator.pop(ctx, true),
-              child: const Text('Saqlash'),
+              child: Text(t.save),
             ),
           ],
         );
@@ -111,6 +110,7 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final t = Translations.of(context);
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
@@ -128,7 +128,7 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
 
           return Scaffold(
             appBar: AppBar(
-              title: const Text('Profil'),
+              title: Text(t.profile.title),
               actions: [
                 if (user != null)
                   IconButton(
@@ -140,8 +140,9 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
                                 CircularProgressIndicator(strokeWidth: 2),
                           )
                         : const Icon(Icons.edit),
-                    onPressed:
-                        isSaving ? null : () => _showEditDialog(user),
+                    onPressed: isSaving
+                        ? null
+                        : () => _showEditDialog(user, t),
                   ),
               ],
             ),
@@ -168,45 +169,57 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
                         Text(
                           user.name.isNotEmpty
                               ? user.name
-                              : 'Ism kiritilmagan',
+                              : t.profile.name_empty,
                           style: textTheme.headlineSmall?.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         const SizedBox(height: 4),
-                        Text(
-                          user.email,
-                          style: textTheme.bodyMedium?.copyWith(
-                            color: colorScheme.onSurfaceVariant,
-                          ),
-                        ),
+                        Text(user.email,
+                            style: textTheme.bodyMedium?.copyWith(
+                                color: colorScheme.onSurfaceVariant)),
                         const SizedBox(height: 24),
                         Card(
                           child: Column(
                             children: [
-                              _ProfileTile(
-                                icon: Icons.cake,
-                                title: 'Yosh',
-                                value: user.age != null
-                                    ? '${user.age} yosh'
-                                    : 'Kiritilmagan',
-                                colorScheme: colorScheme,
+                              ListTile(
+                                leading: Icon(Icons.cake,
+                                    color: colorScheme.primary),
+                                title: Text(t.profile.age),
+                                trailing: Text(
+                                  user.age != null
+                                      ? '${user.age}${t.profile.age_unit}'
+                                      : t.not_specified,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      color: colorScheme.onSurfaceVariant),
+                                ),
                               ),
                               const Divider(height: 1),
-                              _ProfileTile(
-                                icon: Icons.warning_amber,
-                                title: 'Allergiya',
-                                value: user.allergies.isNotEmpty
-                                    ? user.allergies.join(', ')
-                                    : 'Yo\'q',
-                                colorScheme: colorScheme,
+                              ListTile(
+                                leading: Icon(Icons.warning_amber,
+                                    color: colorScheme.primary),
+                                title: Text(t.profile.allergies),
+                                trailing: Text(
+                                  user.allergies.isNotEmpty
+                                      ? user.allergies.join(', ')
+                                      : t.no,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      color: colorScheme.onSurfaceVariant),
+                                ),
                               ),
                               const Divider(height: 1),
-                              _ProfileTile(
-                                icon: Icons.bloodtype,
-                                title: 'Qon guruhi',
-                                value: user.bloodType ?? 'Noma\'lum',
-                                colorScheme: colorScheme,
+                              ListTile(
+                                leading: Icon(Icons.bloodtype,
+                                    color: colorScheme.primary),
+                                title: Text(t.profile.blood_type),
+                                trailing: Text(
+                                  user.bloodType ?? t.unknown,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      color: colorScheme.onSurfaceVariant),
+                                ),
                               ),
                             ],
                           ),
@@ -216,9 +229,8 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
                           child: Column(
                             children: [
                               SwitchListTile(
-                                title: const Text('Dark mode'),
-                                subtitle:
-                                    const Text('Quyuq mavzu yoqish'),
+                                title: Text(t.dark_mode),
+                                subtitle: Text(t.dark_mode_subtitle),
                                 value: settingsState.isDark,
                                 onChanged: (_) => context
                                     .read<SettingsCubit>()
@@ -234,18 +246,19 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
                               ListTile(
                                 leading: Icon(Icons.language,
                                     color: colorScheme.primary),
-                                title: const Text('Til'),
-                                subtitle: Text(_localeName(
-                                    settingsState.locale)),
+                                title: Text(t.language),
+                                subtitle:
+                                    Text(_localeName(settingsState.locale)),
                                 trailing:
                                     const Icon(Icons.chevron_right),
-                                onTap: () => _showLanguagePicker(),
+                                onTap: () =>
+                                    _showLanguagePicker(t),
                               ),
                               const Divider(height: 1),
                               ListTile(
                                 leading: Icon(Icons.help_outline,
                                     color: colorScheme.primary),
-                                title: const Text('Yordam'),
+                                title: Text(t.help),
                                 trailing:
                                     const Icon(Icons.chevron_right),
                                 onTap: () {},
@@ -254,8 +267,8 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
                               ListTile(
                                 leading: Icon(Icons.info_outline,
                                     color: colorScheme.primary),
-                                title: const Text('Ilova haqida'),
-                                subtitle: const Text('v1.0.0'),
+                                title: Text(t.about),
+                                subtitle: Text(t.version),
                                 trailing:
                                     const Icon(Icons.chevron_right),
                                 onTap: () {},
@@ -267,15 +280,13 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
                         SizedBox(
                           width: double.infinity,
                           child: OutlinedButton.icon(
-                            onPressed: () {
-                              context.read<AuthCubit>().signOut();
-                            },
+                            onPressed: () =>
+                                context.read<AuthCubit>().signOut(),
                             icon: const Icon(Icons.logout),
-                            label: const Text('Chiqish'),
+                            label: Text(t.logout),
                             style: OutlinedButton.styleFrom(
                               foregroundColor: colorScheme.error,
-                              side: BorderSide(
-                                  color: colorScheme.error),
+                              side: BorderSide(color: colorScheme.error),
                             ),
                           ),
                         ),
@@ -288,8 +299,10 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
       ),
     );
   }
+}
 
-  void _showLanguagePicker() {
+extension _PatientProfileScreenI18n on _PatientProfileScreenState {
+  void _showLanguagePicker(Translations t) {
     showModalBottomSheet(
       context: context,
       builder: (ctx) {
@@ -297,50 +310,31 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Padding(
-                padding: EdgeInsets.all(16),
-                child: Text(
-                  'Tilni tanlang',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: Text(t.select_language,
+                    style: const TextStyle(
+                        fontSize: 18, fontWeight: FontWeight.w600)),
               ),
-              ListTile(
-                leading: const Text('🇺🇿'),
-                title: const Text('O\'zbekcha'),
-                selected: context.watch<SettingsCubit>().state.locale ==
-                    AppLocale.uz,
-                onTap: () {
-                  context.read<SettingsCubit>().setLocale(AppLocale.uz);
-                  Navigator.pop(ctx);
-                },
-              ),
-              ListTile(
-                leading: const Text('🇷🇺'),
-                title: const Text('Русский'),
-                selected: context.watch<SettingsCubit>().state.locale ==
-                    AppLocale.ru,
-                onTap: () {
-                  context.read<SettingsCubit>().setLocale(AppLocale.ru);
-                  Navigator.pop(ctx);
-                },
-              ),
-              ListTile(
-                leading: const Text('🇬🇧'),
-                title: const Text('English'),
-                selected: context.watch<SettingsCubit>().state.locale ==
-                    AppLocale.en,
-                onTap: () {
-                  context.read<SettingsCubit>().setLocale(AppLocale.en);
-                  Navigator.pop(ctx);
-                },
-              ),
+              _langTile('🇺🇿', 'O\'zbekcha', AppLocale.uz, ctx),
+              _langTile('🇷🇺', 'Русский', AppLocale.ru, ctx),
+              _langTile('🇬🇧', 'English', AppLocale.en, ctx),
               const SizedBox(height: 8),
             ],
           ),
         );
+      },
+    );
+  }
+
+  Widget _langTile(String flag, String name, AppLocale locale, BuildContext ctx) {
+    return ListTile(
+      leading: Text(flag),
+      title: Text(name),
+      selected: ctx.watch<SettingsCubit>().state.locale == locale,
+      onTap: () {
+        ctx.read<SettingsCubit>().setLocale(locale);
+        Navigator.pop(ctx);
       },
     );
   }
@@ -354,34 +348,5 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
       case AppLocale.en:
         return 'English';
     }
-  }
-}
-
-class _ProfileTile extends StatelessWidget {
-  final IconData icon;
-  final String title;
-  final String value;
-  final ColorScheme colorScheme;
-
-  const _ProfileTile({
-    required this.icon,
-    required this.title,
-    required this.value,
-    required this.colorScheme,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      leading: Icon(icon, color: colorScheme.primary),
-      title: Text(title),
-      trailing: Text(
-        value,
-        style: TextStyle(
-          fontWeight: FontWeight.w500,
-          color: colorScheme.onSurfaceVariant,
-        ),
-      ),
-    );
   }
 }

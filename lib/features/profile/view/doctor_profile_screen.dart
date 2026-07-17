@@ -40,46 +40,46 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
     _experienceController.text = user.experienceYears?.toString() ?? '';
   }
 
-  Future<void> _showEditDialog(AppUser user) async {
+  Future<void> _showEditDialog(AppUser user, Translations t) async {
     _loadFromUser(user);
 
     final result = await showDialog<bool>(
       context: context,
       builder: (ctx) {
         return AlertDialog(
-          title: const Text('Profilni tahrirlash'),
+          title: Text(t.profile.edit),
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 TextField(
                   controller: _nameController,
-                  decoration: const InputDecoration(labelText: 'Ism'),
+                  decoration: InputDecoration(labelText: t.profile.name),
                 ),
                 const SizedBox(height: 12),
                 TextField(
                   controller: _specialtyController,
                   decoration:
-                      const InputDecoration(labelText: 'Mutaxassislik'),
+                      InputDecoration(labelText: t.profile.specialty),
                 ),
                 const SizedBox(height: 12),
                 TextField(
                   controller: _hospitalController,
                   decoration:
-                      const InputDecoration(labelText: 'Shifoxona'),
+                      InputDecoration(labelText: t.profile.hospital),
                 ),
                 const SizedBox(height: 12),
                 TextField(
                   controller: _licenseController,
-                  decoration: const InputDecoration(
-                      labelText: 'Litsenziya raqami'),
+                  decoration:
+                      InputDecoration(labelText: t.profile.license_hint),
                 ),
                 const SizedBox(height: 12),
                 TextField(
                   controller: _experienceController,
                   keyboardType: TextInputType.number,
                   decoration:
-                      const InputDecoration(labelText: 'Tajriba (yil)'),
+                      InputDecoration(labelText: t.profile.experience_hint),
                 ),
               ],
             ),
@@ -87,11 +87,11 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(ctx, false),
-              child: const Text('Bekor qilish'),
+              child: Text(t.cancel),
             ),
             FilledButton(
               onPressed: () => Navigator.pop(ctx, true),
-              child: const Text('Saqlash'),
+              child: Text(t.save),
             ),
           ],
         );
@@ -99,8 +99,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
     );
 
     if (result == true && mounted) {
-      final experience =
-          int.tryParse(_experienceController.text.trim());
+      final experience = int.tryParse(_experienceController.text.trim());
 
       context.read<ProfileCubit>().updateProfile(
             uid: user.uid,
@@ -117,6 +116,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final t = Translations.of(context);
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
@@ -134,7 +134,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
 
           return Scaffold(
             appBar: AppBar(
-              title: const Text('Shifokor profili'),
+              title: Text(t.profile.doctor_title),
               actions: [
                 if (user != null)
                   IconButton(
@@ -148,7 +148,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                         : const Icon(Icons.edit),
                     onPressed: isSaving
                         ? null
-                        : () => _showEditDialog(user),
+                        : () => _showEditDialog(user, t),
                   ),
               ],
             ),
@@ -162,28 +162,22 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                         CircleAvatar(
                           radius: 48,
                           backgroundColor: colorScheme.primaryContainer,
-                          child: Icon(
-                            Icons.person,
-                            size: 48,
-                            color: colorScheme.onPrimaryContainer,
-                          ),
+                          child: Icon(Icons.person,
+                              size: 48,
+                              color: colorScheme.onPrimaryContainer),
                         ),
                         const SizedBox(height: 12),
                         Text(
                           user.name.isNotEmpty
                               ? user.name
-                              : 'Ism kiritilmagan',
+                              : t.profile.name_empty,
                           style: textTheme.headlineSmall?.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
+                              fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(height: 4),
-                        Text(
-                          user.email,
-                          style: textTheme.bodyMedium?.copyWith(
-                            color: colorScheme.onSurfaceVariant,
-                          ),
-                        ),
+                        Text(user.email,
+                            style: textTheme.bodyMedium?.copyWith(
+                                color: colorScheme.onSurfaceVariant)),
                         const SizedBox(height: 24),
                         Card(
                           child: Column(
@@ -191,35 +185,36 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                               ListTile(
                                 leading: Icon(Icons.work,
                                     color: colorScheme.primary),
-                                title: const Text('Mutaxassislik'),
+                                title: Text(t.profile.specialty),
                                 subtitle: Text(user.specialty ??
-                                    'Kiritilmagan'),
+                                    t.not_specified),
                               ),
                               const Divider(height: 1),
                               ListTile(
                                 leading: Icon(Icons.local_hospital,
                                     color: colorScheme.primary),
-                                title: const Text('Shifoxona'),
-                                subtitle: Text(user.hospital ??
-                                    'Kiritilmagan'),
+                                title: Text(t.profile.hospital),
+                                subtitle: Text(
+                                    user.hospital ?? t.not_specified),
                               ),
                               const Divider(height: 1),
                               ListTile(
                                 leading: Icon(Icons.document_scanner,
                                     color: colorScheme.primary),
-                                title: const Text('Litsenziya'),
+                                title: Text(t.profile.license),
                                 subtitle: Text(user.licenseNumber ??
-                                    'Kiritilmagan'),
+                                    t.not_specified),
                               ),
                               const Divider(height: 1),
                               ListTile(
                                 leading: Icon(Icons.timer,
                                     color: colorScheme.primary),
-                                title: const Text('Tajriba'),
+                                title: Text(t.profile.experience),
                                 subtitle: Text(
-                                    user.experienceYears != null
-                                        ? '${user.experienceYears} yil'
-                                        : 'Kiritilmagan'),
+                                  user.experienceYears != null
+                                      ? '${user.experienceYears}${t.profile.experience_unit}'
+                                      : t.not_specified,
+                                ),
                               ),
                             ],
                           ),
@@ -229,9 +224,8 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                           child: Column(
                             children: [
                               SwitchListTile(
-                                title: const Text('Dark mode'),
-                                subtitle:
-                                    const Text('Quyuq mavzu yoqish'),
+                                title: Text(t.dark_mode),
+                                subtitle: Text(t.dark_mode_subtitle),
                                 value: settingsState.isDark,
                                 onChanged: (_) => context
                                     .read<SettingsCubit>()
@@ -247,18 +241,18 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                               ListTile(
                                 leading: Icon(Icons.language,
                                     color: colorScheme.primary),
-                                title: const Text('Til'),
-                                subtitle: Text(_localeName(
-                                    settingsState.locale)),
+                                title: Text(t.language),
+                                subtitle:
+                                    Text(_localeName(settingsState.locale)),
                                 trailing:
                                     const Icon(Icons.chevron_right),
-                                onTap: () => _showLanguagePicker(),
+                                onTap: () => _showLanguagePicker(t),
                               ),
                               const Divider(height: 1),
                               ListTile(
                                 leading: Icon(Icons.help_outline,
                                     color: colorScheme.primary),
-                                title: const Text('Yordam'),
+                                title: Text(t.help),
                                 trailing:
                                     const Icon(Icons.chevron_right),
                                 onTap: () {},
@@ -270,15 +264,13 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                         SizedBox(
                           width: double.infinity,
                           child: OutlinedButton.icon(
-                            onPressed: () {
-                              context.read<AuthCubit>().signOut();
-                            },
+                            onPressed: () =>
+                                context.read<AuthCubit>().signOut(),
                             icon: const Icon(Icons.logout),
-                            label: const Text('Chiqish'),
+                            label: Text(t.logout),
                             style: OutlinedButton.styleFrom(
                               foregroundColor: colorScheme.error,
-                              side: BorderSide(
-                                  color: colorScheme.error),
+                              side: BorderSide(color: colorScheme.error),
                             ),
                           ),
                         ),
@@ -291,8 +283,10 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
       ),
     );
   }
+}
 
-  void _showLanguagePicker() {
+extension _DoctorProfileI18n on _DoctorProfileScreenState {
+  void _showLanguagePicker(Translations t) {
     showModalBottomSheet(
       context: context,
       builder: (ctx) {
@@ -300,50 +294,31 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Padding(
-                padding: EdgeInsets.all(16),
-                child: Text(
-                  'Tilni tanlang',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: Text(t.select_language,
+                    style: const TextStyle(
+                        fontSize: 18, fontWeight: FontWeight.w600)),
               ),
-              ListTile(
-                leading: const Text('🇺🇿'),
-                title: const Text('O\'zbekcha'),
-                selected: context.watch<SettingsCubit>().state.locale ==
-                    AppLocale.uz,
-                onTap: () {
-                  context.read<SettingsCubit>().setLocale(AppLocale.uz);
-                  Navigator.pop(ctx);
-                },
-              ),
-              ListTile(
-                leading: const Text('🇷🇺'),
-                title: const Text('Русский'),
-                selected: context.watch<SettingsCubit>().state.locale ==
-                    AppLocale.ru,
-                onTap: () {
-                  context.read<SettingsCubit>().setLocale(AppLocale.ru);
-                  Navigator.pop(ctx);
-                },
-              ),
-              ListTile(
-                leading: const Text('🇬🇧'),
-                title: const Text('English'),
-                selected: context.watch<SettingsCubit>().state.locale ==
-                    AppLocale.en,
-                onTap: () {
-                  context.read<SettingsCubit>().setLocale(AppLocale.en);
-                  Navigator.pop(ctx);
-                },
-              ),
+              _langTile('🇺🇿', 'O\'zbekcha', AppLocale.uz, ctx),
+              _langTile('🇷🇺', 'Русский', AppLocale.ru, ctx),
+              _langTile('🇬🇧', 'English', AppLocale.en, ctx),
               const SizedBox(height: 8),
             ],
           ),
         );
+      },
+    );
+  }
+
+  Widget _langTile(String flag, String name, AppLocale locale, BuildContext ctx) {
+    return ListTile(
+      leading: Text(flag),
+      title: Text(name),
+      selected: ctx.watch<SettingsCubit>().state.locale == locale,
+      onTap: () {
+        ctx.read<SettingsCubit>().setLocale(locale);
+        Navigator.pop(ctx);
       },
     );
   }

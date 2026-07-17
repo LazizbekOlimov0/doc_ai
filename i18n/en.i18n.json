@@ -1,4 +1,53 @@
 {
+  "app_name": "DocAI",
+  "app_tagline": "Your medical assistant",
+  "ok": "OK",
+  "cancel": "Cancel",
+  "save": "Save",
+  "not_specified": "Not specified",
+  "no": "None",
+  "unknown": "Unknown",
+  "version": "v1.0.0",
+  "logout": "Logout",
+  "help": "Help",
+  "language": "Language",
+  "select_language": "Select language",
+  "dark_mode": "Dark mode",
+  "dark_mode_subtitle": "Enable dark theme",
+  "about": "About",
+  "settings": "Settings",
+
+  "nav": {
+    "home": "Home",
+    "analysis": "Analysis",
+    "medications": "Medications",
+    "doctor": "Doctor",
+    "profile": "Profile",
+    "patients": "Patients",
+    "reports": "Reports"
+  },
+
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout",
+    "email": "Email",
+    "password": "Password",
+    "name": "Name",
+    "welcome": "Welcome!",
+    "login_subtitle": "Sign in to DocAI",
+    "create_account": "Create account",
+    "register_subtitle": "Get medical help with DocAI",
+    "full_name": "Full name",
+    "your_role": "Your role",
+    "patient": "Patient",
+    "patient_desc": "Treatment & consultation",
+    "doctor_role": "Doctor",
+    "doctor_desc": "Monitor patients",
+    "has_account": "Already have an account? Login",
+    "password_too_short": "Password must be at least 6 characters"
+  },
+
   "auth_error": {
     "invalid_email": "Invalid email address",
     "user_disabled": "This user has been disabled",
@@ -6,17 +55,111 @@
     "wrong_password": "Wrong password",
     "email_already_in_use": "This email is already in use",
     "weak_password": "Password is too weak, at least 6 characters",
-    "operation_not_allowed": "Operation not allowed",
+    "operation_not_allowed": "Email/Password sign-in is not enabled. Enable it in Firebase Console > Authentication > Sign-in method.",
     "too_many_requests": "Too many attempts, try again later",
-    "network_error": "No internet connection, check your network",
-    "unknown_error": "An unknown error occurred"
+    "network_request_failed": "No internet connection, check your network",
+    "channel_error": "Firebase not connected. Please restart the app.",
+    "internal_error": "Firebase internal error. Make sure Email/Password authentication is enabled in Firebase Console.",
+    "requires_recent_login": "Please log in again",
+    "account_exists": "This email is already registered with another method",
+    "provider_linked": "This account is already linked",
+    "credential_in_use": "These credentials are already in use",
+    "unknown_error": "An error occurred. Please try again."
   },
-  "auth": {
-    "login": "Login",
-    "register": "Register",
-    "logout": "Logout",
-    "email": "Email",
-    "password": "Password",
-    "name": "Name"
+
+  "profile": {
+    "title": "Profile",
+    "doctor_title": "Doctor Profile",
+    "edit": "Edit Profile",
+    "name": "Name",
+    "name_empty": "Name not set",
+    "age": "Age",
+    "age_unit": " years",
+    "allergies": "Allergies",
+    "allergies_hint": "Allergies (separate with commas)",
+    "blood_type": "Blood Type",
+    "specialty": "Specialty",
+    "hospital": "Hospital",
+    "license": "License",
+    "license_hint": "License number",
+    "experience": "Experience",
+    "experience_hint": "Experience (years)",
+    "experience_unit": " years",
+    "patients_count": "Patients count"
+  },
+
+  "symptom": {
+    "title": "Symptom Input",
+    "input_label": "Enter your symptoms",
+    "input_hint": "How are you feeling? (e.g., headache, fever...)",
+    "quick_select": "Quick select",
+    "last_result": "Last analysis result",
+    "analyze": "Analyze",
+    "analyzing": "Analyzing...",
+    "analysis_result": "Analysis Result",
+    "no_analysis": "No analysis yet",
+    "no_analysis_hint": "Enter your symptoms from the home screen",
+    "confidence": "Confidence",
+    "recommendations": "Recommendations",
+    "recommended_hospitals": "Recommended Hospitals",
+    "nearest_pharmacy": "Nearest Pharmacy",
+    "pharmacy": "Pharmacy"
+  },
+
+  "medication": {
+    "title": "Medication Schedule",
+    "schedule": "Medication Schedule",
+    "weekly_adherence": "Weekly Adherence",
+    "adherence_hint": "Taking medications on time is key to health",
+    "today": "Today",
+    "times_per_day": "",
+    "times_suffix": " times/day"
+  },
+
+  "doctor_connect": {
+    "title": "Doctor Connect",
+    "call": "Call",
+    "message": "Message",
+    "send_report": "Send Report",
+    "weekly_report": "Weekly Report",
+    "health_diary": "Health Diary",
+    "new_entry": "Add New Entry",
+    "last_report": "Last",
+    "status": "Status"
+  },
+
+  "doctor_dashboard": {
+    "title": "My Patients",
+    "search": "Search patients...",
+    "adherence": "Adherence",
+    "age_condition": " years, ",
+    "patient_not_found": "Patient not found",
+    "patient_not_found_desc": "Patient data not found",
+    "last_visit": "Last visit",
+    "medication_adherence": "Medication",
+    "overall_adherence": "Overall Adherence",
+    "adherence_desc": "Medication adherence indicator",
+    "times_per_day": "",
+    "times_suffix": "x/day",
+    "analysis_history": "Analysis History",
+    "confidence": "Confidence",
+    "reports_title": "Reports",
+    "reviewed": "Reviewed",
+    "new": "New"
+  },
+
+  "booking": {
+    "title": "Book Appointment",
+    "select_doctor": "Select Doctor",
+    "select_date": "Select Date",
+    "select_date_hint": "Select a date",
+    "select_time": "Select Time",
+    "reason": "Reason for visit",
+    "reason_hint": "Briefly describe your complaint...",
+    "submit": "Book",
+    "submitting": "Submitting...",
+    "success_title": "Appointment booked successfully!",
+    "new_booking": "Book another",
+    "navbat": "Appointment"
   }
 }

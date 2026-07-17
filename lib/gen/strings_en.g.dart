@@ -39,27 +39,48 @@ class TranslationsEn extends Translations with BaseTranslations<AppLocale, Trans
 	TranslationsEn $copyWith({TranslationMetadata<AppLocale, Translations>? meta}) => TranslationsEn(meta: meta ?? this.$meta);
 
 	// Translations
-	@override late final _Translations$auth_error$en auth_error = _Translations$auth_error$en._(_root);
+	@override String get app_name => 'DocAI';
+	@override String get app_tagline => 'Your medical assistant';
+	@override String get ok => 'OK';
+	@override String get cancel => 'Cancel';
+	@override String get save => 'Save';
+	@override String get not_specified => 'Not specified';
+	@override String get no => 'None';
+	@override String get unknown => 'Unknown';
+	@override String get version => 'v1.0.0';
+	@override String get logout => 'Logout';
+	@override String get help => 'Help';
+	@override String get language => 'Language';
+	@override String get select_language => 'Select language';
+	@override String get dark_mode => 'Dark mode';
+	@override String get dark_mode_subtitle => 'Enable dark theme';
+	@override String get about => 'About';
+	@override String get settings => 'Settings';
+	@override late final _Translations$nav$en nav = _Translations$nav$en._(_root);
 	@override late final _Translations$auth$en auth = _Translations$auth$en._(_root);
+	@override late final _Translations$auth_error$en auth_error = _Translations$auth_error$en._(_root);
+	@override late final _Translations$profile$en profile = _Translations$profile$en._(_root);
+	@override late final _Translations$symptom$en symptom = _Translations$symptom$en._(_root);
+	@override late final _Translations$medication$en medication = _Translations$medication$en._(_root);
+	@override late final _Translations$doctor_connect$en doctor_connect = _Translations$doctor_connect$en._(_root);
+	@override late final _Translations$doctor_dashboard$en doctor_dashboard = _Translations$doctor_dashboard$en._(_root);
+	@override late final _Translations$booking$en booking = _Translations$booking$en._(_root);
 }
 
-// Path: auth_error
-class _Translations$auth_error$en extends Translations$auth_error$uz {
-	_Translations$auth_error$en._(TranslationsEn root) : this._root = root, super.internal(root);
+// Path: nav
+class _Translations$nav$en extends Translations$nav$uz {
+	_Translations$nav$en._(TranslationsEn root) : this._root = root, super.internal(root);
 
 	final TranslationsEn _root; // ignore: unused_field
 
 	// Translations
-	@override String get invalid_email => 'Invalid email address';
-	@override String get user_disabled => 'This user has been disabled';
-	@override String get user_not_found => 'User not found';
-	@override String get wrong_password => 'Wrong password';
-	@override String get email_already_in_use => 'This email is already in use';
-	@override String get weak_password => 'Password is too weak, at least 6 characters';
-	@override String get operation_not_allowed => 'Operation not allowed';
-	@override String get too_many_requests => 'Too many attempts, try again later';
-	@override String get network_error => 'No internet connection, check your network';
-	@override String get unknown_error => 'An unknown error occurred';
+	@override String get home => 'Home';
+	@override String get analysis => 'Analysis';
+	@override String get medications => 'Medications';
+	@override String get doctor => 'Doctor';
+	@override String get profile => 'Profile';
+	@override String get patients => 'Patients';
+	@override String get reports => 'Reports';
 }
 
 // Path: auth
@@ -75,6 +96,175 @@ class _Translations$auth$en extends Translations$auth$uz {
 	@override String get email => 'Email';
 	@override String get password => 'Password';
 	@override String get name => 'Name';
+	@override String get welcome => 'Welcome!';
+	@override String get login_subtitle => 'Sign in to DocAI';
+	@override String get create_account => 'Create account';
+	@override String get register_subtitle => 'Get medical help with DocAI';
+	@override String get full_name => 'Full name';
+	@override String get your_role => 'Your role';
+	@override String get patient => 'Patient';
+	@override String get patient_desc => 'Treatment & consultation';
+	@override String get doctor_role => 'Doctor';
+	@override String get doctor_desc => 'Monitor patients';
+	@override String get has_account => 'Already have an account? Login';
+	@override String get password_too_short => 'Password must be at least 6 characters';
+}
+
+// Path: auth_error
+class _Translations$auth_error$en extends Translations$auth_error$uz {
+	_Translations$auth_error$en._(TranslationsEn root) : this._root = root, super.internal(root);
+
+	final TranslationsEn _root; // ignore: unused_field
+
+	// Translations
+	@override String get invalid_email => 'Invalid email address';
+	@override String get user_disabled => 'This user has been disabled';
+	@override String get user_not_found => 'User not found';
+	@override String get wrong_password => 'Wrong password';
+	@override String get email_already_in_use => 'This email is already in use';
+	@override String get weak_password => 'Password is too weak, at least 6 characters';
+	@override String get operation_not_allowed => 'Email/Password sign-in is not enabled. Enable it in Firebase Console > Authentication > Sign-in method.';
+	@override String get too_many_requests => 'Too many attempts, try again later';
+	@override String get network_request_failed => 'No internet connection, check your network';
+	@override String get channel_error => 'Firebase not connected. Please restart the app.';
+	@override String get internal_error => 'Firebase internal error. Make sure Email/Password authentication is enabled in Firebase Console.';
+	@override String get requires_recent_login => 'Please log in again';
+	@override String get account_exists => 'This email is already registered with another method';
+	@override String get provider_linked => 'This account is already linked';
+	@override String get credential_in_use => 'These credentials are already in use';
+	@override String get unknown_error => 'An error occurred. Please try again.';
+}
+
+// Path: profile
+class _Translations$profile$en extends Translations$profile$uz {
+	_Translations$profile$en._(TranslationsEn root) : this._root = root, super.internal(root);
+
+	final TranslationsEn _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Profile';
+	@override String get doctor_title => 'Doctor Profile';
+	@override String get edit => 'Edit Profile';
+	@override String get name => 'Name';
+	@override String get name_empty => 'Name not set';
+	@override String get age => 'Age';
+	@override String get age_unit => ' years';
+	@override String get allergies => 'Allergies';
+	@override String get allergies_hint => 'Allergies (separate with commas)';
+	@override String get blood_type => 'Blood Type';
+	@override String get specialty => 'Specialty';
+	@override String get hospital => 'Hospital';
+	@override String get license => 'License';
+	@override String get license_hint => 'License number';
+	@override String get experience => 'Experience';
+	@override String get experience_hint => 'Experience (years)';
+	@override String get experience_unit => ' years';
+	@override String get patients_count => 'Patients count';
+}
+
+// Path: symptom
+class _Translations$symptom$en extends Translations$symptom$uz {
+	_Translations$symptom$en._(TranslationsEn root) : this._root = root, super.internal(root);
+
+	final TranslationsEn _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Symptom Input';
+	@override String get input_label => 'Enter your symptoms';
+	@override String get input_hint => 'How are you feeling? (e.g., headache, fever...)';
+	@override String get quick_select => 'Quick select';
+	@override String get last_result => 'Last analysis result';
+	@override String get analyze => 'Analyze';
+	@override String get analyzing => 'Analyzing...';
+	@override String get analysis_result => 'Analysis Result';
+	@override String get no_analysis => 'No analysis yet';
+	@override String get no_analysis_hint => 'Enter your symptoms from the home screen';
+	@override String get confidence => 'Confidence';
+	@override String get recommendations => 'Recommendations';
+	@override String get recommended_hospitals => 'Recommended Hospitals';
+	@override String get nearest_pharmacy => 'Nearest Pharmacy';
+	@override String get pharmacy => 'Pharmacy';
+}
+
+// Path: medication
+class _Translations$medication$en extends Translations$medication$uz {
+	_Translations$medication$en._(TranslationsEn root) : this._root = root, super.internal(root);
+
+	final TranslationsEn _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Medication Schedule';
+	@override String get schedule => 'Medication Schedule';
+	@override String get weekly_adherence => 'Weekly Adherence';
+	@override String get adherence_hint => 'Taking medications on time is key to health';
+	@override String get today => 'Today';
+	@override String get times_per_day => '';
+	@override String get times_suffix => ' times/day';
+}
+
+// Path: doctor_connect
+class _Translations$doctor_connect$en extends Translations$doctor_connect$uz {
+	_Translations$doctor_connect$en._(TranslationsEn root) : this._root = root, super.internal(root);
+
+	final TranslationsEn _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Doctor Connect';
+	@override String get call => 'Call';
+	@override String get message => 'Message';
+	@override String get send_report => 'Send Report';
+	@override String get weekly_report => 'Weekly Report';
+	@override String get health_diary => 'Health Diary';
+	@override String get new_entry => 'Add New Entry';
+	@override String get last_report => 'Last';
+	@override String get status => 'Status';
+}
+
+// Path: doctor_dashboard
+class _Translations$doctor_dashboard$en extends Translations$doctor_dashboard$uz {
+	_Translations$doctor_dashboard$en._(TranslationsEn root) : this._root = root, super.internal(root);
+
+	final TranslationsEn _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'My Patients';
+	@override String get search => 'Search patients...';
+	@override String get adherence => 'Adherence';
+	@override String get age_condition => ' years, ';
+	@override String get patient_not_found => 'Patient not found';
+	@override String get patient_not_found_desc => 'Patient data not found';
+	@override String get last_visit => 'Last visit';
+	@override String get medication_adherence => 'Medication';
+	@override String get overall_adherence => 'Overall Adherence';
+	@override String get adherence_desc => 'Medication adherence indicator';
+	@override String get times_per_day => '';
+	@override String get times_suffix => 'x/day';
+	@override String get analysis_history => 'Analysis History';
+	@override String get confidence => 'Confidence';
+	@override String get reports_title => 'Reports';
+	@override String get reviewed => 'Reviewed';
+	@override String get kNew => 'New';
+}
+
+// Path: booking
+class _Translations$booking$en extends Translations$booking$uz {
+	_Translations$booking$en._(TranslationsEn root) : this._root = root, super.internal(root);
+
+	final TranslationsEn _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Book Appointment';
+	@override String get select_doctor => 'Select Doctor';
+	@override String get select_date => 'Select Date';
+	@override String get select_date_hint => 'Select a date';
+	@override String get select_time => 'Select Time';
+	@override String get reason => 'Reason for visit';
+	@override String get reason_hint => 'Briefly describe your complaint...';
+	@override String get submit => 'Book';
+	@override String get submitting => 'Submitting...';
+	@override String get success_title => 'Appointment booked successfully!';
+	@override String get new_booking => 'Book another';
+	@override String get navbat => 'Appointment';
 }
 
 /// The flat map containing all translations for locale <en>.
@@ -85,22 +275,142 @@ class _Translations$auth$en extends Translations$auth$uz {
 extension on TranslationsEn {
 	dynamic _flatMapFunction(String path) {
 		return switch (path) {
-			'auth_error.invalid_email' => 'Invalid email address',
-			'auth_error.user_disabled' => 'This user has been disabled',
-			'auth_error.user_not_found' => 'User not found',
-			'auth_error.wrong_password' => 'Wrong password',
-			'auth_error.email_already_in_use' => 'This email is already in use',
-			'auth_error.weak_password' => 'Password is too weak, at least 6 characters',
-			'auth_error.operation_not_allowed' => 'Operation not allowed',
-			'auth_error.too_many_requests' => 'Too many attempts, try again later',
-			'auth_error.network_error' => 'No internet connection, check your network',
-			'auth_error.unknown_error' => 'An unknown error occurred',
+			'app_name' => 'DocAI',
+			'app_tagline' => 'Your medical assistant',
+			'ok' => 'OK',
+			'cancel' => 'Cancel',
+			'save' => 'Save',
+			'not_specified' => 'Not specified',
+			'no' => 'None',
+			'unknown' => 'Unknown',
+			'version' => 'v1.0.0',
+			'logout' => 'Logout',
+			'help' => 'Help',
+			'language' => 'Language',
+			'select_language' => 'Select language',
+			'dark_mode' => 'Dark mode',
+			'dark_mode_subtitle' => 'Enable dark theme',
+			'about' => 'About',
+			'settings' => 'Settings',
+			'nav.home' => 'Home',
+			'nav.analysis' => 'Analysis',
+			'nav.medications' => 'Medications',
+			'nav.doctor' => 'Doctor',
+			'nav.profile' => 'Profile',
+			'nav.patients' => 'Patients',
+			'nav.reports' => 'Reports',
 			'auth.login' => 'Login',
 			'auth.register' => 'Register',
 			'auth.logout' => 'Logout',
 			'auth.email' => 'Email',
 			'auth.password' => 'Password',
 			'auth.name' => 'Name',
+			'auth.welcome' => 'Welcome!',
+			'auth.login_subtitle' => 'Sign in to DocAI',
+			'auth.create_account' => 'Create account',
+			'auth.register_subtitle' => 'Get medical help with DocAI',
+			'auth.full_name' => 'Full name',
+			'auth.your_role' => 'Your role',
+			'auth.patient' => 'Patient',
+			'auth.patient_desc' => 'Treatment & consultation',
+			'auth.doctor_role' => 'Doctor',
+			'auth.doctor_desc' => 'Monitor patients',
+			'auth.has_account' => 'Already have an account? Login',
+			'auth.password_too_short' => 'Password must be at least 6 characters',
+			'auth_error.invalid_email' => 'Invalid email address',
+			'auth_error.user_disabled' => 'This user has been disabled',
+			'auth_error.user_not_found' => 'User not found',
+			'auth_error.wrong_password' => 'Wrong password',
+			'auth_error.email_already_in_use' => 'This email is already in use',
+			'auth_error.weak_password' => 'Password is too weak, at least 6 characters',
+			'auth_error.operation_not_allowed' => 'Email/Password sign-in is not enabled. Enable it in Firebase Console > Authentication > Sign-in method.',
+			'auth_error.too_many_requests' => 'Too many attempts, try again later',
+			'auth_error.network_request_failed' => 'No internet connection, check your network',
+			'auth_error.channel_error' => 'Firebase not connected. Please restart the app.',
+			'auth_error.internal_error' => 'Firebase internal error. Make sure Email/Password authentication is enabled in Firebase Console.',
+			'auth_error.requires_recent_login' => 'Please log in again',
+			'auth_error.account_exists' => 'This email is already registered with another method',
+			'auth_error.provider_linked' => 'This account is already linked',
+			'auth_error.credential_in_use' => 'These credentials are already in use',
+			'auth_error.unknown_error' => 'An error occurred. Please try again.',
+			'profile.title' => 'Profile',
+			'profile.doctor_title' => 'Doctor Profile',
+			'profile.edit' => 'Edit Profile',
+			'profile.name' => 'Name',
+			'profile.name_empty' => 'Name not set',
+			'profile.age' => 'Age',
+			'profile.age_unit' => ' years',
+			'profile.allergies' => 'Allergies',
+			'profile.allergies_hint' => 'Allergies (separate with commas)',
+			'profile.blood_type' => 'Blood Type',
+			'profile.specialty' => 'Specialty',
+			'profile.hospital' => 'Hospital',
+			'profile.license' => 'License',
+			'profile.license_hint' => 'License number',
+			'profile.experience' => 'Experience',
+			'profile.experience_hint' => 'Experience (years)',
+			'profile.experience_unit' => ' years',
+			'profile.patients_count' => 'Patients count',
+			'symptom.title' => 'Symptom Input',
+			'symptom.input_label' => 'Enter your symptoms',
+			'symptom.input_hint' => 'How are you feeling? (e.g., headache, fever...)',
+			'symptom.quick_select' => 'Quick select',
+			'symptom.last_result' => 'Last analysis result',
+			'symptom.analyze' => 'Analyze',
+			'symptom.analyzing' => 'Analyzing...',
+			'symptom.analysis_result' => 'Analysis Result',
+			'symptom.no_analysis' => 'No analysis yet',
+			'symptom.no_analysis_hint' => 'Enter your symptoms from the home screen',
+			'symptom.confidence' => 'Confidence',
+			'symptom.recommendations' => 'Recommendations',
+			'symptom.recommended_hospitals' => 'Recommended Hospitals',
+			'symptom.nearest_pharmacy' => 'Nearest Pharmacy',
+			'symptom.pharmacy' => 'Pharmacy',
+			'medication.title' => 'Medication Schedule',
+			'medication.schedule' => 'Medication Schedule',
+			'medication.weekly_adherence' => 'Weekly Adherence',
+			'medication.adherence_hint' => 'Taking medications on time is key to health',
+			'medication.today' => 'Today',
+			'medication.times_per_day' => '',
+			'medication.times_suffix' => ' times/day',
+			'doctor_connect.title' => 'Doctor Connect',
+			'doctor_connect.call' => 'Call',
+			'doctor_connect.message' => 'Message',
+			'doctor_connect.send_report' => 'Send Report',
+			'doctor_connect.weekly_report' => 'Weekly Report',
+			'doctor_connect.health_diary' => 'Health Diary',
+			'doctor_connect.new_entry' => 'Add New Entry',
+			'doctor_connect.last_report' => 'Last',
+			'doctor_connect.status' => 'Status',
+			'doctor_dashboard.title' => 'My Patients',
+			'doctor_dashboard.search' => 'Search patients...',
+			'doctor_dashboard.adherence' => 'Adherence',
+			'doctor_dashboard.age_condition' => ' years, ',
+			'doctor_dashboard.patient_not_found' => 'Patient not found',
+			'doctor_dashboard.patient_not_found_desc' => 'Patient data not found',
+			'doctor_dashboard.last_visit' => 'Last visit',
+			'doctor_dashboard.medication_adherence' => 'Medication',
+			'doctor_dashboard.overall_adherence' => 'Overall Adherence',
+			'doctor_dashboard.adherence_desc' => 'Medication adherence indicator',
+			'doctor_dashboard.times_per_day' => '',
+			'doctor_dashboard.times_suffix' => 'x/day',
+			'doctor_dashboard.analysis_history' => 'Analysis History',
+			'doctor_dashboard.confidence' => 'Confidence',
+			'doctor_dashboard.reports_title' => 'Reports',
+			'doctor_dashboard.reviewed' => 'Reviewed',
+			'doctor_dashboard.kNew' => 'New',
+			'booking.title' => 'Book Appointment',
+			'booking.select_doctor' => 'Select Doctor',
+			'booking.select_date' => 'Select Date',
+			'booking.select_date_hint' => 'Select a date',
+			'booking.select_time' => 'Select Time',
+			'booking.reason' => 'Reason for visit',
+			'booking.reason_hint' => 'Briefly describe your complaint...',
+			'booking.submit' => 'Book',
+			'booking.submitting' => 'Submitting...',
+			'booking.success_title' => 'Appointment booked successfully!',
+			'booking.new_booking' => 'Book another',
+			'booking.navbat' => 'Appointment',
 			_ => null,
 		};
 	}

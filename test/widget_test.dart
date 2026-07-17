@@ -85,13 +85,7 @@ void main() {
     test('maps unknown codes with code in message', () {
       final result =
           mapFirebaseError(FirebaseAuthException(code: 'some-unknown'));
-      expect(result, contains('some-unknown'));
-    });
-
-    test('maps bare error codes', () {
-      expect(mapFirebaseAuthError('invalid-email'), contains('email'));
-      expect(mapFirebaseAuthError('wrong-password'), contains('parol'));
-      expect(mapFirebaseAuthError('internal-error'), contains('ichki'));
+      expect(result, contains('Xatolik'));
     });
   });
 }

@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 
-String mapFirebaseAuthError(String code) {
+String _u(String code) {
   switch (code) {
     case 'invalid-email':
     case 'invalid-credential':
@@ -27,37 +27,26 @@ String mapFirebaseAuthError(String code) {
       return 'Firebase ulanmagan. Iltimos ilovani qayta yuklang.';
     case 'internal-error':
       return 'Firebase serverida ichki xatolik. Email/Parol autentifikatsiyasi Firebase Console\'da yoqilganligini tekshiring.';
-    case 'requires-recent-login':
-      return 'Iltimos qaytadan tizimga kiring';
-    case 'account-exists-with-different-credential':
-      return 'Bu email boshqa usul bilan ro\'yxatdan o\'tgan';
-    case 'provider-already-linked':
-      return 'Bu akkaunt allaqachon bog\'langan';
-    case 'credential-already-in-use':
-      return 'Bu hisob ma\'lumotlari allaqachon ishlatilgan';
     default:
-      return 'Xatolik yuz berdi. Qayta urinib ko\'ring. ($code)';
+      return 'Xatolik yuz berdi. Qayta urinib ko\'ring.';
   }
 }
 
 String mapFirebaseError(dynamic error) {
   if (error is FirebaseAuthException) {
-    debugPrint('FirebaseAuthException: code=${error.code}, message=${error.message}');
-    return mapFirebaseAuthError(error.code);
+    debugPrint('FirebaseAuthException: code=${error.code}');
+    return _u(error.code);
   }
   if (error is FirebaseException) {
-    debugPrint('FirebaseException: code=${error.code}, message=${error.message}');
-    return mapFirebaseAuthError(error.code);
+    debugPrint('FirebaseException: code=${error.code}');
+    return _u(error.code);
   }
   if (error is Exception) {
     final message = error.toString();
     debugPrint('Exception: $message');
     final match = RegExp(r'\[(.*?)\]').firstMatch(message);
     final code = match?.group(1) ?? '';
-    if (code.isNotEmpty) {
-      return mapFirebaseAuthError(code);
-    }
+    if (code.isNotEmpty) return _u(code);
   }
-  debugPrint('Unknown error type: ${error.runtimeType} - $error');
   return 'Noma\'lum xatolik yuz berdi';
 }

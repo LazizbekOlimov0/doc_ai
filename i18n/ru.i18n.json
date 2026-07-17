@@ -1,4 +1,53 @@
 {
+  "app_name": "DocAI",
+  "app_tagline": "Ваш медицинский помощник",
+  "ok": "OK",
+  "cancel": "Отмена",
+  "save": "Сохранить",
+  "not_specified": "Не указано",
+  "no": "Нет",
+  "unknown": "Неизвестно",
+  "version": "v1.0.0",
+  "logout": "Выход",
+  "help": "Помощь",
+  "language": "Язык",
+  "select_language": "Выберите язык",
+  "dark_mode": "Тёмная тема",
+  "dark_mode_subtitle": "Включить тёмную тему",
+  "about": "О приложении",
+  "settings": "Настройки",
+
+  "nav": {
+    "home": "Главная",
+    "analysis": "Анализ",
+    "medications": "Лекарства",
+    "doctor": "Врач",
+    "profile": "Профиль",
+    "patients": "Пациенты",
+    "reports": "Отчёты"
+  },
+
+  "auth": {
+    "login": "Вход",
+    "register": "Регистрация",
+    "logout": "Выход",
+    "email": "Email",
+    "password": "Пароль",
+    "name": "Имя",
+    "welcome": "Добро пожаловать!",
+    "login_subtitle": "Войдите в DocAI",
+    "create_account": "Создать аккаунт",
+    "register_subtitle": "Получите медицинскую помощь с DocAI",
+    "full_name": "Имя и фамилия",
+    "your_role": "Ваша роль",
+    "patient": "Пациент",
+    "patient_desc": "Лечение и консультации",
+    "doctor_role": "Врач",
+    "doctor_desc": "Наблюдение за пациентами",
+    "has_account": "Уже есть аккаунт? Войти",
+    "password_too_short": "Пароль должен содержать минимум 6 символов"
+  },
+
   "auth_error": {
     "invalid_email": "Неверный email адрес",
     "user_disabled": "Пользователь заблокирован",
@@ -6,17 +55,111 @@
     "wrong_password": "Неверный пароль",
     "email_already_in_use": "Этот email уже занят",
     "weak_password": "Слишком простой пароль, минимум 6 символов",
-    "operation_not_allowed": "Действие не разрешено",
+    "operation_not_allowed": "Вход по Email/Паролю не включён. Включите в Firebase Console > Authentication > Sign-in method.",
     "too_many_requests": "Слишком много попыток, попробуйте позже",
-    "network_error": "Нет интернета, проверьте подключение",
-    "unknown_error": "Неизвестная ошибка"
+    "network_request_failed": "Нет интернета, проверьте подключение",
+    "channel_error": "Firebase не подключён. Перезапустите приложение.",
+    "internal_error": "Внутренняя ошибка Firebase. Убедитесь, что вход по Email/Паролю включён в Firebase Console.",
+    "requires_recent_login": "Пожалуйста, войдите заново",
+    "account_exists": "Этот email уже зарегистрирован другим способом",
+    "provider_linked": "Этот аккаунт уже привязан",
+    "credential_in_use": "Эти данные уже используются",
+    "unknown_error": "Произошла ошибка. Попробуйте снова."
   },
-  "auth": {
-    "login": "Вход",
-    "register": "Регистрация",
-    "logout": "Выход",
-    "email": "Email",
-    "password": "Пароль",
-    "name": "Имя"
+
+  "profile": {
+    "title": "Профиль",
+    "doctor_title": "Профиль врача",
+    "edit": "Редактировать профиль",
+    "name": "Имя",
+    "name_empty": "Имя не указано",
+    "age": "Возраст",
+    "age_unit": " лет",
+    "allergies": "Аллергии",
+    "allergies_hint": "Аллергии (через запятую)",
+    "blood_type": "Группа крови",
+    "specialty": "Специальность",
+    "hospital": "Больница",
+    "license": "Лицензия",
+    "license_hint": "Номер лицензии",
+    "experience": "Опыт",
+    "experience_hint": "Опыт (лет)",
+    "experience_unit": " лет",
+    "patients_count": "Количество пациентов"
+  },
+
+  "symptom": {
+    "title": "Ввод симптомов",
+    "input_label": "Введите симптомы",
+    "input_hint": "Как вы себя чувствуете? (например, головная боль, жар...)",
+    "quick_select": "Быстрый выбор",
+    "last_result": "Последний результат анализа",
+    "analyze": "Анализировать",
+    "analyzing": "Анализ...",
+    "analysis_result": "Результат анализа",
+    "no_analysis": "Анализ ещё не проводился",
+    "no_analysis_hint": "Введите симптомы на главном экране",
+    "confidence": "Достоверность",
+    "recommendations": "Рекомендации",
+    "recommended_hospitals": "Рекомендованные больницы",
+    "nearest_pharmacy": "Ближайшая аптека",
+    "pharmacy": "Аптека"
+  },
+
+  "medication": {
+    "title": "График приёма лекарств",
+    "schedule": "График приёма лекарств",
+    "weekly_adherence": "Недельный приём",
+    "adherence_hint": "Своевременный приём лекарств — залог здоровья",
+    "today": "Сегодня",
+    "times_per_day": "",
+    "times_suffix": " раз/день"
+  },
+
+  "doctor_connect": {
+    "title": "Связь с врачом",
+    "call": "Звонок",
+    "message": "Сообщение",
+    "send_report": "Отправить отчёт",
+    "weekly_report": "Недельный отчёт",
+    "health_diary": "Дневник здоровья",
+    "new_entry": "Добавить запись",
+    "last_report": "Последний",
+    "status": "Статус"
+  },
+
+  "doctor_dashboard": {
+    "title": "Мои пациенты",
+    "search": "Поиск пациентов...",
+    "adherence": "Приверженность",
+    "age_condition": " лет, ",
+    "patient_not_found": "Пациент не найден",
+    "patient_not_found_desc": "Данные пациента не найдены",
+    "last_visit": "Последний визит",
+    "medication_adherence": "Приём лекарств",
+    "overall_adherence": "Общая приверженность",
+    "adherence_desc": "Показатель приверженности лечению",
+    "times_per_day": "",
+    "times_suffix": "р/д",
+    "analysis_history": "История анализов",
+    "confidence": "Достоверность",
+    "reports_title": "Отчёты",
+    "reviewed": "Просмотрено",
+    "new": "Новый"
+  },
+
+  "booking": {
+    "title": "Запись на приём",
+    "select_doctor": "Выберите врача",
+    "select_date": "Выберите дату",
+    "select_date_hint": "Выберите дату",
+    "select_time": "Выберите время",
+    "reason": "Причина обращения",
+    "reason_hint": "Кратко опишите жалобу...",
+    "submit": "Записаться",
+    "submitting": "Отправка...",
+    "success_title": "Запись успешно создана!",
+    "new_booking": "Записаться ещё",
+    "navbat": "Приём"
   }
 }

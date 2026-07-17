@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/router/route_names.dart';
 import '../../../core/models/app_user.dart';
+import '../../../gen/strings.g.dart';
 import '../bloc/auth_cubit.dart';
 import '../bloc/auth_state.dart';
 
@@ -35,11 +36,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
     if (email.isEmpty || password.isEmpty) return;
     if (password.length < 6) {
+      final t = Translations.of(context);
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content:
-              Text('Parol kamida 6 ta belgidan iborat bo\'lishi kerak'),
-        ),
+        SnackBar(content: Text(t.auth.password_too_short)),
       );
       return;
     }
@@ -54,6 +53,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final t = Translations.of(context);
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
@@ -69,11 +69,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
               backgroundColor: colorScheme.error,
               duration: const Duration(seconds: 4),
               action: SnackBarAction(
-                label: 'OK',
+                label: t.ok,
                 textColor: colorScheme.onError,
-                onPressed: () {
-                  context.read<AuthCubit>().clearError();
-                },
+                onPressed: () =>
+                    context.read<AuthCubit>().clearError(),
               ),
             ),
           );
@@ -83,9 +82,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         final isLoading = state.status == AuthStatus.loading;
 
         return Scaffold(
-          appBar: AppBar(
-            title: const Text('Ro\'yxatdan o\'tish'),
-          ),
+          appBar: AppBar(title: Text(t.auth.register)),
           body: SafeArea(
             child: SingleChildScrollView(
               padding: const EdgeInsets.all(24),
@@ -93,31 +90,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   const SizedBox(height: 20),
-                  Text(
-                    'Hisob yaratish',
-                    textAlign: TextAlign.center,
-                    style: textTheme.headlineSmall?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: colorScheme.onSurface,
-                    ),
-                  ),
+                  Text(t.auth.create_account,
+                      textAlign: TextAlign.center,
+                      style: textTheme.headlineSmall?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: colorScheme.onSurface)),
                   const SizedBox(height: 8),
-                  Text(
-                    'DocAI orqali tibbiy yordam oling',
-                    textAlign: TextAlign.center,
-                    style: textTheme.bodyMedium?.copyWith(
-                      color: colorScheme.onSurfaceVariant,
-                    ),
-                  ),
+                  Text(t.auth.register_subtitle,
+                      textAlign: TextAlign.center,
+                      style: textTheme.bodyMedium?.copyWith(
+                          color: colorScheme.onSurfaceVariant)),
                   const SizedBox(height: 32),
                   TextField(
                     controller: _nameController,
                     enabled: !isLoading,
                     textInputAction: TextInputAction.next,
-                    decoration: const InputDecoration(
-                      labelText: 'Ism familiya',
-                      prefixIcon: Icon(Icons.person_outline),
-                    ),
+                    decoration: InputDecoration(
+                        labelText: t.auth.full_name,
+                        prefixIcon: const Icon(Icons.person_outline)),
                   ),
                   const SizedBox(height: 16),
                   TextField(
@@ -125,10 +115,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     keyboardType: TextInputType.emailAddress,
                     enabled: !isLoading,
                     textInputAction: TextInputAction.next,
-                    decoration: const InputDecoration(
-                      labelText: 'Email',
-                      prefixIcon: Icon(Icons.email_outlined),
-                    ),
+                    decoration: InputDecoration(
+                        labelText: t.auth.email,
+                        prefixIcon: const Icon(Icons.email_outlined)),
                   ),
                   const SizedBox(height: 16),
                   TextField(
@@ -139,53 +128,47 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     onSubmitted:
                         isLoading ? null : (_) => _handleRegister(),
                     decoration: InputDecoration(
-                      labelText: 'Parol',
+                      labelText: t.auth.password,
                       prefixIcon: const Icon(Icons.lock_outlined),
                       suffixIcon: IconButton(
-                        icon: Icon(
-                          _obscurePassword
-                              ? Icons.visibility_off
-                              : Icons.visibility,
-                        ),
-                        onPressed: () {
-                          setState(() => _obscurePassword = !_obscurePassword);
-                        },
+                        icon: Icon(_obscurePassword
+                            ? Icons.visibility_off
+                            : Icons.visibility),
+                        onPressed: () => setState(
+                            () => _obscurePassword = !_obscurePassword),
                       ),
                     ),
                   ),
                   const SizedBox(height: 24),
-                  Text(
-                    'Sizning rolingiz',
-                    style: textTheme.titleSmall?.copyWith(
-                      color: colorScheme.onSurfaceVariant,
-                    ),
-                  ),
+                  Text(t.auth.your_role,
+                      style: textTheme.titleSmall?.copyWith(
+                          color: colorScheme.onSurfaceVariant)),
                   const SizedBox(height: 8),
                   Row(
                     children: [
                       Expanded(
                         child: _RoleCard(
                           icon: Icons.person,
-                          title: 'Bemor',
-                          subtitle: 'Davolanish va maslahat',
+                          title: t.auth.patient,
+                          subtitle: t.auth.patient_desc,
                           isSelected: _selectedRole == UserRole.patient,
                           onTap: isLoading
                               ? null
-                              : () => setState(
-                                  () => _selectedRole = UserRole.patient),
+                              : () => setState(() =>
+                                  _selectedRole = UserRole.patient),
                         ),
                       ),
                       const SizedBox(width: 12),
                       Expanded(
                         child: _RoleCard(
                           icon: Icons.medical_information,
-                          title: 'Shifokor',
-                          subtitle: 'Bemorlarni kuzatish',
+                          title: t.auth.doctor_role,
+                          subtitle: t.auth.doctor_desc,
                           isSelected: _selectedRole == UserRole.doctor,
                           onTap: isLoading
                               ? null
-                              : () => setState(
-                                  () => _selectedRole = UserRole.doctor),
+                              : () => setState(() =>
+                                  _selectedRole = UserRole.doctor),
                         ),
                       ),
                     ],
@@ -198,17 +181,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             width: 20,
                             height: 20,
                             child: CircularProgressIndicator(
-                              strokeWidth: 2,
-                              color: Colors.white,
-                            ),
-                          )
-                        : const Text('Ro\'yxatdan o\'tish'),
+                                strokeWidth: 2, color: Colors.white))
+                        : Text(t.auth.register),
                   ),
                   const SizedBox(height: 16),
                   TextButton(
-                    onPressed:
-                        isLoading ? null : () => context.go(RouteNames.login),
-                    child: const Text('Allaqachon hisobingiz bormi? Kirish'),
+                    onPressed: isLoading
+                        ? null
+                        : () => context.go(RouteNames.login),
+                    child: Text(t.auth.has_account),
                   ),
                 ],
               ),
@@ -254,30 +235,23 @@ class _RoleCard extends StatelessWidget {
         ),
         child: Column(
           children: [
-            Icon(
-              icon,
-              size: 40,
-              color: isSelected
-                  ? colorScheme.primary
-                  : colorScheme.onSurfaceVariant,
-            ),
+            Icon(icon,
+                size: 40,
+                color: isSelected
+                    ? colorScheme.primary
+                    : colorScheme.onSurfaceVariant),
             const SizedBox(height: 8),
-            Text(
-              title,
-              style: TextStyle(
-                fontWeight: FontWeight.w600,
-                color: isSelected ? colorScheme.primary : colorScheme.onSurface,
-              ),
-            ),
+            Text(title,
+                style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    color: isSelected
+                        ? colorScheme.primary
+                        : colorScheme.onSurface)),
             const SizedBox(height: 4),
-            Text(
-              subtitle,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 12,
-                color: colorScheme.onSurfaceVariant,
-              ),
-            ),
+            Text(subtitle,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontSize: 12, color: colorScheme.onSurfaceVariant)),
           ],
         ),
       ),

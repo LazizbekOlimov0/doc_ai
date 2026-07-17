@@ -15,14 +15,16 @@ import 'gen/strings.g.dart';
 import 'firebase_options.dart';
 
 Future<SharedPreferences?> _getPrefs() async {
-  for (int i = 0; i < 5; i++) {
+  try {
+    return await SharedPreferences.getInstance();
+  } catch (_) {
     try {
+      await Future.delayed(const Duration(milliseconds: 200));
       return await SharedPreferences.getInstance();
     } catch (_) {
-      await Future.delayed(const Duration(milliseconds: 400));
+      return null;
     }
   }
-  return null;
 }
 
 Future<void> main() async {

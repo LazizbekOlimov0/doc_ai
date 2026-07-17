@@ -1,4 +1,53 @@
 {
+  "app_name": "DocAI",
+  "app_tagline": "Sizning tibbiy yordamchingiz",
+  "ok": "OK",
+  "cancel": "Bekor qilish",
+  "save": "Saqlash",
+  "not_specified": "Kiritilmagan",
+  "no": "Yo'q",
+  "unknown": "Noma'lum",
+  "version": "v1.0.0",
+  "logout": "Chiqish",
+  "help": "Yordam",
+  "language": "Til",
+  "select_language": "Tilni tanlang",
+  "dark_mode": "Dark mode",
+  "dark_mode_subtitle": "Quyuq mavzu yoqish",
+  "about": "Ilova haqida",
+  "settings": "Sozlamalar",
+
+  "nav": {
+    "home": "Bosh sahifa",
+    "analysis": "Tahlil",
+    "medications": "Dorilar",
+    "doctor": "Shifokor",
+    "profile": "Profil",
+    "patients": "Bemorlar",
+    "reports": "Hisobotlar"
+  },
+
+  "auth": {
+    "login": "Kirish",
+    "register": "Ro'yxatdan o'tish",
+    "logout": "Chiqish",
+    "email": "Email",
+    "password": "Parol",
+    "name": "Ism",
+    "welcome": "Xush kelibsiz!",
+    "login_subtitle": "DocAI tizimiga kirish",
+    "create_account": "Hisob yaratish",
+    "register_subtitle": "DocAI orqali tibbiy yordam oling",
+    "full_name": "Ism familiya",
+    "your_role": "Sizning rolingiz",
+    "patient": "Bemor",
+    "patient_desc": "Davolanish va maslahat",
+    "doctor_role": "Shifokor",
+    "doctor_desc": "Bemorlarni kuzatish",
+    "has_account": "Allaqachon hisobingiz bormi? Kirish",
+    "password_too_short": "Parol kamida 6 ta belgidan iborat bo'lishi kerak"
+  },
+
   "auth_error": {
     "invalid_email": "Noto'g'ri email manzil",
     "user_disabled": "Bu foydalanuvchi bloklangan",
@@ -6,17 +55,111 @@
     "wrong_password": "Noto'g'ri parol",
     "email_already_in_use": "Bu email allaqachon band",
     "weak_password": "Parol juda oddiy, kamida 6 ta belgi",
-    "operation_not_allowed": "Bu amalga ruxsat berilmagan",
+    "operation_not_allowed": "Email/parol orqali kirish hali yoqilmagan. Firebase Console > Authentication > Sign-in method bo'limidan Email/Password ni yoqing.",
     "too_many_requests": "Juda ko'p urinish, keyinroq qayta urinib ko'ring",
-    "network_error": "Internet aloqasi yo'q, tarmoqni tekshiring",
-    "unknown_error": "Noma'lum xatolik yuz berdi"
+    "network_request_failed": "Internet aloqasi yo'q, tarmoqni tekshiring",
+    "channel_error": "Firebase ulanmagan. Iltimos ilovani qayta yuklang.",
+    "internal_error": "Firebase serverida ichki xatolik. Email/Parol autentifikatsiyasi Firebase Console'da yoqilganligini tekshiring.",
+    "requires_recent_login": "Iltimos qaytadan tizimga kiring",
+    "account_exists": "Bu email boshqa usul bilan ro'yxatdan o'tgan",
+    "provider_linked": "Bu akkaunt allaqachon bog'langan",
+    "credential_in_use": "Bu hisob ma'lumotlari allaqachon ishlatilgan",
+    "unknown_error": "Xatolik yuz berdi. Qayta urinib ko'ring."
   },
-  "auth": {
-    "login": "Kirish",
-    "register": "Ro'yxatdan o'tish",
-    "logout": "Chiqish",
-    "email": "Email",
-    "password": "Parol",
-    "name": "Ism"
+
+  "profile": {
+    "title": "Profil",
+    "doctor_title": "Shifokor profili",
+    "edit": "Profilni tahrirlash",
+    "name": "Ism",
+    "name_empty": "Ism kiritilmagan",
+    "age": "Yosh",
+    "age_unit": " yosh",
+    "allergies": "Allergiya",
+    "allergies_hint": "Allergiyalar (vergul bilan ajrating)",
+    "blood_type": "Qon guruhi",
+    "specialty": "Mutaxassislik",
+    "hospital": "Shifoxona",
+    "license": "Litsenziya",
+    "license_hint": "Litsenziya raqami",
+    "experience": "Tajriba",
+    "experience_hint": "Tajriba (yil)",
+    "experience_unit": " yil",
+    "patients_count": "Bemorlar soni"
+  },
+
+  "symptom": {
+    "title": "Semptom kiritish",
+    "input_label": "Semptomlaringizni kiriting",
+    "input_hint": "O'zingizni qanday his qilyapsiz? (masalan: bosh og'rig'i, isitma...)",
+    "quick_select": "Tez tanlash",
+    "last_result": "Oxirgi tahlil natijasi",
+    "analyze": "Tahlil qilish",
+    "analyzing": "Tahlil qilinmoqda...",
+    "analysis_result": "Tahlil natijasi",
+    "no_analysis": "Hali tahlil o'tkazilmagan",
+    "no_analysis_hint": "Bosh sahifadan semptomlaringizni kiriting",
+    "confidence": "Ishonchlilik",
+    "recommendations": "Tavsiyalar",
+    "recommended_hospitals": "Tavsiya etilgan shifoxonalar",
+    "nearest_pharmacy": "Eng yaqin apteka",
+    "pharmacy": "Dorixona"
+  },
+
+  "medication": {
+    "title": "Dorilar jadvali",
+    "schedule": "Dori qabul qilish jadvali",
+    "weekly_adherence": "Haftalik qabul",
+    "adherence_hint": "Dorilarni o'z vaqtida qabul qilish salomatlik garovi",
+    "today": "Bugun",
+    "times_per_day": "Kuniga ",
+    "times_suffix": " marta"
+  },
+
+  "doctor_connect": {
+    "title": "Shifokor bilan bog'lanish",
+    "call": "Qo'ng'iroq",
+    "message": "Xabar yozish",
+    "send_report": "Hisobot yuborish",
+    "weekly_report": "Haftalik hisobot",
+    "health_diary": "Sog'liq kundaligi",
+    "new_entry": "Yangi yozuv qo'shish",
+    "last_report": "Oxirgi",
+    "status": "Holat"
+  },
+
+  "doctor_dashboard": {
+    "title": "Mening bemorlarim",
+    "search": "Bemorni qidirish...",
+    "adherence": "Adherence",
+    "age_condition": " yosh • ",
+    "patient_not_found": "Bemor topilmadi",
+    "patient_not_found_desc": "Bemor ma'lumotlari topilmadi",
+    "last_visit": "Oxirgi tashrif",
+    "medication_adherence": "Dori qabul qilish",
+    "overall_adherence": "Umumiy adherence",
+    "adherence_desc": "Dorilarni qabul qilish ko'rsatkichi",
+    "times_per_day": "Kuniga ",
+    "times_suffix": "x",
+    "analysis_history": "Tahlil tarixi",
+    "confidence": "Ishonchlilik",
+    "reports_title": "Hisobotlar",
+    "reviewed": "Ko'rib chiqilgan",
+    "new": "Yangi"
+  },
+
+  "booking": {
+    "title": "Navbat bron qilish",
+    "select_doctor": "Shifokor tanlash",
+    "select_date": "Sana tanlash",
+    "select_date_hint": "Sanani tanlang",
+    "select_time": "Vaqt tanlash",
+    "reason": "Murojaat sababi",
+    "reason_hint": "Qisqacha shikoyatingizni yozing...",
+    "submit": "Bron qilish",
+    "submitting": "Yuborilmoqda...",
+    "success_title": "Navbat muvaffaqiyatli bron qilindi!",
+    "new_booking": "Yana bron qilish",
+    "navbat": "Navbat"
   }
 }

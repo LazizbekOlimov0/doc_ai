@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/router/route_names.dart';
+import '../../../gen/strings.g.dart';
 import '../bloc/auth_cubit.dart';
 import '../bloc/auth_state.dart';
 
@@ -28,12 +29,12 @@ class _LoginScreenState extends State<LoginScreen> {
     final email = _emailController.text.trim();
     final password = _passwordController.text;
     if (email.isEmpty || password.isEmpty) return;
-
     context.read<AuthCubit>().signIn(email: email, password: password);
   }
 
   @override
   Widget build(BuildContext context) {
+    final t = Translations.of(context);
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
@@ -49,11 +50,10 @@ class _LoginScreenState extends State<LoginScreen> {
               backgroundColor: colorScheme.error,
               duration: const Duration(seconds: 4),
               action: SnackBarAction(
-                label: 'OK',
+                label: t.ok,
                 textColor: colorScheme.onError,
-                onPressed: () {
-                  context.read<AuthCubit>().clearError();
-                },
+                onPressed: () =>
+                    context.read<AuthCubit>().clearError(),
               ),
             ),
           );
@@ -70,38 +70,28 @@ class _LoginScreenState extends State<LoginScreen> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   const SizedBox(height: 40),
-                  Icon(
-                    Icons.medical_services_rounded,
-                    size: 64,
-                    color: colorScheme.primary,
-                  ),
+                  Icon(Icons.medical_services_rounded,
+                      size: 64, color: colorScheme.primary),
                   const SizedBox(height: 16),
-                  Text(
-                    'Xush kelibsiz!',
-                    textAlign: TextAlign.center,
-                    style: textTheme.headlineMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: colorScheme.onSurface,
-                    ),
-                  ),
+                  Text(t.auth.welcome,
+                      textAlign: TextAlign.center,
+                      style: textTheme.headlineMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: colorScheme.onSurface)),
                   const SizedBox(height: 8),
-                  Text(
-                    'DocAI tizimiga kirish',
-                    textAlign: TextAlign.center,
-                    style: textTheme.bodyLarge?.copyWith(
-                      color: colorScheme.onSurfaceVariant,
-                    ),
-                  ),
+                  Text(t.auth.login_subtitle,
+                      textAlign: TextAlign.center,
+                      style: textTheme.bodyLarge?.copyWith(
+                          color: colorScheme.onSurfaceVariant)),
                   const SizedBox(height: 40),
                   TextField(
                     controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
                     textInputAction: TextInputAction.next,
                     enabled: !isLoading,
-                    decoration: const InputDecoration(
-                      labelText: 'Email',
-                      prefixIcon: Icon(Icons.email_outlined),
-                    ),
+                    decoration: InputDecoration(
+                        labelText: t.auth.email,
+                        prefixIcon: const Icon(Icons.email_outlined)),
                   ),
                   const SizedBox(height: 16),
                   TextField(
@@ -109,19 +99,17 @@ class _LoginScreenState extends State<LoginScreen> {
                     obscureText: _obscurePassword,
                     textInputAction: TextInputAction.done,
                     enabled: !isLoading,
-                    onSubmitted: isLoading ? null : (_) => _handleLogin(),
+                    onSubmitted:
+                        isLoading ? null : (_) => _handleLogin(),
                     decoration: InputDecoration(
-                      labelText: 'Parol',
+                      labelText: t.auth.password,
                       prefixIcon: const Icon(Icons.lock_outlined),
                       suffixIcon: IconButton(
-                        icon: Icon(
-                          _obscurePassword
-                              ? Icons.visibility_off
-                              : Icons.visibility,
-                        ),
-                        onPressed: () {
-                          setState(() => _obscurePassword = !_obscurePassword);
-                        },
+                        icon: Icon(_obscurePassword
+                            ? Icons.visibility_off
+                            : Icons.visibility),
+                        onPressed: () => setState(
+                            () => _obscurePassword = !_obscurePassword),
                       ),
                     ),
                   ),
@@ -133,17 +121,15 @@ class _LoginScreenState extends State<LoginScreen> {
                             width: 20,
                             height: 20,
                             child: CircularProgressIndicator(
-                              strokeWidth: 2,
-                              color: Colors.white,
-                            ),
-                          )
-                        : const Text('Kirish'),
+                                strokeWidth: 2, color: Colors.white))
+                        : Text(t.auth.login),
                   ),
                   const SizedBox(height: 16),
                   TextButton(
-                    onPressed:
-                        isLoading ? null : () => context.go(RouteNames.register),
-                    child: const Text('Ro\'yxatdan o\'tish'),
+                    onPressed: isLoading
+                        ? null
+                        : () => context.go(RouteNames.register),
+                    child: Text(t.auth.register),
                   ),
                 ],
               ),

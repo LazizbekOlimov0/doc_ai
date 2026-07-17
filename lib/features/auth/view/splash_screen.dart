@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/router/route_names.dart';
 import '../../../core/models/app_user.dart';
+import '../../../gen/strings.g.dart';
 import '../bloc/auth_cubit.dart';
 import '../bloc/auth_state.dart';
 
@@ -54,6 +55,7 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   Widget build(BuildContext context) {
+    final t = Translations.of(context);
     final colorScheme = Theme.of(context).colorScheme;
 
     return BlocListener<AuthCubit, AuthState>(
@@ -66,10 +68,7 @@ class _SplashScreenState extends State<SplashScreen>
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: [
-                colorScheme.primary,
-                colorScheme.primaryContainer,
-              ],
+              colors: [colorScheme.primary, colorScheme.primaryContainer],
             ),
           ),
           child: Center(
@@ -92,39 +91,29 @@ class _SplashScreenState extends State<SplashScreen>
                         ),
                       ],
                     ),
-                    child: Icon(
-                      Icons.medical_services_rounded,
-                      size: 56,
-                      color: colorScheme.primary,
-                    ),
+                    child: Icon(Icons.medical_services_rounded,
+                        size: 56, color: colorScheme.primary),
                   ),
                   const SizedBox(height: 24),
-                  Text(
-                    'DocAI',
-                    style: TextStyle(
-                      fontSize: 36,
-                      fontWeight: FontWeight.bold,
-                      color: colorScheme.onPrimary,
-                      letterSpacing: 1.2,
-                    ),
-                  ),
+                  Text(t.app_name,
+                      style: TextStyle(
+                          fontSize: 36,
+                          fontWeight: FontWeight.bold,
+                          color: colorScheme.onPrimary,
+                          letterSpacing: 1.2)),
                   const SizedBox(height: 8),
-                  Text(
-                    'Sizning tibbiy yordamchingiz',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: colorScheme.onPrimary.withValues(alpha: 0.85),
-                    ),
-                  ),
+                  Text(t.app_tagline,
+                      style: TextStyle(
+                          fontSize: 16,
+                          color: colorScheme.onPrimary.withValues(alpha: 0.85))),
                   const SizedBox(height: 48),
                   SizedBox(
                     width: 28,
                     height: 28,
                     child: CircularProgressIndicator(
-                      strokeWidth: 2.5,
-                      valueColor:
-                          AlwaysStoppedAnimation(colorScheme.onPrimary),
-                    ),
+                        strokeWidth: 2.5,
+                        valueColor:
+                            AlwaysStoppedAnimation(colorScheme.onPrimary)),
                   ),
                 ],
               ),

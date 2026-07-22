@@ -49,6 +49,8 @@ class TranslationsEn extends Translations with BaseTranslations<AppLocale, Trans
 	@override String get unknown => 'Unknown';
 	@override String get version => 'v1.0.0';
 	@override String get logout => 'Logout';
+	@override String get logout_title => 'Logout';
+	@override String get logout_message => 'Are you sure you want to log out?';
 	@override String get help => 'Help';
 	@override String get language => 'Language';
 	@override String get select_language => 'Select language';
@@ -65,6 +67,7 @@ class TranslationsEn extends Translations with BaseTranslations<AppLocale, Trans
 	@override late final _Translations$doctor_connect$en doctor_connect = _Translations$doctor_connect$en._(_root);
 	@override late final _Translations$doctor_dashboard$en doctor_dashboard = _Translations$doctor_dashboard$en._(_root);
 	@override late final _Translations$booking$en booking = _Translations$booking$en._(_root);
+	@override late final _Translations$weather$en weather = _Translations$weather$en._(_root);
 }
 
 // Path: nav
@@ -173,6 +176,18 @@ class _Translations$symptom$en extends Translations$symptom$uz {
 	@override String get input_label => 'Enter your symptoms';
 	@override String get input_hint => 'How are you feeling? (e.g., headache, fever...)';
 	@override String get quick_select => 'Quick select';
+	@override List<String> get quick_items => [
+		'Headache',
+		'Fever',
+		'Cough',
+		'Stomach ache',
+		'Allergy',
+		'Back pain',
+		'Sore throat',
+		'Nausea',
+		'Fatigue',
+		'Dizziness',
+	];
 	@override String get last_result => 'Last analysis result';
 	@override String get analyze => 'Analyze';
 	@override String get analyzing => 'Analyzing...';
@@ -184,6 +199,7 @@ class _Translations$symptom$en extends Translations$symptom$uz {
 	@override String get recommended_hospitals => 'Recommended Hospitals';
 	@override String get nearest_pharmacy => 'Nearest Pharmacy';
 	@override String get pharmacy => 'Pharmacy';
+	@override String get distance_km => '{km} km';
 }
 
 // Path: medication
@@ -218,6 +234,7 @@ class _Translations$doctor_connect$en extends Translations$doctor_connect$uz {
 	@override String get new_entry => 'Add New Entry';
 	@override String get last_report => 'Last';
 	@override String get status => 'Status';
+	@override String get rating_experience => '{rating} • {years} years of experience';
 }
 
 // Path: doctor_dashboard
@@ -243,7 +260,7 @@ class _Translations$doctor_dashboard$en extends Translations$doctor_dashboard$uz
 	@override String get confidence => 'Confidence';
 	@override String get reports_title => 'Reports';
 	@override String get reviewed => 'Reviewed';
-	@override String get kNew => 'New';
+	@override String get status_new => 'New';
 }
 
 // Path: booking
@@ -267,6 +284,33 @@ class _Translations$booking$en extends Translations$booking$uz {
 	@override String get navbat => 'Appointment';
 }
 
+// Path: weather
+class _Translations$weather$en extends Translations$weather$uz {
+	_Translations$weather$en._(TranslationsEn root) : this._root = root, super.internal(root);
+
+	final TranslationsEn _root; // ignore: unused_field
+
+	// Translations
+	@override String get today => 'Today';
+	@override String get tomorrow => 'Tomorrow';
+	@override String get monday => 'Monday';
+	@override String get tuesday => 'Tuesday';
+	@override String get wednesday => 'Wednesday';
+	@override String get thursday => 'Thursday';
+	@override String get friday => 'Friday';
+	@override String get saturday => 'Saturday';
+	@override String get sunday => 'Sunday';
+	@override String get clear => 'Clear';
+	@override String get title => 'Weather';
+	@override String get forecast_7days => '7-day forecast';
+	@override String get partly_cloudy => 'Partly cloudy';
+	@override String get fog => 'Fog';
+	@override String get rain => 'Rain';
+	@override String get snow => 'Snow';
+	@override String get thunderstorm => 'Thunderstorm';
+	@override String get unknown => 'Unknown';
+}
+
 /// The flat map containing all translations for locale <en>.
 /// Only for edge cases! For simple maps, use the map function of this library.
 ///
@@ -285,6 +329,8 @@ extension on TranslationsEn {
 			'unknown' => 'Unknown',
 			'version' => 'v1.0.0',
 			'logout' => 'Logout',
+			'logout_title' => 'Logout',
+			'logout_message' => 'Are you sure you want to log out?',
 			'help' => 'Help',
 			'language' => 'Language',
 			'select_language' => 'Select language',
@@ -355,6 +401,16 @@ extension on TranslationsEn {
 			'symptom.input_label' => 'Enter your symptoms',
 			'symptom.input_hint' => 'How are you feeling? (e.g., headache, fever...)',
 			'symptom.quick_select' => 'Quick select',
+			'symptom.quick_items.0' => 'Headache',
+			'symptom.quick_items.1' => 'Fever',
+			'symptom.quick_items.2' => 'Cough',
+			'symptom.quick_items.3' => 'Stomach ache',
+			'symptom.quick_items.4' => 'Allergy',
+			'symptom.quick_items.5' => 'Back pain',
+			'symptom.quick_items.6' => 'Sore throat',
+			'symptom.quick_items.7' => 'Nausea',
+			'symptom.quick_items.8' => 'Fatigue',
+			'symptom.quick_items.9' => 'Dizziness',
 			'symptom.last_result' => 'Last analysis result',
 			'symptom.analyze' => 'Analyze',
 			'symptom.analyzing' => 'Analyzing...',
@@ -366,6 +422,7 @@ extension on TranslationsEn {
 			'symptom.recommended_hospitals' => 'Recommended Hospitals',
 			'symptom.nearest_pharmacy' => 'Nearest Pharmacy',
 			'symptom.pharmacy' => 'Pharmacy',
+			'symptom.distance_km' => '{km} km',
 			'medication.title' => 'Medication Schedule',
 			'medication.schedule' => 'Medication Schedule',
 			'medication.weekly_adherence' => 'Weekly Adherence',
@@ -382,6 +439,7 @@ extension on TranslationsEn {
 			'doctor_connect.new_entry' => 'Add New Entry',
 			'doctor_connect.last_report' => 'Last',
 			'doctor_connect.status' => 'Status',
+			'doctor_connect.rating_experience' => '{rating} • {years} years of experience',
 			'doctor_dashboard.title' => 'My Patients',
 			'doctor_dashboard.search' => 'Search patients...',
 			'doctor_dashboard.adherence' => 'Adherence',
@@ -398,7 +456,7 @@ extension on TranslationsEn {
 			'doctor_dashboard.confidence' => 'Confidence',
 			'doctor_dashboard.reports_title' => 'Reports',
 			'doctor_dashboard.reviewed' => 'Reviewed',
-			'doctor_dashboard.kNew' => 'New',
+			'doctor_dashboard.status_new' => 'New',
 			'booking.title' => 'Book Appointment',
 			'booking.select_doctor' => 'Select Doctor',
 			'booking.select_date' => 'Select Date',
@@ -411,6 +469,24 @@ extension on TranslationsEn {
 			'booking.success_title' => 'Appointment booked successfully!',
 			'booking.new_booking' => 'Book another',
 			'booking.navbat' => 'Appointment',
+			'weather.today' => 'Today',
+			'weather.tomorrow' => 'Tomorrow',
+			'weather.monday' => 'Monday',
+			'weather.tuesday' => 'Tuesday',
+			'weather.wednesday' => 'Wednesday',
+			'weather.thursday' => 'Thursday',
+			'weather.friday' => 'Friday',
+			'weather.saturday' => 'Saturday',
+			'weather.sunday' => 'Sunday',
+			'weather.clear' => 'Clear',
+			'weather.title' => 'Weather',
+			'weather.forecast_7days' => '7-day forecast',
+			'weather.partly_cloudy' => 'Partly cloudy',
+			'weather.fog' => 'Fog',
+			'weather.rain' => 'Rain',
+			'weather.snow' => 'Snow',
+			'weather.thunderstorm' => 'Thunderstorm',
+			'weather.unknown' => 'Unknown',
 			_ => null,
 		};
 	}

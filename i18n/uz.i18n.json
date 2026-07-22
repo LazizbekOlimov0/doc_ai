@@ -9,6 +9,8 @@
   "unknown": "Noma'lum",
   "version": "v1.0.0",
   "logout": "Chiqish",
+  "logout_title": "Chiqish",
+  "logout_message": "Chindan ham chiqmoqchimisiz?",
   "help": "Yordam",
   "language": "Til",
   "select_language": "Tilni tanlang",
@@ -93,6 +95,18 @@
     "input_label": "Semptomlaringizni kiriting",
     "input_hint": "O'zingizni qanday his qilyapsiz? (masalan: bosh og'rig'i, isitma...)",
     "quick_select": "Tez tanlash",
+    "quick_items": [
+      "Bosh og'rig'i",
+      "Isitma",
+      "Yo'tal",
+      "Qorin og'rig'i",
+      "Allergiya",
+      "Bel og'rig'i",
+      "Tomoq og'rig'i",
+      "Ko'ngil aynishi",
+      "Charchoq",
+      "Bosh aylanishi"
+    ],
     "last_result": "Oxirgi tahlil natijasi",
     "analyze": "Tahlil qilish",
     "analyzing": "Tahlil qilinmoqda...",
@@ -103,7 +117,8 @@
     "recommendations": "Tavsiyalar",
     "recommended_hospitals": "Tavsiya etilgan shifoxonalar",
     "nearest_pharmacy": "Eng yaqin apteka",
-    "pharmacy": "Dorixona"
+    "pharmacy": "Dorixona",
+    "distance_km": "{km} km"
   },
 
   "medication": {
@@ -125,7 +140,8 @@
     "health_diary": "Sog'liq kundaligi",
     "new_entry": "Yangi yozuv qo'shish",
     "last_report": "Oxirgi",
-    "status": "Holat"
+    "status": "Holat",
+    "rating_experience": "{rating} • {years} yillik tajriba"
   },
 
   "doctor_dashboard": {
@@ -145,7 +161,7 @@
     "confidence": "Ishonchlilik",
     "reports_title": "Hisobotlar",
     "reviewed": "Ko'rib chiqilgan",
-    "new": "Yangi"
+    "status_new": "Yangi"
   },
 
   "booking": {
@@ -161,5 +177,26 @@
     "success_title": "Navbat muvaffaqiyatli bron qilindi!",
     "new_booking": "Yana bron qilish",
     "navbat": "Navbat"
+  },
+
+  "weather": {
+    "today": "Bugun",
+    "tomorrow": "Ertaga",
+    "monday": "Dushanba",
+    "tuesday": "Seshanba",
+    "wednesday": "Chorshanba",
+    "thursday": "Payshanba",
+    "friday": "Juma",
+    "saturday": "Shanba",
+    "sunday": "Yakshanba",
+    "clear": "Ochiq havo",
+    "title": "Ob-havo",
+    "forecast_7days": "7 kunlik prognoz",
+    "partly_cloudy": "Qisman bulutli",
+    "fog": "Tuman",
+    "rain": "Yomg'ir",
+    "snow": "Qor",
+    "thunderstorm": "Momaqaldiroq",
+    "unknown": "Noma'lum"
   }
 }

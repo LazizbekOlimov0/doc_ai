@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../gen/strings.g.dart';
 import '../bloc/booking_cubit.dart';
 import '../bloc/booking_state.dart';
 
@@ -41,7 +42,7 @@ class _BookingScreenState extends State<BookingScreen> {
       builder: (context, state) {
         if (state.isSuccess) {
           return Scaffold(
-            appBar: AppBar(title: const Text('Navbat')),
+            appBar: AppBar(title: Text(context.t.booking.navbat)),
             body: Center(
               child: Padding(
                 padding: const EdgeInsets.all(32),
@@ -55,7 +56,7 @@ class _BookingScreenState extends State<BookingScreen> {
                     ),
                     const SizedBox(height: 16),
                     Text(
-                      'Navbat muvaffaqiyatli bron qilindi!',
+                      context.t.booking.success_title,
                       textAlign: TextAlign.center,
                       style: textTheme.titleLarge?.copyWith(
                         fontWeight: FontWeight.bold,
@@ -64,7 +65,7 @@ class _BookingScreenState extends State<BookingScreen> {
                     const SizedBox(height: 24),
                     FilledButton(
                       onPressed: () => context.read<BookingCubit>().reset(),
-                      child: const Text('Yana bron qilish'),
+                      child: Text(context.t.booking.new_booking),
                     ),
                   ],
                 ),
@@ -76,14 +77,14 @@ class _BookingScreenState extends State<BookingScreen> {
         final cubit = context.read<BookingCubit>();
 
         return Scaffold(
-          appBar: AppBar(title: const Text('Navbat bron qilish')),
+          appBar: AppBar(title: Text(context.t.booking.title)),
           body: SingleChildScrollView(
             padding: const EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Shifokor tanlash',
+                  context.t.booking.select_doctor,
                   style: textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.w600,
                   ),
@@ -120,7 +121,7 @@ class _BookingScreenState extends State<BookingScreen> {
                 ),
                 const SizedBox(height: 16),
                 Text(
-                  'Sana tanlash',
+                  context.t.booking.select_date,
                   style: textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.w600,
                   ),
@@ -134,7 +135,7 @@ class _BookingScreenState extends State<BookingScreen> {
                     label: Text(
                       state.selectedDate != null
                           ? '${state.selectedDate!.day.toString().padLeft(2, '0')}.${state.selectedDate!.month.toString().padLeft(2, '0')}.${state.selectedDate!.year}'
-                          : 'Sanani tanlang',
+                          : context.t.booking.select_date_hint,
                     ),
                     style: OutlinedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 14),
@@ -143,7 +144,7 @@ class _BookingScreenState extends State<BookingScreen> {
                 ),
                 const SizedBox(height: 16),
                 Text(
-                  'Vaqt tanlash',
+                  context.t.booking.select_time,
                   style: textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.w600,
                   ),
@@ -173,9 +174,9 @@ class _BookingScreenState extends State<BookingScreen> {
                 TextField(
                   controller: _reasonController,
                   maxLines: 3,
-                  decoration: const InputDecoration(
-                    labelText: 'Murojaat sababi',
-                    hintText: 'Qisqacha shikoyatingizni yozing...',
+                  decoration: InputDecoration(
+                    labelText: context.t.booking.reason,
+                    hintText: context.t.booking.reason_hint,
                   ),
                   onChanged: (v) =>
                       context.read<BookingCubit>().updateReason(v),
@@ -202,8 +203,8 @@ class _BookingScreenState extends State<BookingScreen> {
                         : const Icon(Icons.check),
                     label: Text(
                       state.isSubmitting
-                          ? 'Yuborilmoqda...'
-                          : 'Bron qilish',
+                          ? context.t.booking.submitting
+                          : context.t.booking.submit,
                     ),
                   ),
                 ),

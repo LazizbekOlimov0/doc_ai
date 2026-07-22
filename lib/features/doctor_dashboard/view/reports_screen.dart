@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../gen/strings.g.dart';
 import '../../../models/mock_data.dart';
 
 class ReportsScreen extends StatelessWidget {
@@ -7,6 +8,7 @@ class ReportsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = context.t;
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
@@ -15,16 +17,16 @@ class ReportsScreen extends StatelessWidget {
         'patient': mockPatients[0].name,
         'title': 'Haftalik adherence hisoboti',
         'date': '07.07.2026',
-        'status': 'Ko\'rib chiqilgan',
+        'status': t.doctor_dashboard.reviewed,
         'adherence': 0.85,
         'icon': Icons.check_circle,
         'iconColor': AppColors.adherenceGreen,
       },
       {
         'patient': mockPatients[1].name,
-        'title': 'Sog\'liq kundaligi',
+        'title': t.doctor_connect.health_diary,
         'date': '06.07.2026',
-        'status': 'Yangi',
+        'status': t.doctor_dashboard.status_new,
         'adherence': 0.62,
         'icon': Icons.fiber_new,
         'iconColor': Colors.orange,
@@ -33,7 +35,7 @@ class ReportsScreen extends StatelessWidget {
         'patient': mockPatients[2].name,
         'title': 'Oylik dori hisoboti',
         'date': '05.07.2026',
-        'status': 'Ko\'rib chiqilgan',
+        'status': t.doctor_dashboard.reviewed,
         'adherence': 0.94,
         'icon': Icons.check_circle,
         'iconColor': AppColors.adherenceGreen,
@@ -41,7 +43,7 @@ class ReportsScreen extends StatelessWidget {
     ];
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Hisobotlar')),
+      appBar: AppBar(title: Text(t.doctor_dashboard.reports_title)),
       body: ListView.builder(
         padding: const EdgeInsets.all(16),
         itemCount: mockReports.length,
@@ -76,7 +78,7 @@ class ReportsScreen extends StatelessWidget {
                     padding:
                         const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                     decoration: BoxDecoration(
-                      color: (report['status'] == 'Yangi')
+                      color: (report['status'] == t.doctor_dashboard.status_new)
                           ? Colors.orange.withValues(alpha: 0.15)
                           : AppColors.adherenceGreen.withValues(alpha: 0.12),
                       borderRadius: BorderRadius.circular(8),
@@ -86,7 +88,7 @@ class ReportsScreen extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 11,
                         fontWeight: FontWeight.w500,
-                        color: report['status'] == 'Yangi'
+                        color: report['status'] == t.doctor_dashboard.status_new
                             ? Colors.orange[700]
                             : AppColors.adherenceGreen,
                       ),
@@ -94,7 +96,7 @@ class ReportsScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    'Adherence: ${((report['adherence'] as double) * 100).toInt()}%',
+                    '${t.doctor_dashboard.adherence}${((report['adherence'] as double) * 100).toInt()}%',
                     style: textTheme.labelSmall?.copyWith(
                       color: colorScheme.onSurfaceVariant,
                     ),

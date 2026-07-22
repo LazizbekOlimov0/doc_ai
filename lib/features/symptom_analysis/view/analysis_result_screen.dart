@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../gen/strings.g.dart';
 import '../bloc/symptom_cubit.dart';
 import '../bloc/symptom_state.dart';
 
@@ -15,7 +16,7 @@ class AnalysisResultScreen extends StatelessWidget {
       builder: (context, state) {
         if (state.lastResult == null) {
           return Scaffold(
-            appBar: AppBar(title: const Text('Tahlil natijasi')),
+            appBar: AppBar(title: Text(context.t.symptom.analysis_result)),
             body: Center(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -27,14 +28,14 @@ class AnalysisResultScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    'Hali tahlil o\'tkazilmagan',
+                    context.t.symptom.no_analysis,
                     style: textTheme.bodyLarge?.copyWith(
                       color: colorScheme.onSurfaceVariant,
                     ),
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'Bosh sahifadan semptomlaringizni kiriting',
+                    context.t.symptom.no_analysis_hint,
                     style: textTheme.bodyMedium?.copyWith(
                       color: colorScheme.onSurfaceVariant,
                     ),
@@ -47,7 +48,7 @@ class AnalysisResultScreen extends StatelessWidget {
 
         final result = state.lastResult!;
         return Scaffold(
-          appBar: AppBar(title: const Text('Tahlil natijasi')),
+          appBar: AppBar(title: Text(context.t.symptom.analysis_result)),
           body: SingleChildScrollView(
             padding: const EdgeInsets.all(16),
             child: Column(
@@ -87,7 +88,7 @@ class AnalysisResultScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          'Ishonchlilik: ${(result.confidence * 100).toInt()}%',
+                          '${context.t.symptom.confidence}${(result.confidence * 100).toInt()}%',
                           style: textTheme.bodySmall?.copyWith(
                             color: colorScheme.onPrimaryContainer,
                           ),
@@ -98,7 +99,7 @@ class AnalysisResultScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Tavsiyalar',
+                  context.t.symptom.recommendations,
                   style: textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.w600,
                   ),
@@ -136,7 +137,7 @@ class AnalysisResultScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
                 Text(
-                  'Tavsiya etilgan shifoxonalar',
+                  context.t.symptom.recommended_hospitals,
                   style: textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.w600,
                   ),
@@ -157,7 +158,7 @@ class AnalysisResultScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            '${hospital.distanceKm} km',
+                            context.t.symptom.distance_km.replaceAll('{km}', hospital.distanceKm.toString()),
                             style: TextStyle(
                               fontWeight: FontWeight.w600,
                               color: colorScheme.primary,
@@ -178,7 +179,7 @@ class AnalysisResultScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
                 Text(
-                  'Eng yaqin apteka',
+                  context.t.symptom.nearest_pharmacy,
                   style: textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.w600,
                   ),
@@ -193,9 +194,9 @@ class AnalysisResultScreen extends StatelessWidget {
                     ),
                     title: Text(result.pharmacyName,
                         style: TextStyle(fontWeight: FontWeight.w600)),
-                    subtitle: const Text('Dorixona'),
+                    subtitle: Text(context.t.symptom.pharmacy),
                     trailing: Text(
-                      '${result.pharmacyDistance} km',
+                      context.t.symptom.distance_km.replaceAll('{km}', result.pharmacyDistance.toString()),
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
                         color: colorScheme.primary,

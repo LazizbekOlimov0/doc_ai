@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../gen/strings.g.dart';
 import '../../../models/mock_data.dart';
 import '../bloc/doctor_dashboard_cubit.dart';
 import '../bloc/doctor_dashboard_state.dart';
@@ -23,8 +24,8 @@ class DoctorPatientDetailScreen extends StatelessWidget {
 
         if (patient == null) {
           return Scaffold(
-            appBar: AppBar(title: const Text('Bemor topilmadi')),
-            body: const Center(child: Text('Bemor ma\'lumotlari topilmadi')),
+            appBar: AppBar(title: Text(context.t.doctor_dashboard.patient_not_found)),
+            body: Center(child: Text(context.t.doctor_dashboard.patient_not_found_desc)),
           );
         }
 
@@ -61,14 +62,14 @@ class DoctorPatientDetailScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          '${patient.age} yosh • ${patient.condition}',
+                          '${patient.age}${context.t.doctor_dashboard.age_condition}${patient.condition}',
                           style: textTheme.bodyMedium?.copyWith(
                             color: colorScheme.onSurfaceVariant,
                           ),
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          'Oxirgi tashrif: ${_formatDate(patient.lastVisit)}',
+                          '${context.t.doctor_dashboard.last_visit}${_formatDate(patient.lastVisit)}',
                           style: textTheme.bodySmall?.copyWith(
                             color: colorScheme.onSurfaceVariant,
                           ),
@@ -80,7 +81,7 @@ class DoctorPatientDetailScreen extends StatelessWidget {
                               child: OutlinedButton.icon(
                                 onPressed: () {},
                                 icon: const Icon(Icons.call),
-                                label: const Text('Qo\'ng\'iroq'),
+                                label: Text(context.t.doctor_connect.call),
                               ),
                             ),
                             const SizedBox(width: 12),
@@ -88,7 +89,7 @@ class DoctorPatientDetailScreen extends StatelessWidget {
                               child: FilledButton.icon(
                                 onPressed: () {},
                                 icon: const Icon(Icons.chat),
-                                label: const Text('Xabar'),
+                                label: Text(context.t.doctor_connect.message),
                               ),
                             ),
                           ],
@@ -99,7 +100,7 @@ class DoctorPatientDetailScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
                 Text(
-                  'Dori qabul qilish',
+                  context.t.doctor_dashboard.medication_adherence,
                   style: textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.w600,
                   ),
@@ -149,13 +150,13 @@ class DoctorPatientDetailScreen extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Umumiy adherence',
+                                    context.t.doctor_dashboard.overall_adherence,
                                     style: TextStyle(
                                         fontWeight: FontWeight.w600),
                                   ),
                                   const SizedBox(height: 4),
                                   Text(
-                                    'Dorilarni qabul qilish ko\'rsatkichi',
+                                    context.t.doctor_dashboard.adherence_desc,
                                     style: textTheme.bodySmall?.copyWith(
                                       color: colorScheme.onSurfaceVariant,
                                     ),
@@ -183,7 +184,7 @@ class DoctorPatientDetailScreen extends StatelessWidget {
                                         ),
                                       ),
                                       Text(
-                                        'Kuniga ${med.timesPerDay}x',
+                                        '${context.t.doctor_dashboard.times_per_day}${med.timesPerDay}${context.t.doctor_dashboard.times_suffix}',
                                         style: textTheme.bodySmall?.copyWith(
                                           color: colorScheme.onSurfaceVariant,
                                         ),
@@ -199,7 +200,7 @@ class DoctorPatientDetailScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
                 Text(
-                  'Tahlil tarixi',
+                  context.t.doctor_dashboard.analysis_history,
                   style: textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.w600,
                   ),
@@ -234,7 +235,7 @@ class DoctorPatientDetailScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 8),
                           Text(
-                            'Ishonchlilik: ${(result.confidence * 100).toInt()}%',
+                            '${context.t.doctor_dashboard.confidence}${(result.confidence * 100).toInt()}%',
                             style: textTheme.bodySmall?.copyWith(
                               color: colorScheme.primary,
                               fontWeight: FontWeight.w500,

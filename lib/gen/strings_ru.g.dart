@@ -49,6 +49,8 @@ class TranslationsRu extends Translations with BaseTranslations<AppLocale, Trans
 	@override String get unknown => 'Неизвестно';
 	@override String get version => 'v1.0.0';
 	@override String get logout => 'Выход';
+	@override String get logout_title => 'Выход';
+	@override String get logout_message => 'Вы уверены, что хотите выйти?';
 	@override String get help => 'Помощь';
 	@override String get language => 'Язык';
 	@override String get select_language => 'Выберите язык';
@@ -65,6 +67,7 @@ class TranslationsRu extends Translations with BaseTranslations<AppLocale, Trans
 	@override late final _Translations$doctor_connect$ru doctor_connect = _Translations$doctor_connect$ru._(_root);
 	@override late final _Translations$doctor_dashboard$ru doctor_dashboard = _Translations$doctor_dashboard$ru._(_root);
 	@override late final _Translations$booking$ru booking = _Translations$booking$ru._(_root);
+	@override late final _Translations$weather$ru weather = _Translations$weather$ru._(_root);
 }
 
 // Path: nav
@@ -173,6 +176,18 @@ class _Translations$symptom$ru extends Translations$symptom$uz {
 	@override String get input_label => 'Введите симптомы';
 	@override String get input_hint => 'Как вы себя чувствуете? (например, головная боль, жар...)';
 	@override String get quick_select => 'Быстрый выбор';
+	@override List<String> get quick_items => [
+		'Головная боль',
+		'Жар',
+		'Кашель',
+		'Боль в животе',
+		'Аллергия',
+		'Боль в спине',
+		'Боль в горле',
+		'Тошнота',
+		'Усталость',
+		'Головокружение',
+	];
 	@override String get last_result => 'Последний результат анализа';
 	@override String get analyze => 'Анализировать';
 	@override String get analyzing => 'Анализ...';
@@ -184,6 +199,7 @@ class _Translations$symptom$ru extends Translations$symptom$uz {
 	@override String get recommended_hospitals => 'Рекомендованные больницы';
 	@override String get nearest_pharmacy => 'Ближайшая аптека';
 	@override String get pharmacy => 'Аптека';
+	@override String get distance_km => '{km} км';
 }
 
 // Path: medication
@@ -218,6 +234,7 @@ class _Translations$doctor_connect$ru extends Translations$doctor_connect$uz {
 	@override String get new_entry => 'Добавить запись';
 	@override String get last_report => 'Последний';
 	@override String get status => 'Статус';
+	@override String get rating_experience => '{rating} • {years} лет опыта';
 }
 
 // Path: doctor_dashboard
@@ -243,7 +260,7 @@ class _Translations$doctor_dashboard$ru extends Translations$doctor_dashboard$uz
 	@override String get confidence => 'Достоверность';
 	@override String get reports_title => 'Отчёты';
 	@override String get reviewed => 'Просмотрено';
-	@override String get kNew => 'Новый';
+	@override String get status_new => 'Новый';
 }
 
 // Path: booking
@@ -267,6 +284,33 @@ class _Translations$booking$ru extends Translations$booking$uz {
 	@override String get navbat => 'Приём';
 }
 
+// Path: weather
+class _Translations$weather$ru extends Translations$weather$uz {
+	_Translations$weather$ru._(TranslationsRu root) : this._root = root, super.internal(root);
+
+	final TranslationsRu _root; // ignore: unused_field
+
+	// Translations
+	@override String get today => 'Сегодня';
+	@override String get tomorrow => 'Завтра';
+	@override String get monday => 'Понедельник';
+	@override String get tuesday => 'Вторник';
+	@override String get wednesday => 'Среда';
+	@override String get thursday => 'Четверг';
+	@override String get friday => 'Пятница';
+	@override String get saturday => 'Суббота';
+	@override String get sunday => 'Воскресенье';
+	@override String get clear => 'Ясно';
+	@override String get title => 'Погода';
+	@override String get forecast_7days => 'Прогноз на 7 дней';
+	@override String get partly_cloudy => 'Переменная облачность';
+	@override String get fog => 'Туман';
+	@override String get rain => 'Дождь';
+	@override String get snow => 'Снег';
+	@override String get thunderstorm => 'Гроза';
+	@override String get unknown => 'Неизвестно';
+}
+
 /// The flat map containing all translations for locale <ru>.
 /// Only for edge cases! For simple maps, use the map function of this library.
 ///
@@ -285,6 +329,8 @@ extension on TranslationsRu {
 			'unknown' => 'Неизвестно',
 			'version' => 'v1.0.0',
 			'logout' => 'Выход',
+			'logout_title' => 'Выход',
+			'logout_message' => 'Вы уверены, что хотите выйти?',
 			'help' => 'Помощь',
 			'language' => 'Язык',
 			'select_language' => 'Выберите язык',
@@ -355,6 +401,16 @@ extension on TranslationsRu {
 			'symptom.input_label' => 'Введите симптомы',
 			'symptom.input_hint' => 'Как вы себя чувствуете? (например, головная боль, жар...)',
 			'symptom.quick_select' => 'Быстрый выбор',
+			'symptom.quick_items.0' => 'Головная боль',
+			'symptom.quick_items.1' => 'Жар',
+			'symptom.quick_items.2' => 'Кашель',
+			'symptom.quick_items.3' => 'Боль в животе',
+			'symptom.quick_items.4' => 'Аллергия',
+			'symptom.quick_items.5' => 'Боль в спине',
+			'symptom.quick_items.6' => 'Боль в горле',
+			'symptom.quick_items.7' => 'Тошнота',
+			'symptom.quick_items.8' => 'Усталость',
+			'symptom.quick_items.9' => 'Головокружение',
 			'symptom.last_result' => 'Последний результат анализа',
 			'symptom.analyze' => 'Анализировать',
 			'symptom.analyzing' => 'Анализ...',
@@ -366,6 +422,7 @@ extension on TranslationsRu {
 			'symptom.recommended_hospitals' => 'Рекомендованные больницы',
 			'symptom.nearest_pharmacy' => 'Ближайшая аптека',
 			'symptom.pharmacy' => 'Аптека',
+			'symptom.distance_km' => '{km} км',
 			'medication.title' => 'График приёма лекарств',
 			'medication.schedule' => 'График приёма лекарств',
 			'medication.weekly_adherence' => 'Недельный приём',
@@ -382,6 +439,7 @@ extension on TranslationsRu {
 			'doctor_connect.new_entry' => 'Добавить запись',
 			'doctor_connect.last_report' => 'Последний',
 			'doctor_connect.status' => 'Статус',
+			'doctor_connect.rating_experience' => '{rating} • {years} лет опыта',
 			'doctor_dashboard.title' => 'Мои пациенты',
 			'doctor_dashboard.search' => 'Поиск пациентов...',
 			'doctor_dashboard.adherence' => 'Приверженность',
@@ -398,7 +456,7 @@ extension on TranslationsRu {
 			'doctor_dashboard.confidence' => 'Достоверность',
 			'doctor_dashboard.reports_title' => 'Отчёты',
 			'doctor_dashboard.reviewed' => 'Просмотрено',
-			'doctor_dashboard.kNew' => 'Новый',
+			'doctor_dashboard.status_new' => 'Новый',
 			'booking.title' => 'Запись на приём',
 			'booking.select_doctor' => 'Выберите врача',
 			'booking.select_date' => 'Выберите дату',
@@ -411,6 +469,24 @@ extension on TranslationsRu {
 			'booking.success_title' => 'Запись успешно создана!',
 			'booking.new_booking' => 'Записаться ещё',
 			'booking.navbat' => 'Приём',
+			'weather.today' => 'Сегодня',
+			'weather.tomorrow' => 'Завтра',
+			'weather.monday' => 'Понедельник',
+			'weather.tuesday' => 'Вторник',
+			'weather.wednesday' => 'Среда',
+			'weather.thursday' => 'Четверг',
+			'weather.friday' => 'Пятница',
+			'weather.saturday' => 'Суббота',
+			'weather.sunday' => 'Воскресенье',
+			'weather.clear' => 'Ясно',
+			'weather.title' => 'Погода',
+			'weather.forecast_7days' => 'Прогноз на 7 дней',
+			'weather.partly_cloudy' => 'Переменная облачность',
+			'weather.fog' => 'Туман',
+			'weather.rain' => 'Дождь',
+			'weather.snow' => 'Снег',
+			'weather.thunderstorm' => 'Гроза',
+			'weather.unknown' => 'Неизвестно',
 			_ => null,
 		};
 	}

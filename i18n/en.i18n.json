@@ -9,6 +9,8 @@
   "unknown": "Unknown",
   "version": "v1.0.0",
   "logout": "Logout",
+  "logout_title": "Logout",
+  "logout_message": "Are you sure you want to log out?",
   "help": "Help",
   "language": "Language",
   "select_language": "Select language",
@@ -93,6 +95,18 @@
     "input_label": "Enter your symptoms",
     "input_hint": "How are you feeling? (e.g., headache, fever...)",
     "quick_select": "Quick select",
+    "quick_items": [
+      "Headache",
+      "Fever",
+      "Cough",
+      "Stomach ache",
+      "Allergy",
+      "Back pain",
+      "Sore throat",
+      "Nausea",
+      "Fatigue",
+      "Dizziness"
+    ],
     "last_result": "Last analysis result",
     "analyze": "Analyze",
     "analyzing": "Analyzing...",
@@ -103,7 +117,8 @@
     "recommendations": "Recommendations",
     "recommended_hospitals": "Recommended Hospitals",
     "nearest_pharmacy": "Nearest Pharmacy",
-    "pharmacy": "Pharmacy"
+    "pharmacy": "Pharmacy",
+    "distance_km": "{km} km"
   },
 
   "medication": {
@@ -125,7 +140,8 @@
     "health_diary": "Health Diary",
     "new_entry": "Add New Entry",
     "last_report": "Last",
-    "status": "Status"
+    "status": "Status",
+    "rating_experience": "{rating} • {years} years of experience"
   },
 
   "doctor_dashboard": {
@@ -145,7 +161,7 @@
     "confidence": "Confidence",
     "reports_title": "Reports",
     "reviewed": "Reviewed",
-    "new": "New"
+    "status_new": "New"
   },
 
   "booking": {
@@ -161,5 +177,26 @@
     "success_title": "Appointment booked successfully!",
     "new_booking": "Book another",
     "navbat": "Appointment"
+  },
+
+  "weather": {
+    "today": "Today",
+    "tomorrow": "Tomorrow",
+    "monday": "Monday",
+    "tuesday": "Tuesday",
+    "wednesday": "Wednesday",
+    "thursday": "Thursday",
+    "friday": "Friday",
+    "saturday": "Saturday",
+    "sunday": "Sunday",
+    "clear": "Clear",
+    "title": "Weather",
+    "forecast_7days": "7-day forecast",
+    "partly_cloudy": "Partly cloudy",
+    "fog": "Fog",
+    "rain": "Rain",
+    "snow": "Snow",
+    "thunderstorm": "Thunderstorm",
+    "unknown": "Unknown"
   }
 }

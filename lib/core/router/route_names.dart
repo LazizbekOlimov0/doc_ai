@@ -22,6 +22,8 @@ class RouteNames {
 
   // Booking
   static const booking = '/booking';
+  static const weatherDetail = '/weather-detail';
+  static const settings = '/settings';
 
   static String doctorPatientDetailPath(String id) => '/doctor/patient/$id';
 }

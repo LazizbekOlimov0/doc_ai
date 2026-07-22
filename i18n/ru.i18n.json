@@ -9,6 +9,8 @@
   "unknown": "Неизвестно",
   "version": "v1.0.0",
   "logout": "Выход",
+  "logout_title": "Выход",
+  "logout_message": "Вы уверены, что хотите выйти?",
   "help": "Помощь",
   "language": "Язык",
   "select_language": "Выберите язык",
@@ -93,6 +95,18 @@
     "input_label": "Введите симптомы",
     "input_hint": "Как вы себя чувствуете? (например, головная боль, жар...)",
     "quick_select": "Быстрый выбор",
+    "quick_items": [
+      "Головная боль",
+      "Жар",
+      "Кашель",
+      "Боль в животе",
+      "Аллергия",
+      "Боль в спине",
+      "Боль в горле",
+      "Тошнота",
+      "Усталость",
+      "Головокружение"
+    ],
     "last_result": "Последний результат анализа",
     "analyze": "Анализировать",
     "analyzing": "Анализ...",
@@ -103,7 +117,8 @@
     "recommendations": "Рекомендации",
     "recommended_hospitals": "Рекомендованные больницы",
     "nearest_pharmacy": "Ближайшая аптека",
-    "pharmacy": "Аптека"
+    "pharmacy": "Аптека",
+    "distance_km": "{km} км"
   },
 
   "medication": {
@@ -125,7 +140,8 @@
     "health_diary": "Дневник здоровья",
     "new_entry": "Добавить запись",
     "last_report": "Последний",
-    "status": "Статус"
+    "status": "Статус",
+    "rating_experience": "{rating} • {years} лет опыта"
   },
 
   "doctor_dashboard": {
@@ -145,7 +161,7 @@
     "confidence": "Достоверность",
     "reports_title": "Отчёты",
     "reviewed": "Просмотрено",
-    "new": "Новый"
+    "status_new": "Новый"
   },
 
   "booking": {
@@ -161,5 +177,26 @@
     "success_title": "Запись успешно создана!",
     "new_booking": "Записаться ещё",
     "navbat": "Приём"
+  },
+
+  "weather": {
+    "today": "Сегодня",
+    "tomorrow": "Завтра",
+    "monday": "Понедельник",
+    "tuesday": "Вторник",
+    "wednesday": "Среда",
+    "thursday": "Четверг",
+    "friday": "Пятница",
+    "saturday": "Суббота",
+    "sunday": "Воскресенье",
+    "clear": "Ясно",
+    "title": "Погода",
+    "forecast_7days": "Прогноз на 7 дней",
+    "partly_cloudy": "Переменная облачность",
+    "fog": "Туман",
+    "rain": "Дождь",
+    "snow": "Снег",
+    "thunderstorm": "Гроза",
+    "unknown": "Неизвестно"
   }
 }

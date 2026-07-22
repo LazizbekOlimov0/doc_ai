@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/router/route_names.dart';
-import '../../../models/mock_data.dart';
+import '../../../gen/strings.g.dart';
+import '../../../models/mock_data.dart' show MockAnalysisResult;
+import '../../weather/view/weather_card.dart';
 import '../bloc/symptom_cubit.dart';
 import '../bloc/symptom_state.dart';
 
@@ -16,11 +18,11 @@ class SymptomInputScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Semptom kiritish'),
+        title: Text(context.t.symptom.title),
         actions: [
           IconButton(
             icon: const Icon(Icons.calendar_month_outlined),
-            onPressed: () => context.go(RouteNames.booking),
+            onPressed: () => context.push(RouteNames.booking),
           ),
         ],
       ),
@@ -34,8 +36,10 @@ class SymptomInputScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      const WeatherCard(),
+                      const SizedBox(height: 16),
                       Text(
-                        'Semptomlaringizni kiriting',
+                        context.t.symptom.input_label,
                         style: textTheme.titleMedium?.copyWith(
                           fontWeight: FontWeight.w600,
                         ),
@@ -43,9 +47,8 @@ class SymptomInputScreen extends StatelessWidget {
                       const SizedBox(height: 12),
                       TextField(
                         maxLines: 4,
-                        decoration: const InputDecoration(
-                          hintText:
-                              'O\'zingizni qanday his qilyapsiz? (masalan: bosh og\'rig\'i, isitma...)',
+                        decoration: InputDecoration(
+                          hintText: context.t.symptom.input_hint,
                           alignLabelWithHint: true,
                         ),
                         onChanged: (value) =>
@@ -53,7 +56,7 @@ class SymptomInputScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 20),
                       Text(
-                        'Tez tanlash',
+                        context.t.symptom.quick_select,
                         style: textTheme.titleSmall?.copyWith(
                           color: colorScheme.onSurfaceVariant,
                         ),
@@ -62,7 +65,7 @@ class SymptomInputScreen extends StatelessWidget {
                       Wrap(
                         spacing: 8,
                         runSpacing: 8,
-                        children: mockSymptoms.map((symptom) {
+                        children: t.symptom.quick_items.map((symptom) {
                           final isSelected =
                               state.selectedSymptoms.contains(symptom);
                           return FilterChip(
@@ -79,7 +82,7 @@ class SymptomInputScreen extends StatelessWidget {
                       if (state.lastResult != null) ...[
                         const SizedBox(height: 24),
                         Text(
-                          'Oxirgi tahlil natijasi',
+                          context.t.symptom.last_result,
                           style: textTheme.titleMedium?.copyWith(
                             fontWeight: FontWeight.w600,
                           ),
@@ -110,7 +113,7 @@ class SymptomInputScreen extends StatelessWidget {
                           )
                         : const Icon(Icons.search),
                     label: Text(
-                      state.isAnalyzing ? 'Tahlil qilinmoqda...' : 'Tahlil qilish',
+                      state.isAnalyzing ? context.t.symptom.analyzing : context.t.symptom.analyze,
                     ),
                   ),
                 ),
@@ -171,7 +174,7 @@ class _ResultCard extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             Text(
-              'Tavsiyalar:',
+              context.t.symptom.recommendations,
               style: textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
             ),
             ...result.recommendations.map(

@@ -71,6 +71,12 @@ class Translations with BaseTranslations<AppLocale, Translations> {
 	/// uz: 'Chiqish'
 	String get logout => 'Chiqish';
 
+	/// uz: 'Chiqish'
+	String get logout_title => 'Chiqish';
+
+	/// uz: 'Chindan ham chiqmoqchimisiz?'
+	String get logout_message => 'Chindan ham chiqmoqchimisiz?';
+
 	/// uz: 'Yordam'
 	String get help => 'Yordam';
 
@@ -101,6 +107,7 @@ class Translations with BaseTranslations<AppLocale, Translations> {
 	late final Translations$doctor_connect$uz doctor_connect = Translations$doctor_connect$uz.internal(_root);
 	late final Translations$doctor_dashboard$uz doctor_dashboard = Translations$doctor_dashboard$uz.internal(_root);
 	late final Translations$booking$uz booking = Translations$booking$uz.internal(_root);
+	late final Translations$weather$uz weather = Translations$weather$uz.internal(_root);
 }
 
 // Path: nav
@@ -336,6 +343,19 @@ class Translations$symptom$uz {
 	/// uz: 'Tez tanlash'
 	String get quick_select => 'Tez tanlash';
 
+	List<String> get quick_items => [
+		'Bosh og\'rig\'i',
+		'Isitma',
+		'Yo\'tal',
+		'Qorin og\'rig\'i',
+		'Allergiya',
+		'Bel og\'rig\'i',
+		'Tomoq og\'rig\'i',
+		'Ko\'ngil aynishi',
+		'Charchoq',
+		'Bosh aylanishi',
+	];
+
 	/// uz: 'Oxirgi tahlil natijasi'
 	String get last_result => 'Oxirgi tahlil natijasi';
 
@@ -368,6 +388,9 @@ class Translations$symptom$uz {
 
 	/// uz: 'Dorixona'
 	String get pharmacy => 'Dorixona';
+
+	/// uz: '{km} km'
+	String get distance_km => '{km} km';
 }
 
 // Path: medication
@@ -434,6 +457,9 @@ class Translations$doctor_connect$uz {
 
 	/// uz: 'Holat'
 	String get status => 'Holat';
+
+	/// uz: '{rating} • {years} yillik tajriba'
+	String get rating_experience => '{rating} • {years} yillik tajriba';
 }
 
 // Path: doctor_dashboard
@@ -493,7 +519,7 @@ class Translations$doctor_dashboard$uz {
 	String get reviewed => 'Ko\'rib chiqilgan';
 
 	/// uz: 'Yangi'
-	String get kNew => 'Yangi';
+	String get status_new => 'Yangi';
 }
 
 // Path: booking
@@ -541,6 +567,69 @@ class Translations$booking$uz {
 	String get navbat => 'Navbat';
 }
 
+// Path: weather
+class Translations$weather$uz {
+	Translations$weather$uz.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// uz: 'Bugun'
+	String get today => 'Bugun';
+
+	/// uz: 'Ertaga'
+	String get tomorrow => 'Ertaga';
+
+	/// uz: 'Dushanba'
+	String get monday => 'Dushanba';
+
+	/// uz: 'Seshanba'
+	String get tuesday => 'Seshanba';
+
+	/// uz: 'Chorshanba'
+	String get wednesday => 'Chorshanba';
+
+	/// uz: 'Payshanba'
+	String get thursday => 'Payshanba';
+
+	/// uz: 'Juma'
+	String get friday => 'Juma';
+
+	/// uz: 'Shanba'
+	String get saturday => 'Shanba';
+
+	/// uz: 'Yakshanba'
+	String get sunday => 'Yakshanba';
+
+	/// uz: 'Ochiq havo'
+	String get clear => 'Ochiq havo';
+
+	/// uz: 'Ob-havo'
+	String get title => 'Ob-havo';
+
+	/// uz: '7 kunlik prognoz'
+	String get forecast_7days => '7 kunlik prognoz';
+
+	/// uz: 'Qisman bulutli'
+	String get partly_cloudy => 'Qisman bulutli';
+
+	/// uz: 'Tuman'
+	String get fog => 'Tuman';
+
+	/// uz: 'Yomg'ir'
+	String get rain => 'Yomg\'ir';
+
+	/// uz: 'Qor'
+	String get snow => 'Qor';
+
+	/// uz: 'Momaqaldiroq'
+	String get thunderstorm => 'Momaqaldiroq';
+
+	/// uz: 'Noma'lum'
+	String get unknown => 'Noma\'lum';
+}
+
 /// The flat map containing all translations for locale <uz>.
 /// Only for edge cases! For simple maps, use the map function of this library.
 ///
@@ -559,6 +648,8 @@ extension on Translations {
 			'unknown' => 'Noma\'lum',
 			'version' => 'v1.0.0',
 			'logout' => 'Chiqish',
+			'logout_title' => 'Chiqish',
+			'logout_message' => 'Chindan ham chiqmoqchimisiz?',
 			'help' => 'Yordam',
 			'language' => 'Til',
 			'select_language' => 'Tilni tanlang',
@@ -629,6 +720,16 @@ extension on Translations {
 			'symptom.input_label' => 'Semptomlaringizni kiriting',
 			'symptom.input_hint' => 'O\'zingizni qanday his qilyapsiz? (masalan: bosh og\'rig\'i, isitma...)',
 			'symptom.quick_select' => 'Tez tanlash',
+			'symptom.quick_items.0' => 'Bosh og\'rig\'i',
+			'symptom.quick_items.1' => 'Isitma',
+			'symptom.quick_items.2' => 'Yo\'tal',
+			'symptom.quick_items.3' => 'Qorin og\'rig\'i',
+			'symptom.quick_items.4' => 'Allergiya',
+			'symptom.quick_items.5' => 'Bel og\'rig\'i',
+			'symptom.quick_items.6' => 'Tomoq og\'rig\'i',
+			'symptom.quick_items.7' => 'Ko\'ngil aynishi',
+			'symptom.quick_items.8' => 'Charchoq',
+			'symptom.quick_items.9' => 'Bosh aylanishi',
 			'symptom.last_result' => 'Oxirgi tahlil natijasi',
 			'symptom.analyze' => 'Tahlil qilish',
 			'symptom.analyzing' => 'Tahlil qilinmoqda...',
@@ -640,6 +741,7 @@ extension on Translations {
 			'symptom.recommended_hospitals' => 'Tavsiya etilgan shifoxonalar',
 			'symptom.nearest_pharmacy' => 'Eng yaqin apteka',
 			'symptom.pharmacy' => 'Dorixona',
+			'symptom.distance_km' => '{km} km',
 			'medication.title' => 'Dorilar jadvali',
 			'medication.schedule' => 'Dori qabul qilish jadvali',
 			'medication.weekly_adherence' => 'Haftalik qabul',
@@ -656,6 +758,7 @@ extension on Translations {
 			'doctor_connect.new_entry' => 'Yangi yozuv qo\'shish',
 			'doctor_connect.last_report' => 'Oxirgi',
 			'doctor_connect.status' => 'Holat',
+			'doctor_connect.rating_experience' => '{rating} • {years} yillik tajriba',
 			'doctor_dashboard.title' => 'Mening bemorlarim',
 			'doctor_dashboard.search' => 'Bemorni qidirish...',
 			'doctor_dashboard.adherence' => 'Adherence',
@@ -672,7 +775,7 @@ extension on Translations {
 			'doctor_dashboard.confidence' => 'Ishonchlilik',
 			'doctor_dashboard.reports_title' => 'Hisobotlar',
 			'doctor_dashboard.reviewed' => 'Ko\'rib chiqilgan',
-			'doctor_dashboard.kNew' => 'Yangi',
+			'doctor_dashboard.status_new' => 'Yangi',
 			'booking.title' => 'Navbat bron qilish',
 			'booking.select_doctor' => 'Shifokor tanlash',
 			'booking.select_date' => 'Sana tanlash',
@@ -685,6 +788,24 @@ extension on Translations {
 			'booking.success_title' => 'Navbat muvaffaqiyatli bron qilindi!',
 			'booking.new_booking' => 'Yana bron qilish',
 			'booking.navbat' => 'Navbat',
+			'weather.today' => 'Bugun',
+			'weather.tomorrow' => 'Ertaga',
+			'weather.monday' => 'Dushanba',
+			'weather.tuesday' => 'Seshanba',
+			'weather.wednesday' => 'Chorshanba',
+			'weather.thursday' => 'Payshanba',
+			'weather.friday' => 'Juma',
+			'weather.saturday' => 'Shanba',
+			'weather.sunday' => 'Yakshanba',
+			'weather.clear' => 'Ochiq havo',
+			'weather.title' => 'Ob-havo',
+			'weather.forecast_7days' => '7 kunlik prognoz',
+			'weather.partly_cloudy' => 'Qisman bulutli',
+			'weather.fog' => 'Tuman',
+			'weather.rain' => 'Yomg\'ir',
+			'weather.snow' => 'Qor',
+			'weather.thunderstorm' => 'Momaqaldiroq',
+			'weather.unknown' => 'Noma\'lum',
 			_ => null,
 		};
 	}

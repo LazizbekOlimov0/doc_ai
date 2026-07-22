@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/router/route_names.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../gen/strings.g.dart';
 import '../../../models/mock_data.dart';
 import '../bloc/doctor_dashboard_cubit.dart';
 import '../bloc/doctor_dashboard_state.dart';
@@ -32,11 +33,11 @@ class _DoctorDashboardScreenState extends State<DoctorDashboardScreen> {
 
         return Scaffold(
           appBar: AppBar(
-            title: const Text('Mening bemorlarim'),
+            title: Text(context.t.doctor_dashboard.title),
             actions: [
               IconButton(
                 icon: const Icon(Icons.calendar_month_outlined),
-                onPressed: () => context.go(RouteNames.booking),
+                onPressed: () => context.push(RouteNames.booking),
               ),
             ],
           ),
@@ -46,7 +47,7 @@ class _DoctorDashboardScreenState extends State<DoctorDashboardScreen> {
                 padding: const EdgeInsets.all(16),
                 child: TextField(
                   decoration: InputDecoration(
-                    hintText: 'Bemorni qidirish...',
+                    hintText: context.t.doctor_dashboard.search,
                     prefixIcon: const Icon(Icons.search),
                     suffixIcon: state.searchQuery.isNotEmpty
                         ? IconButton(
@@ -149,7 +150,7 @@ class _PatientCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      '${patient.age} yosh • ${patient.condition}',
+                      '${patient.age}${context.t.doctor_dashboard.age_condition}${patient.condition}',
                       style: textTheme.bodySmall?.copyWith(
                         color: colorScheme.onSurfaceVariant,
                       ),
@@ -177,7 +178,7 @@ class _PatientCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    'Adherence',
+                    context.t.doctor_dashboard.adherence,
                     style: textTheme.labelSmall?.copyWith(
                       color: colorScheme.onSurfaceVariant,
                     ),

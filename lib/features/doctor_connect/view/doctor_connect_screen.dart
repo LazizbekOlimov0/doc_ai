@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../gen/strings.g.dart';
 import '../../../models/mock_data.dart';
 
 class DoctorConnectScreen extends StatelessWidget {
@@ -11,7 +12,7 @@ class DoctorConnectScreen extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Shifokor bilan bog\'lanish')),
+      appBar: AppBar(title: Text(context.t.doctor_connect.title)),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -77,7 +78,9 @@ class DoctorConnectScreen extends StatelessWidget {
                         Icon(Icons.star, size: 16, color: Colors.amber[700]),
                         const SizedBox(width: 4),
                         Text(
-                          '${mockDoctor.rating} • ${mockDoctor.experienceYears} yillik tajriba',
+                          context.t.doctor_connect.rating_experience
+                          .replaceAll('{rating}', mockDoctor.rating.toString())
+                          .replaceAll('{years}', mockDoctor.experienceYears.toString()),
                           style: textTheme.bodySmall?.copyWith(
                             color: colorScheme.onSurfaceVariant,
                           ),
@@ -91,7 +94,7 @@ class DoctorConnectScreen extends StatelessWidget {
                           child: OutlinedButton.icon(
                             onPressed: () {},
                             icon: const Icon(Icons.call),
-                            label: const Text('Qo\'ng\'iroq'),
+                            label: Text(context.t.doctor_connect.call),
                             style: OutlinedButton.styleFrom(
                               foregroundColor: colorScheme.primary,
                             ),
@@ -102,7 +105,7 @@ class DoctorConnectScreen extends StatelessWidget {
                           child: FilledButton.icon(
                             onPressed: () {},
                             icon: const Icon(Icons.chat),
-                            label: const Text('Xabar yozish'),
+                            label: Text(context.t.doctor_connect.message),
                           ),
                         ),
                       ],
@@ -113,7 +116,7 @@ class DoctorConnectScreen extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Text(
-              'Hisobot yuborish',
+              context.t.doctor_connect.send_report,
               style: textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.w600,
               ),
@@ -131,7 +134,7 @@ class DoctorConnectScreen extends StatelessWidget {
                             color: colorScheme.primary),
                         const SizedBox(width: 8),
                         Text(
-                          'Haftalik hisobot',
+                          context.t.doctor_connect.weekly_report,
                           style: TextStyle(fontWeight: FontWeight.w600),
                         ),
                       ],
@@ -156,7 +159,7 @@ class DoctorConnectScreen extends StatelessWidget {
                       child: OutlinedButton.icon(
                         onPressed: () {},
                         icon: const Icon(Icons.send),
-                        label: const Text('Hisobot yuborish'),
+                        label: Text(context.t.doctor_connect.send_report),
                       ),
                     ),
                   ],
@@ -176,7 +179,7 @@ class DoctorConnectScreen extends StatelessWidget {
                             color: colorScheme.primary),
                         const SizedBox(width: 8),
                         Text(
-                          'Sog\'liq kundaligi',
+                          context.t.doctor_connect.health_diary,
                           style: TextStyle(fontWeight: FontWeight.w600),
                         ),
                       ],
@@ -201,7 +204,7 @@ class DoctorConnectScreen extends StatelessWidget {
                       child: OutlinedButton.icon(
                         onPressed: () {},
                         icon: const Icon(Icons.add),
-                        label: const Text('Yangi yozuv qo\'shish'),
+                        label: Text(context.t.doctor_connect.new_entry),
                       ),
                     ),
                   ],

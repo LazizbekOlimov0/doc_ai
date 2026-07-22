@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../gen/strings.g.dart';
 import '../bloc/medication_cubit.dart';
 import '../bloc/medication_state.dart';
 
@@ -26,7 +27,7 @@ class _MedicationsScreenState extends State<MedicationsScreen> {
     return BlocBuilder<MedicationCubit, MedicationState>(
       builder: (context, state) {
         return Scaffold(
-          appBar: AppBar(title: const Text('Dorilar jadvali')),
+          appBar: AppBar(title: Text(context.t.medication.title)),
           body: state.isLoading
               ? const Center(child: CircularProgressIndicator())
               : RefreshIndicator(
@@ -46,7 +47,7 @@ class _MedicationsScreenState extends State<MedicationsScreen> {
                         ),
                         const SizedBox(height: 16),
                         Text(
-                          'Dori qabul qilish jadvali',
+                          context.t.medication.schedule,
                           style: textTheme.titleMedium?.copyWith(
                             fontWeight: FontWeight.w600,
                           ),
@@ -132,14 +133,14 @@ class _AdherenceCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Haftalik qabul',
+                    context.t.medication.weekly_adherence,
                     style: textTheme.titleSmall?.copyWith(
                       fontWeight: FontWeight.w600,
                     ),
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    'Dorilarni o\'z vaqtida qabul qilish salomatlik garovi',
+                    context.t.medication.adherence_hint,
                     style: textTheme.bodySmall?.copyWith(
                       color: colorScheme.onSurfaceVariant,
                     ),
@@ -196,7 +197,7 @@ class _MedicationCard extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        '${medication.dosage} • Kuniga ${medication.timesPerDay} marta',
+                        '${medication.dosage} • ${context.t.medication.times_per_day}${medication.timesPerDay}${context.t.medication.times_suffix}',
                         style: textTheme.bodySmall?.copyWith(
                           color: colorScheme.onSurfaceVariant,
                         ),
@@ -224,7 +225,7 @@ class _MedicationCard extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             Text(
-              'Bugun: ${medication.times.join(', ')}',
+                      '${context.t.medication.today}: ${medication.times.join(', ')}',
               style: textTheme.bodySmall?.copyWith(
                 color: colorScheme.onSurfaceVariant,
               ),

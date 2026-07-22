@@ -11,6 +11,7 @@ import 'features/symptom_analysis/bloc/symptom_cubit.dart';
 import 'features/medication/bloc/medication_cubit.dart';
 import 'features/doctor_dashboard/bloc/doctor_dashboard_cubit.dart';
 import 'features/booking/bloc/booking_cubit.dart';
+import 'features/weather/bloc/weather_cubit.dart';
 import 'gen/strings.g.dart';
 import 'firebase_options.dart';
 
@@ -36,7 +37,7 @@ Future<void> main() async {
 
   final prefs = await _getPrefs();
 
-  LocaleSettings.useDeviceLocale();
+  await LocaleSettings.useDeviceLocale();
 
   runApp(DocAIApp(prefs: prefs));
 }
@@ -60,6 +61,7 @@ class DocAIApp extends StatelessWidget {
         BlocProvider(create: (_) => MedicationCubit()),
         BlocProvider(create: (_) => DoctorDashboardCubit()),
         BlocProvider(create: (_) => BookingCubit()),
+        BlocProvider(create: (_) => WeatherCubit()..fetchWeather()),
       ],
       child: TranslationProvider(
         child: BlocBuilder<SettingsCubit, SettingsState>(

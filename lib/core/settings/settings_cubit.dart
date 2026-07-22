@@ -36,15 +36,21 @@ class SettingsCubit extends Cubit<SettingsState> {
 
   void _load() {
     final themeStr = _read(_themeKey) ?? 'light';
-    final localeStr = _read(_localeKey) ?? 'uz';
+    final localeStr = _read(_localeKey);
 
     final themeMode = themeStr == 'dark' ? ThemeMode.dark : ThemeMode.light;
-    final locale = AppLocale.values.firstWhere(
-      (l) => l.languageCode == localeStr,
-      orElse: () => AppLocale.uz,
-    );
 
-    LocaleSettings.setLocale(locale);
+    AppLocale locale = LocaleSettings.currentLocale;
+    if (localeStr != null) {
+      locale = AppLocale.values.firstWhere(
+        (l) => l.languageCode == localeStr,
+        orElse: () => LocaleSettings.currentLocale,
+      );
+      if (locale != LocaleSettings.currentLocale) {
+        LocaleSettings.setLocale(locale);
+      }
+    }
+
     emit(SettingsState(themeMode: themeMode, locale: locale));
   }
 

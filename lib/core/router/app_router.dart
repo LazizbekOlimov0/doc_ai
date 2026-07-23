@@ -16,6 +16,7 @@ import '../../features/doctor_dashboard/view/reports_screen.dart';
 import '../../features/profile/view/settings_screen.dart';
 import '../../features/weather/view/weather_detail_screen.dart';
 import '../../features/booking/view/booking_screen.dart';
+import '../../core/services/notification_service.dart';
 import '../widgets/patient_shell.dart';
 import '../widgets/doctor_shell.dart';
 import '../models/app_user.dart';
@@ -23,6 +24,7 @@ import 'route_names.dart';
 
 GoRouter createRouter(AuthCubit authCubit) {
   return GoRouter(
+    navigatorKey: NavigationService.navigatorKey,
     refreshListenable: _AuthListenable(authCubit),
     initialLocation: RouteNames.splash,
     debugLogDiagnostics: true,

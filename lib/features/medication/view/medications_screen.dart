@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../core/theme/app_colors.dart';
@@ -27,7 +28,19 @@ class _MedicationsScreenState extends State<MedicationsScreen> {
     return BlocBuilder<MedicationCubit, MedicationState>(
       builder: (context, state) {
         return Scaffold(
-          appBar: AppBar(title: Text(context.t.medication.title)),
+          appBar: AppBar(
+            title: Text(context.t.medication.title),
+            actions: [
+              if (kDebugMode)
+                IconButton(
+                  icon: const Icon(Icons.notifications_active),
+                  tooltip: 'Test notification (10s)',
+                  onPressed: () {
+                    context.read<MedicationCubit>().testNotification();
+                  },
+                ),
+            ],
+          ),
           body: state.isLoading
               ? const Center(child: CircularProgressIndicator())
               : RefreshIndicator(

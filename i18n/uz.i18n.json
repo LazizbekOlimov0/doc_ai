@@ -198,5 +198,24 @@
     "snow": "Qor",
     "thunderstorm": "Momaqaldiroq",
     "unknown": "Noma'lum"
+  },
+  "aiChat": {
+    "title": "AI Doktor",
+    "subtitle": "Semptomlaringizni yozing, AI tahlil qilsin",
+    "inputHint": "Semptomlaringizni yozing...",
+    "send": "Yuborish",
+    "typing": "AI javob yozmoqda...",
+    "empty": "Hali xabarlar yo'q",
+    "error": "Xatolik yuz berdi. Qayta urinib ko'ring.",
+    "diagnosisSaved": "Tashxis xulosasi saqlandi"
+  },
+  "doctorNotifications": {
+    "title": "Bildirishnomalar",
+    "empty": "Bildirishnomalar yo'q",
+    "urgencyHigh": "Yuqori",
+    "urgencyMedium": "O'rta",
+    "urgencyLow": "Past",
+    "viewPatient": "Bemorni ko'rish",
+    "newAiDiagnosis": "Yangi AI tashxisi"
   }
 }

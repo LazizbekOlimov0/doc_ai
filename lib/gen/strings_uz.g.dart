@@ -108,6 +108,8 @@ class Translations with BaseTranslations<AppLocale, Translations> {
 	late final Translations$doctor_dashboard$uz doctor_dashboard = Translations$doctor_dashboard$uz.internal(_root);
 	late final Translations$booking$uz booking = Translations$booking$uz.internal(_root);
 	late final Translations$weather$uz weather = Translations$weather$uz.internal(_root);
+	late final Translations$aiChat$uz aiChat = Translations$aiChat$uz.internal(_root);
+	late final Translations$doctorNotifications$uz doctorNotifications = Translations$doctorNotifications$uz.internal(_root);
 }
 
 // Path: nav
@@ -630,6 +632,69 @@ class Translations$weather$uz {
 	String get unknown => 'Noma\'lum';
 }
 
+// Path: aiChat
+class Translations$aiChat$uz {
+	Translations$aiChat$uz.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// uz: 'AI Doktor'
+	String get title => 'AI Doktor';
+
+	/// uz: 'Semptomlaringizni yozing, AI tahlil qilsin'
+	String get subtitle => 'Semptomlaringizni yozing, AI tahlil qilsin';
+
+	/// uz: 'Semptomlaringizni yozing...'
+	String get inputHint => 'Semptomlaringizni yozing...';
+
+	/// uz: 'Yuborish'
+	String get send => 'Yuborish';
+
+	/// uz: 'AI javob yozmoqda...'
+	String get typing => 'AI javob yozmoqda...';
+
+	/// uz: 'Hali xabarlar yo'q'
+	String get empty => 'Hali xabarlar yo\'q';
+
+	/// uz: 'Xatolik yuz berdi. Qayta urinib ko'ring.'
+	String get error => 'Xatolik yuz berdi. Qayta urinib ko\'ring.';
+
+	/// uz: 'Tashxis xulosasi saqlandi'
+	String get diagnosisSaved => 'Tashxis xulosasi saqlandi';
+}
+
+// Path: doctorNotifications
+class Translations$doctorNotifications$uz {
+	Translations$doctorNotifications$uz.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// uz: 'Bildirishnomalar'
+	String get title => 'Bildirishnomalar';
+
+	/// uz: 'Bildirishnomalar yo'q'
+	String get empty => 'Bildirishnomalar yo\'q';
+
+	/// uz: 'Yuqori'
+	String get urgencyHigh => 'Yuqori';
+
+	/// uz: 'O'rta'
+	String get urgencyMedium => 'O\'rta';
+
+	/// uz: 'Past'
+	String get urgencyLow => 'Past';
+
+	/// uz: 'Bemorni ko'rish'
+	String get viewPatient => 'Bemorni ko\'rish';
+
+	/// uz: 'Yangi AI tashxisi'
+	String get newAiDiagnosis => 'Yangi AI tashxisi';
+}
+
 /// The flat map containing all translations for locale <uz>.
 /// Only for edge cases! For simple maps, use the map function of this library.
 ///
@@ -806,6 +871,21 @@ extension on Translations {
 			'weather.snow' => 'Qor',
 			'weather.thunderstorm' => 'Momaqaldiroq',
 			'weather.unknown' => 'Noma\'lum',
+			'aiChat.title' => 'AI Doktor',
+			'aiChat.subtitle' => 'Semptomlaringizni yozing, AI tahlil qilsin',
+			'aiChat.inputHint' => 'Semptomlaringizni yozing...',
+			'aiChat.send' => 'Yuborish',
+			'aiChat.typing' => 'AI javob yozmoqda...',
+			'aiChat.empty' => 'Hali xabarlar yo\'q',
+			'aiChat.error' => 'Xatolik yuz berdi. Qayta urinib ko\'ring.',
+			'aiChat.diagnosisSaved' => 'Tashxis xulosasi saqlandi',
+			'doctorNotifications.title' => 'Bildirishnomalar',
+			'doctorNotifications.empty' => 'Bildirishnomalar yo\'q',
+			'doctorNotifications.urgencyHigh' => 'Yuqori',
+			'doctorNotifications.urgencyMedium' => 'O\'rta',
+			'doctorNotifications.urgencyLow' => 'Past',
+			'doctorNotifications.viewPatient' => 'Bemorni ko\'rish',
+			'doctorNotifications.newAiDiagnosis' => 'Yangi AI tashxisi',
 			_ => null,
 		};
 	}

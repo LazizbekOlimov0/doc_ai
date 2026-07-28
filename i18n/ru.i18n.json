@@ -198,5 +198,24 @@
     "snow": "Снег",
     "thunderstorm": "Гроза",
     "unknown": "Неизвестно"
+  },
+  "aiChat": {
+    "title": "ИИ Доктор",
+    "subtitle": "Опишите симптомы, ИИ проанализирует",
+    "inputHint": "Опишите ваши симптомы...",
+    "send": "Отправить",
+    "typing": "ИИ печатает...",
+    "empty": "Сообщений пока нет",
+    "error": "Произошла ошибка. Попробуйте ещё раз.",
+    "diagnosisSaved": "Диагноз сохранён"
+  },
+  "doctorNotifications": {
+    "title": "Уведомления",
+    "empty": "Нет уведомлений",
+    "urgencyHigh": "Высокая",
+    "urgencyMedium": "Средняя",
+    "urgencyLow": "Низкая",
+    "viewPatient": "Посмотреть пациента",
+    "newAiDiagnosis": "Новый ИИ диагноз"
   }
 }

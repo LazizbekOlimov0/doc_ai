@@ -3,18 +3,24 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // Users collection
     match /users/{userId} {
-      // Har bir user faqat o'z hujjatini o'qiy oladi va tahrirlay oladi
       allow read, write: if request.auth != null && request.auth.uid == userId;
 
-      // Doctorlar o'zlariga bog'langan patient'larni o'qiy oladi
-      // (keyingi bosqichda doctor_patient_links bilan to'liqlashtiriladi)
-    }
+      match /chats/{chatId} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+        match /messages/{messageId} {
+          allow read, write: if request.auth != null && request.auth.uid == userId;
+        }
+      }
 
-    // Keyingi bosqichlar uchun tayyorlangan placeholder qoidalar
-    match /{document=**} {
-      allow read, write: if request.auth != null;
+      match /diagnoses/{diagnosisId} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+
+      match /notifications/{notifId} {
+        allow read, update: if request.auth != null && request.auth.uid == userId;
+        allow create: if true;
+      }
     }
   }
 }

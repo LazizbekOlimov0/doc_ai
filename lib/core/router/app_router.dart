@@ -16,6 +16,8 @@ import '../../features/doctor_dashboard/view/reports_screen.dart';
 import '../../features/profile/view/settings_screen.dart';
 import '../../features/weather/view/weather_detail_screen.dart';
 import '../../features/booking/view/booking_screen.dart';
+import '../../features/ai_chat/view/chat_page.dart';
+import '../../features/doctor_notifications/view/doctor_notifications_page.dart';
 import '../../core/services/notification_service.dart';
 import '../widgets/patient_shell.dart';
 import '../widgets/doctor_shell.dart';
@@ -159,6 +161,14 @@ GoRouter createRouter(AuthCubit authCubit) {
       GoRoute(
         path: RouteNames.settings,
         builder: (context, state) => const SettingsScreen(),
+      ),
+      GoRoute(
+        path: RouteNames.patientAiChat,
+        builder: (context, state) => const ChatPage(),
+      ),
+      GoRoute(
+        path: '/doctor/notifications',
+        builder: (context, state) => const DoctorNotificationsPage(),
       ),
     ],
   );

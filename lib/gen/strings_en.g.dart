@@ -68,6 +68,8 @@ class TranslationsEn extends Translations with BaseTranslations<AppLocale, Trans
 	@override late final _Translations$doctor_dashboard$en doctor_dashboard = _Translations$doctor_dashboard$en._(_root);
 	@override late final _Translations$booking$en booking = _Translations$booking$en._(_root);
 	@override late final _Translations$weather$en weather = _Translations$weather$en._(_root);
+	@override late final _Translations$aiChat$en aiChat = _Translations$aiChat$en._(_root);
+	@override late final _Translations$doctorNotifications$en doctorNotifications = _Translations$doctorNotifications$en._(_root);
 }
 
 // Path: nav
@@ -311,6 +313,39 @@ class _Translations$weather$en extends Translations$weather$uz {
 	@override String get unknown => 'Unknown';
 }
 
+// Path: aiChat
+class _Translations$aiChat$en extends Translations$aiChat$uz {
+	_Translations$aiChat$en._(TranslationsEn root) : this._root = root, super.internal(root);
+
+	final TranslationsEn _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'AI Doctor';
+	@override String get subtitle => 'Describe your symptoms, AI will analyze';
+	@override String get inputHint => 'Describe your symptoms...';
+	@override String get send => 'Send';
+	@override String get typing => 'AI is typing...';
+	@override String get empty => 'No messages yet';
+	@override String get error => 'An error occurred. Please try again.';
+	@override String get diagnosisSaved => 'Diagnosis summary saved';
+}
+
+// Path: doctorNotifications
+class _Translations$doctorNotifications$en extends Translations$doctorNotifications$uz {
+	_Translations$doctorNotifications$en._(TranslationsEn root) : this._root = root, super.internal(root);
+
+	final TranslationsEn _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Notifications';
+	@override String get empty => 'No notifications';
+	@override String get urgencyHigh => 'High';
+	@override String get urgencyMedium => 'Medium';
+	@override String get urgencyLow => 'Low';
+	@override String get viewPatient => 'View patient';
+	@override String get newAiDiagnosis => 'New AI diagnosis';
+}
+
 /// The flat map containing all translations for locale <en>.
 /// Only for edge cases! For simple maps, use the map function of this library.
 ///
@@ -487,6 +522,21 @@ extension on TranslationsEn {
 			'weather.snow' => 'Snow',
 			'weather.thunderstorm' => 'Thunderstorm',
 			'weather.unknown' => 'Unknown',
+			'aiChat.title' => 'AI Doctor',
+			'aiChat.subtitle' => 'Describe your symptoms, AI will analyze',
+			'aiChat.inputHint' => 'Describe your symptoms...',
+			'aiChat.send' => 'Send',
+			'aiChat.typing' => 'AI is typing...',
+			'aiChat.empty' => 'No messages yet',
+			'aiChat.error' => 'An error occurred. Please try again.',
+			'aiChat.diagnosisSaved' => 'Diagnosis summary saved',
+			'doctorNotifications.title' => 'Notifications',
+			'doctorNotifications.empty' => 'No notifications',
+			'doctorNotifications.urgencyHigh' => 'High',
+			'doctorNotifications.urgencyMedium' => 'Medium',
+			'doctorNotifications.urgencyLow' => 'Low',
+			'doctorNotifications.viewPatient' => 'View patient',
+			'doctorNotifications.newAiDiagnosis' => 'New AI diagnosis',
 			_ => null,
 		};
 	}

@@ -198,5 +198,24 @@
     "snow": "Snow",
     "thunderstorm": "Thunderstorm",
     "unknown": "Unknown"
+  },
+  "aiChat": {
+    "title": "AI Doctor",
+    "subtitle": "Describe your symptoms, AI will analyze",
+    "inputHint": "Describe your symptoms...",
+    "send": "Send",
+    "typing": "AI is typing...",
+    "empty": "No messages yet",
+    "error": "An error occurred. Please try again.",
+    "diagnosisSaved": "Diagnosis summary saved"
+  },
+  "doctorNotifications": {
+    "title": "Notifications",
+    "empty": "No notifications",
+    "urgencyHigh": "High",
+    "urgencyMedium": "Medium",
+    "urgencyLow": "Low",
+    "viewPatient": "View patient",
+    "newAiDiagnosis": "New AI diagnosis"
   }
 }

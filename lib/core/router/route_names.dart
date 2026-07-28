@@ -12,6 +12,7 @@ class RouteNames {
   static const patientMedications = '/patient/medications';
   static const patientDoctorConnect = '/patient/doctor-connect';
   static const patientProfile = '/patient/profile';
+  static const patientAiChat = '/patient/ai-chat';
 
   // Doctor
   static const doctorShell = '/doctor';

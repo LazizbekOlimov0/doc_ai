@@ -68,6 +68,8 @@ class TranslationsRu extends Translations with BaseTranslations<AppLocale, Trans
 	@override late final _Translations$doctor_dashboard$ru doctor_dashboard = _Translations$doctor_dashboard$ru._(_root);
 	@override late final _Translations$booking$ru booking = _Translations$booking$ru._(_root);
 	@override late final _Translations$weather$ru weather = _Translations$weather$ru._(_root);
+	@override late final _Translations$aiChat$ru aiChat = _Translations$aiChat$ru._(_root);
+	@override late final _Translations$doctorNotifications$ru doctorNotifications = _Translations$doctorNotifications$ru._(_root);
 }
 
 // Path: nav
@@ -311,6 +313,39 @@ class _Translations$weather$ru extends Translations$weather$uz {
 	@override String get unknown => 'Неизвестно';
 }
 
+// Path: aiChat
+class _Translations$aiChat$ru extends Translations$aiChat$uz {
+	_Translations$aiChat$ru._(TranslationsRu root) : this._root = root, super.internal(root);
+
+	final TranslationsRu _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'ИИ Доктор';
+	@override String get subtitle => 'Опишите симптомы, ИИ проанализирует';
+	@override String get inputHint => 'Опишите ваши симптомы...';
+	@override String get send => 'Отправить';
+	@override String get typing => 'ИИ печатает...';
+	@override String get empty => 'Сообщений пока нет';
+	@override String get error => 'Произошла ошибка. Попробуйте ещё раз.';
+	@override String get diagnosisSaved => 'Диагноз сохранён';
+}
+
+// Path: doctorNotifications
+class _Translations$doctorNotifications$ru extends Translations$doctorNotifications$uz {
+	_Translations$doctorNotifications$ru._(TranslationsRu root) : this._root = root, super.internal(root);
+
+	final TranslationsRu _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Уведомления';
+	@override String get empty => 'Нет уведомлений';
+	@override String get urgencyHigh => 'Высокая';
+	@override String get urgencyMedium => 'Средняя';
+	@override String get urgencyLow => 'Низкая';
+	@override String get viewPatient => 'Посмотреть пациента';
+	@override String get newAiDiagnosis => 'Новый ИИ диагноз';
+}
+
 /// The flat map containing all translations for locale <ru>.
 /// Only for edge cases! For simple maps, use the map function of this library.
 ///
@@ -487,6 +522,21 @@ extension on TranslationsRu {
 			'weather.snow' => 'Снег',
 			'weather.thunderstorm' => 'Гроза',
 			'weather.unknown' => 'Неизвестно',
+			'aiChat.title' => 'ИИ Доктор',
+			'aiChat.subtitle' => 'Опишите симптомы, ИИ проанализирует',
+			'aiChat.inputHint' => 'Опишите ваши симптомы...',
+			'aiChat.send' => 'Отправить',
+			'aiChat.typing' => 'ИИ печатает...',
+			'aiChat.empty' => 'Сообщений пока нет',
+			'aiChat.error' => 'Произошла ошибка. Попробуйте ещё раз.',
+			'aiChat.diagnosisSaved' => 'Диагноз сохранён',
+			'doctorNotifications.title' => 'Уведомления',
+			'doctorNotifications.empty' => 'Нет уведомлений',
+			'doctorNotifications.urgencyHigh' => 'Высокая',
+			'doctorNotifications.urgencyMedium' => 'Средняя',
+			'doctorNotifications.urgencyLow' => 'Низкая',
+			'doctorNotifications.viewPatient' => 'Посмотреть пациента',
+			'doctorNotifications.newAiDiagnosis' => 'Новый ИИ диагноз',
 			_ => null,
 		};
 	}

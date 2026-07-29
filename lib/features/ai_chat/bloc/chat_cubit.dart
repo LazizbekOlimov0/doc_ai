@@ -1,12 +1,17 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../data/chat_repository.dart';
 import 'chat_state.dart';
 
 class ChatCubit extends Cubit<ChatState> {
   final ChatRepository _repository;
+  final String _patientId;
 
-  ChatCubit({ChatRepository? repository})
-      : _repository = repository ?? FirebaseChatRepository(),
+  ChatCubit({
+    ChatRepository? repository,
+    required String patientId,
+  })  : _repository = repository ?? FirebaseChatRepository(),
+        _patientId = patientId,
         super(const ChatState());
 
   Future<void> sendMessage(String text) async {
@@ -26,7 +31,10 @@ class ChatCubit extends Cubit<ChatState> {
     ));
 
     try {
-      final aiReplyText = await _repository.askDocAiAgent(patientMessage: text);
+      final aiReplyText = await _repository.askDocAiAgent(
+        patientMessage: text,
+        patientId: _patientId,
+      );
 
       final aiMessage = ChatMessage(
         text: aiReplyText,
@@ -39,9 +47,10 @@ class ChatCubit extends Cubit<ChatState> {
         isAiTyping: false,
       ));
     } catch (e) {
+      debugPrint('🔴 ChatCubit ERROR: $e');
       emit(state.copyWith(
         isAiTyping: false,
-        error: 'Javob olishda xatolik yuz berdi. Qayta urinib ko\'ring.',
+        error: e.toString().replaceFirst('Exception: ', ''),
       ));
     }
   }

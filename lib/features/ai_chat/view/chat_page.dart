@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../gen/strings.g.dart';
+import '../../../features/auth/bloc/auth_cubit.dart';
 import '../bloc/chat_cubit.dart';
 import '../bloc/chat_state.dart';
 
@@ -19,7 +20,12 @@ class _ChatPageState extends State<ChatPage> {
   @override
   void initState() {
     super.initState();
-    _cubit = ChatCubit();
+    final authCubit = context.read<AuthCubit>();
+    final userId = authCubit.state.user?.uid;
+    if (userId == null) {
+      throw StateError('User must be authenticated to access chat');
+    }
+    _cubit = ChatCubit(patientId: userId);
   }
 
   @override

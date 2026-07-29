@@ -1,97 +1,109 @@
-import 'package:cloud_functions/cloud_functions.dart';
+import 'dart:convert';
+import 'package:flutter/foundation.dart';
+import 'package:http/http.dart' as http;
+
+const _apiKey = 'AIzaSyBRp25fqnfx6cq8Y-wCWWiA4q5P98cwlgw';
+const _projectId = 'doc-ai-antigravity';
+const _location = 'us';
+const _dataStoreId = 'doc-ai-clinical-data_1785072129919';
+
+String get _basePath => 'projects/$_projectId/locations/$_location/collections/default_collection/dataStores/$_dataStoreId/servingConfigs/default_search';
+String _sessionPath(String patientId) => 'projects/$_projectId/locations/$_location/collections/default_collection/dataStores/$_dataStoreId/sessions/$patientId';
 
 abstract class ChatRepository {
-  Future<String> askDocAiAgent({required String patientMessage});
+  Future<String> askDocAiAgent({
+    required String patientMessage,
+    required String patientId,
+  });
 }
 
 class FirebaseChatRepository implements ChatRepository {
-  final FirebaseFunctions _functions = FirebaseFunctions.instanceFor(region: 'us-central1');
-
   @override
-  Future<String> askDocAiAgent({required String patientMessage}) async {
+  Future<String> askDocAiAgent({
+    required String patientMessage,
+    required String patientId,
+  }) async {
+    // Strategy 1: API key in header (x-goog-api-key)
+    final result1 = await _tryAnswer(
+      patientMessage: patientMessage,
+      patientId: patientId,
+      strategy: 'header',
+    );
+    if (result1 != null) return result1;
+
+    // Strategy 2: API key in query param (?key=)
+    final result2 = await _tryAnswer(
+      patientMessage: patientMessage,
+      patientId: patientId,
+      strategy: 'query',
+    );
+    if (result2 != null) return result2;
+
+    // Strategy 3: API key in both header and query
+    final result3 = await _tryAnswer(
+      patientMessage: patientMessage,
+      patientId: patientId,
+      strategy: 'both',
+    );
+    if (result3 != null) return result3;
+
+    throw Exception(
+      'Discovery Engine API javob bermadi.\n\n'
+      'Sabab: :answer metodi API key auth ni qo\'llab-quvvatlamaydi (faqat service account kerak).\n\n'
+      'Yechim: Cloud Functions orqali deploy qilish kerak (Blaze plan: ~\$0.01/oy).\n'
+      'Yoki: firebase_ai Vertex AI ni yoqib ishlatish.\n\n'
+      'Log\'lar: yuqorida 🔴 xatolik sabablari ko\'rsatilgan.',
+    );
+  }
+
+  Future<String?> _tryAnswer({
+    required String patientMessage,
+    required String patientId,
+    required String strategy,
+  }) async {
     try {
-      final callable = _functions.httpsCallable('askDocAiAgent');
-      final result = await callable.call(<String, dynamic>{
-        'patientMessage': patientMessage,
+      final uriStr = strategy == 'header'
+          ? 'https://discoveryengine.googleapis.com/v1beta/$_basePath:answer'
+          : 'https://discoveryengine.googleapis.com/v1beta/$_basePath:answer?key=$_apiKey';
+
+      final uri = Uri.parse(uriStr);
+      final body = jsonEncode({
+        'query': {'text': patientMessage},
+        'session': _sessionPath(patientId),
+        'answerGenerationSpec': {
+          'includeCitations': false,
+          'ignoreAdversarialQuery': true,
+        },
       });
-      final data = result.data as Map<String, dynamic>;
-      return data['answer'] as String? ?? await _mock(patientMessage);
-    } catch (_) {
-      return await _mock(patientMessage);
-    }
-  }
 
-  Future<String> _mock(String msg) async {
-    // Simulate AI thinking time
-    await Future<void>.delayed(const Duration(seconds: 1));
-    return _fallback(msg);
-  }
+      final headers = <String, String>{'Content-Type': 'application/json'};
+      if (strategy == 'header' || strategy == 'both') {
+        headers['x-goog-api-key'] = _apiKey;
+      }
 
-  String _fallback(String msg) {
-    final lowered = msg.toLowerCase();
+      debugPrint('🔵 ChatRepo [$strategy]: calling discoveryengine:answer...');
+      final response = await http.post(uri, headers: headers, body: body);
 
-    if (lowered.contains('bosh') || lowered.contains('golova')) {
-      return 'Bosh og\'rig\'i ko\'p sabablarga ko\'ra yuzaga kelishi mumkin: stress, ko\'z charchashi, suvsizlanish, yuqori qon bosimi yoki migren.\n\n'
-          'Tavsiyalar:\n'
-          '• Ko\'proq suv iching (kuniga 8-10 stakan)\n'
-          '• 15-20 daqiqa dam oling, ko\'zingizni yuming\n'
-          '• Agar qon bosimingiz yuqori bo\'lsa, shifokorga murojaat qiling\n'
-          '• Doimiy og\'riq bo\'lsa, nevropatolog konsultatsiyasi tavsiya etiladi';
-    }
-    if (lowered.contains('qon') || lowered.contains('bosim') || lowered.contains('gipertoniya')) {
-      return 'Qon bosimi haqida:\n\n'
-          'Normal qon bosimi: 120/80 mmHg\n'
-          'Yuqori qon bosimi (gipertoniya): 140/90 dan yuqori\n\n'
-          'Tavsiyalar:\n'
-          '• Tuz iste\'molini kamaytiring\n'
-          '• Muntazam jismoniy mashq qiling\n'
-          '• Stressni kamaytiring\n'
-          '• Shifokor tayinlagan dorilarni muntazam qabul qiling\n'
-          '• Qon bosimini har kuni o\'lchab boring';
-    }
-    if (lowered.contains('qand') || lowered.contains('diabet') || lowered.contains('shakar')) {
-      return 'Qandli diabet haqida:\n\n'
-          'Asosiy belgilar: ko\'p siyish, chanqoqlik, vazn yo\'qotish, charchoqlik.\n\n'
-          'Tavsiyalar:\n'
-          '• Qonda shakar miqdorini muntazam tekshirib boring\n'
-          '• Sog\'lom ovqatlanish — kam uglevodli mahsulotlar\n'
-          '• Jismoniy faollikni oshiring\n'
-          '• Endokrinolog nazoratida bo\'ling\n'
-          '• Oyoqlaringizni har kuni tekshirib boring (diabetik tovon xavfi)';
-    }
-    if (lowered.contains('yurak') || lowered.contains('ko\'krak') || lowered.contains('yurek')) {
-      return 'Yurak bilan bog\'liq simptomlar jiddiy bo\'lishi mumkin.\n\n'
-          'Agar ko\'krak qafasida og\'riq, nafas qisishi, chap qo\'l yoki jag\'da og\'riq bo\'lsa — tez tibbiy yordam chaqiring (103)!\n\n'
-          'Tavsiyalar:\n'
-          '• Darhol EKG tekshiruvidan o\'ting\n'
-          '• Kardiolog konsultatsiyasi\n'
-          '• Yog\'li va qovurilgan ovqatlardan voz keching\n'
-          '• Yurish va yengil jismoniy mashqlar foydali';
-    }
-    if (lowered.contains('harorat') || lowered.contains('isitma') || lowered.contains('temperatura')) {
-      return 'Tana harorati ko\'tarilishi — organizmning infeksiyaga qarshi himoya reaksiyasi.\n\n'
-          'Tavsiyalar:\n'
-          '• 38.5°C gacha haroratni tushirish shart emas\n'
-          '• Ko\'p suyuqlik iching (suv, choy, kompot)\n'
-          '• Yengil kiyining, xona haroratini 20-22°C da saqlang\n'
-          '• Paratsetamol yoki ibuprofen (dozasiga rioya qiling)\n'
-          '• Agar 3 kundan ortiq davom etsa yoki 39°C dan oshsa — shifokorga murojaat qiling';
-    }
-    if (lowered.contains('yo\'tal')) {
-      return 'Yo\'tal — nafas yo\'llari kasalliklarining eng ko\'p uchraydigan belgisi.\n\n'
-          'Tavsiyalar:\n'
-          '• Ko\'p iliq suyuqlik iching\n'
-          '• Asal va limon choyi foydali\n'
-          '• Nam havoda nafas oling\n'
-          '• Agar quruq yo\'tal bo\'lsa — shifokor ko\'rigi kerak\n'
-          '• Balg\'amli yo\'tal 2 haftadan ortiq davom etsa — pulmonologga murojaat qiling';
-    }
+      debugPrint('🔵 ChatRepo [$strategy]: status=${response.statusCode}, bodyLen=${response.body.length}');
 
-    return 'Sizning simptomlaringiz asosida aniq tashxis qo\'yish qiyin. Quyidagi umumiy tavsiyalarni ko\'rib chiqing:\n\n'
-        '• Ko\'proq suv iching va sog\'lom ovqatlaning\n'
-        '• 7-8 soat uxlang\n'
-        '• Stressni kamaytirishga harakat qiling\n'
-        '• Agar simptomlar 2-3 kundan ortiq davom etsa, albatta shifokorga murojaat qiling\n\n'
-        '📌 Bu AI maslahati — yakuniy tashxis emas. Jiddiy simptomlar bo\'lsa, darhol tibbiy yordamga murojaat qiling.';
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body) as Map<String, dynamic>;
+        final answer = data['answer'] as Map<String, dynamic>?;
+        final answerText = answer?['answerText'] as String?;
+        if (answerText != null && answerText.trim().isNotEmpty) {
+          debugPrint('🟢 ChatRepo [$strategy]: SUCCESS (${answerText.length} chars)');
+          return answerText;
+        }
+      }
+
+      final errorSnippet = response.body.length > 200
+          ? response.body.substring(0, 200)
+          : response.body;
+      debugPrint('🔴 ChatRepo [$strategy]: FAILED status=${response.statusCode} body=$errorSnippet');
+      return null;
+    } catch (e) {
+      debugPrint('🔴 ChatRepo [$strategy]: EXCEPTION $e');
+      return null;
+    }
   }
 }

@@ -17,6 +17,8 @@ class AppUser extends Equatable {
   final String? hospital;
   final int? experienceYears;
 
+  final String? linkedDoctorId;
+
   const AppUser({
     required this.uid,
     required this.email,
@@ -30,6 +32,7 @@ class AppUser extends Equatable {
     this.licenseNumber,
     this.hospital,
     this.experienceYears,
+    this.linkedDoctorId,
   });
 
   bool get isPatient => role == UserRole.patient;
@@ -48,6 +51,7 @@ class AppUser extends Equatable {
     String? licenseNumber,
     String? hospital,
     int? experienceYears,
+    String? linkedDoctorId,
   }) {
     return AppUser(
       uid: uid ?? this.uid,
@@ -62,6 +66,7 @@ class AppUser extends Equatable {
       licenseNumber: licenseNumber ?? this.licenseNumber,
       hospital: hospital ?? this.hospital,
       experienceYears: experienceYears ?? this.experienceYears,
+      linkedDoctorId: linkedDoctorId ?? this.linkedDoctorId,
     );
   }
 
@@ -80,6 +85,7 @@ class AppUser extends Equatable {
       licenseNumber: data['licenseNumber'] as String?,
       hospital: data['hospital'] as String?,
       experienceYears: data['experienceYears'] as int?,
+      linkedDoctorId: data['linkedDoctorId'] as String?,
     );
   }
 
@@ -96,6 +102,7 @@ class AppUser extends Equatable {
       if (licenseNumber != null) 'licenseNumber': licenseNumber,
       if (hospital != null) 'hospital': hospital,
       if (experienceYears != null) 'experienceYears': experienceYears,
+      if (linkedDoctorId != null) 'linkedDoctorId': linkedDoctorId,
     };
     return data;
   }

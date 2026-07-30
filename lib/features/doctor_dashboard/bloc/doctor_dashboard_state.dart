@@ -1,10 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
-import '../../../models/mock_data.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../core/models/app_user.dart';
 
 class DoctorDashboardState extends Equatable {
-  final List<MockPatient> patients;
+  final List<AppUser> patients;
   final String searchQuery;
-  final MockPatient? selectedPatient;
+  final AppUser? selectedPatient;
   final bool isLoading;
 
   const DoctorDashboardState({
@@ -14,7 +18,7 @@ class DoctorDashboardState extends Equatable {
     this.isLoading = false,
   });
 
-  List<MockPatient> get filteredPatients {
+  List<AppUser> get filteredPatients {
     if (searchQuery.isEmpty) return patients;
     return patients
         .where((p) => p.name.toLowerCase().contains(searchQuery.toLowerCase()))
@@ -22,9 +26,9 @@ class DoctorDashboardState extends Equatable {
   }
 
   DoctorDashboardState copyWith({
-    List<MockPatient>? patients,
+    List<AppUser>? patients,
     String? searchQuery,
-    MockPatient? selectedPatient,
+    AppUser? selectedPatient,
     bool? isLoading,
   }) {
     return DoctorDashboardState(
@@ -37,4 +41,55 @@ class DoctorDashboardState extends Equatable {
 
   @override
   List<Object?> get props => [patients, searchQuery, selectedPatient, isLoading];
+}
+
+class DoctorDashboardCubit extends Cubit<DoctorDashboardState> {
+  final FirebaseFirestore _firestore;
+  final FirebaseAuth _auth;
+
+  DoctorDashboardCubit({
+    FirebaseFirestore? firestore,
+    FirebaseAuth? auth,
+  })  : _firestore = firestore ?? FirebaseFirestore.instance,
+        _auth = auth ?? FirebaseAuth.instance,
+        super(const DoctorDashboardState());
+
+  void loadPatients() async {
+    emit(state.copyWith(isLoading: true));
+    try {
+      final doctorId = _auth.currentUser?.uid;
+      if (doctorId == null) {
+        emit(state.copyWith(isLoading: false));
+        return;
+      }
+
+      debugPrint('🔵 DoctorDashboard: loading patients for doctor=$doctorId');
+
+      final docs = await _firestore
+          .collection('users')
+          .where('linkedDoctorId', isEqualTo: doctorId)
+          .get();
+
+      debugPrint('🔵 DoctorDashboard: found ${docs.docs.length} linked patients');
+
+      final patients = docs.docs.map((d) {
+        final data = d.data() as Map<String, dynamic>;
+        debugPrint('🔵 DoctorDashboard patient: name=${data['name']}, email=${data['email']}, uid=${d.id}');
+        return AppUser.fromFirestore(d);
+      }).toList();
+
+      emit(DoctorDashboardState(patients: patients, isLoading: false));
+    } catch (e) {
+      debugPrint('🔴 DoctorDashboard ERROR: $e');
+      emit(state.copyWith(isLoading: false));
+    }
+  }
+
+  void search(String query) {
+    emit(state.copyWith(searchQuery: query));
+  }
+
+  void selectPatient(AppUser patient) {
+    emit(state.copyWith(selectedPatient: patient));
+  }
 }

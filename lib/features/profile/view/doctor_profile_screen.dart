@@ -25,9 +25,13 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
     final authState = context.watch<AuthCubit>().state;
     final appUser = authState.user;
 
-    return BlocProvider<ProfileCubit>(
-      create: (_) => ProfileCubit(repository: AuthRepository())
-        ..loadProfile(appUser?.uid ?? ''),
+    final cubit = ProfileCubit(repository: AuthRepository());
+    if (appUser?.uid != null && appUser!.uid.isNotEmpty) {
+      cubit.loadProfile(appUser.uid);
+    }
+
+    return BlocProvider<ProfileCubit>.value(
+      value: cubit,
       child: BlocBuilder<ProfileCubit, ProfileState>(
         builder: (context, profileState) {
           final user = profileState.user ?? appUser;
@@ -42,9 +46,19 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                 ),
               ],
             ),
-            body: user == null
-                ? const Center(child: CircularProgressIndicator())
-                : SingleChildScrollView(
+            body: RefreshIndicator(
+              onRefresh: () async {
+                final uid = context.read<AuthCubit>().state.user?.uid;
+                if (uid != null && uid.isNotEmpty) cubit.loadProfile(uid);
+              },
+              child: user == null
+                  ? ListView(
+                      children: const [
+                        SizedBox(height: 400, child: Center(child: CircularProgressIndicator())),
+                      ],
+                    )
+                  : SingleChildScrollView(
+                      physics: const AlwaysScrollableScrollPhysics(),
                     padding: const EdgeInsets.all(16),
                     child: Column(
                       children: [
@@ -113,6 +127,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                       ],
                     ),
                   ),
+            ),
           );
         },
       ),

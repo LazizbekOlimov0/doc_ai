@@ -82,6 +82,12 @@ class _ChatPageState extends State<ChatPage> {
                         return const _TypingBubble();
                       }
                       final msg = state.messages[index];
+                      if (msg.showReportPrompt) {
+                        return _ReportPromptBubble(
+                          message: msg,
+                          messageIndex: index,
+                        );
+                      }
                       return _ChatBubble(message: msg);
                     },
                   ),
@@ -189,6 +195,73 @@ class _DotLoaderState extends State<_DotLoader> with SingleTickerProviderStateMi
           }),
         );
       },
+    );
+  }
+}
+
+class _ReportPromptBubble extends StatelessWidget {
+  final ChatMessage message;
+  final int messageIndex;
+
+  const _ReportPromptBubble({
+    required this.message,
+    required this.messageIndex,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Container(
+        margin: const EdgeInsets.symmetric(vertical: 4),
+        padding: const EdgeInsets.all(14),
+        constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.75),
+        decoration: BoxDecoration(
+          color: colorScheme.tertiaryContainer,
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              message.text,
+              style: TextStyle(color: colorScheme.onTertiaryContainer, fontSize: 14),
+            ),
+            if (!message.reportSent) ...[
+              const SizedBox(height: 10),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  FilledButton(
+                    onPressed: () {
+                      context.read<ChatCubit>().respondToReportPrompt(messageIndex, true);
+                    },
+                    style: FilledButton.styleFrom(
+                      backgroundColor: Colors.green[600],
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    ),
+                    child: const Text('Ha', style: TextStyle(color: Colors.white)),
+                  ),
+                  const SizedBox(width: 8),
+                  OutlinedButton(
+                    onPressed: () {
+                      context.read<ChatCubit>().respondToReportPrompt(messageIndex, false);
+                    },
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: colorScheme.onSurfaceVariant,
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    ),
+                    child: const Text('Yo\'q'),
+                  ),
+                ],
+              ),
+            ],
+          ],
+        ),
+      ),
     );
   }
 }

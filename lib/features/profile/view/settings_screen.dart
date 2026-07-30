@@ -52,7 +52,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     _experienceController.text = user.experienceYears?.toString() ?? '';
   }
 
-  Future<void> _showEditDialog(AppUser user, Translations t) async {
+  Future<void> _showEditDialog(AppUser user, Translations t, ProfileCubit cubit) async {
     final isPatient = user.role == UserRole.patient;
     if (isPatient) {
       _loadPatientFields(user);
@@ -141,7 +141,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           : null;
       final experience = isPatient ? null : int.tryParse(_experienceController.text.trim());
 
-      context.read<ProfileCubit>().updateProfile(
+      cubit.updateProfile(
             uid: user.uid,
             name: _nameController.text.trim(),
             age: age,
@@ -164,21 +164,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final settingsState = context.watch<SettingsCubit>().state;
     final user = context.watch<AuthCubit>().state.user;
 
-    return BlocProvider<ProfileCubit>(
-      create: (_) => ProfileCubit(repository: AuthRepository())
-        ..loadProfile(user?.uid ?? ''),
-      child: Scaffold(
+    final profileCubit = user != null
+        ? (ProfileCubit(repository: AuthRepository())..loadProfile(user.uid))
+        : null;
+
+    final scaffold = Scaffold(
         appBar: AppBar(
           title: Text(t.settings),
         ),
         body: ListView(
           children: [
-            if (user != null)
+            if (user != null && profileCubit != null)
               ListTile(
                 leading: Icon(Icons.edit, color: colorScheme.primary),
                 title: Text(t.profile.edit),
                 trailing: const Icon(Icons.chevron_right),
-                onTap: () => _showEditDialog(user, t),
+                onTap: () => _showEditDialog(user, t, profileCubit!),
               ),
             SwitchListTile(
               title: Text(t.dark_mode),
@@ -218,8 +219,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
           ],
         ),
-      ),
-    );
+      );
+
+    return profileCubit != null
+        ? BlocProvider<ProfileCubit>.value(value: profileCubit, child: scaffold)
+        : scaffold;
   }
 
   void _showLanguagePicker(Translations t) {

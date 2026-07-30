@@ -4,8 +4,8 @@ import 'package:go_router/go_router.dart';
 import '../../../core/router/route_names.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../gen/strings.g.dart';
-import '../../../models/mock_data.dart';
-import '../bloc/doctor_dashboard_cubit.dart';
+import '../../../core/models/app_user.dart';
+import '../bloc/doctor_dashboard_state.dart';
 import '../bloc/doctor_dashboard_state.dart';
 
 class DoctorDashboardScreen extends StatefulWidget {
@@ -78,9 +78,9 @@ class _DoctorDashboardScreenState extends State<DoctorDashboardScreen> {
                               colorScheme: colorScheme,
                               textTheme: textTheme,
                               onTap: () {
-                                context.read<DoctorDashboardCubit>().selectPatient(patient.id);
+                                context.read<DoctorDashboardCubit>().selectPatient(patient);
                                 context.go(
-                                  RouteNames.doctorPatientDetailPath(patient.id),
+                                  RouteNames.doctorPatientDetailPath(patient.uid),
                                 );
                               },
                             );
@@ -97,7 +97,7 @@ class _DoctorDashboardScreenState extends State<DoctorDashboardScreen> {
 }
 
 class _PatientCard extends StatelessWidget {
-  final MockPatient patient;
+  final AppUser patient;
   final ColorScheme colorScheme;
   final TextTheme textTheme;
   final VoidCallback onTap;
@@ -109,14 +109,11 @@ class _PatientCard extends StatelessWidget {
     required this.onTap,
   });
 
-  Color get _adherenceColor {
-    if (patient.adherenceRate >= 0.8) return AppColors.adherenceGreen;
-    if (patient.adherenceRate >= 0.5) return AppColors.adherenceYellow;
-    return AppColors.adherenceRed;
-  }
-
   @override
   Widget build(BuildContext context) {
+    final ageText = patient.age != null ? '${patient.age} yosh' : '';
+    final bloodText = patient.bloodType != null ? 'Qon: ${patient.bloodType}' : '';
+
     return Card(
       child: InkWell(
         onTap: onTap,
@@ -129,7 +126,7 @@ class _PatientCard extends StatelessWidget {
                 radius: 24,
                 backgroundColor: colorScheme.primaryContainer,
                 child: Text(
-                  patient.name[0],
+                  patient.name.isNotEmpty ? patient.name[0] : '?',
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -143,48 +140,50 @@ class _PatientCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      patient.name,
+                      patient.name.isEmpty ? 'Ismsiz' : patient.name,
                       style: textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.w600,
                       ),
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      '${patient.age}${context.t.doctor_dashboard.age_condition}${patient.condition}',
+                      patient.email,
                       style: textTheme.bodySmall?.copyWith(
                         color: colorScheme.onSurfaceVariant,
                       ),
                     ),
+                    if (ageText.isNotEmpty || bloodText.isNotEmpty) ...[
+                      const SizedBox(height: 2),
+                      Text(
+                        [ageText, bloodText].where((s) => s.isNotEmpty).join(' · '),
+                        style: textTheme.bodySmall?.copyWith(
+                          color: colorScheme.onSurfaceVariant,
+                        ),
+                      ),
+                    ],
+                    if (patient.allergies.isNotEmpty) ...[
+                      const SizedBox(height: 2),
+                      Row(
+                        children: [
+                          Icon(Icons.warning_amber, size: 14, color: Colors.orange[700]),
+                          const SizedBox(width: 4),
+                          Expanded(
+                            child: Text(
+                              patient.allergies.join(', '),
+                              style: textTheme.bodySmall?.copyWith(
+                                color: Colors.orange[700],
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ],
                 ),
               ),
-              Column(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10, vertical: 4),
-                    decoration: BoxDecoration(
-                      color: _adherenceColor.withValues(alpha: 0.15),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Text(
-                      '${(patient.adherenceRate * 100).toInt()}%',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: _adherenceColor,
-                        fontSize: 14,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    context.t.doctor_dashboard.adherence,
-                    style: textTheme.labelSmall?.copyWith(
-                      color: colorScheme.onSurfaceVariant,
-                    ),
-                  ),
-                ],
-              ),
+              const Icon(Icons.chevron_right, color: Colors.grey),
             ],
           ),
         ),

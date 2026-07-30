@@ -12,7 +12,7 @@ import '../../features/profile/view/patient_profile_screen.dart';
 import '../../features/profile/view/doctor_profile_screen.dart';
 import '../../features/doctor_dashboard/view/dashboard_screen.dart';
 import '../../features/doctor_dashboard/view/patient_detail_screen.dart';
-import '../../features/doctor_dashboard/view/reports_screen.dart';
+import '../../features/doctor_patient_reports/view/doctor_patient_reports_page.dart';
 import '../../features/profile/view/settings_screen.dart';
 import '../../features/weather/view/weather_detail_screen.dart';
 import '../../features/booking/view/booking_screen.dart';
@@ -129,7 +129,7 @@ GoRouter createRouter(AuthCubit authCubit) {
             routes: [
               GoRoute(
                 path: RouteNames.doctorReports,
-                builder: (context, state) => const ReportsScreen(),
+                builder: (context, state) => const DoctorPatientReportsPage(),
               ),
             ],
           ),

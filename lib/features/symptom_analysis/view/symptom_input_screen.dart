@@ -31,7 +31,12 @@ class SymptomInputScreen extends StatelessWidget {
           return Column(
             children: [
               Expanded(
-                child: SingleChildScrollView(
+                child: RefreshIndicator(
+                  onRefresh: () async {
+                    context.read<SymptomCubit>().clearResult();
+                  },
+                  child: SingleChildScrollView(
+                    physics: const AlwaysScrollableScrollPhysics(),
                   padding: const EdgeInsets.all(16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -93,6 +98,7 @@ class SymptomInputScreen extends StatelessWidget {
                     ],
                   ),
                 ),
+              ),
               ),
               Padding(
                 padding: const EdgeInsets.all(16),

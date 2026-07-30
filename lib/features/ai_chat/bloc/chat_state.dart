@@ -4,15 +4,19 @@ class ChatMessage extends Equatable {
   final String text;
   final bool isUser;
   final DateTime timestamp;
+  final bool showReportPrompt;
+  final bool reportSent;
 
   const ChatMessage({
     required this.text,
     required this.isUser,
     required this.timestamp,
+    this.showReportPrompt = false,
+    this.reportSent = false,
   });
 
   @override
-  List<Object?> get props => [text, isUser, timestamp];
+  List<Object?> get props => [text, isUser, timestamp, showReportPrompt, reportSent];
 }
 
 class ChatState extends Equatable {

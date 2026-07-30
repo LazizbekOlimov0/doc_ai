@@ -1,242 +1,218 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../gen/strings.g.dart';
-import '../../../models/mock_data.dart';
+import '../bloc/doctor_connect_cubit.dart';
 
-class DoctorConnectScreen extends StatelessWidget {
+class DoctorConnectScreen extends StatefulWidget {
   const DoctorConnectScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
-
-    return Scaffold(
-      appBar: AppBar(title: Text(context.t.doctor_connect.title)),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  children: [
-                    CircleAvatar(
-                      radius: 40,
-                      backgroundColor: colorScheme.primaryContainer,
-                      child: Icon(
-                        Icons.person,
-                        size: 48,
-                        color: colorScheme.onPrimaryContainer,
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    Text(
-                      mockDoctor.name,
-                      style: textTheme.titleLarge?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 12, vertical: 4),
-                      decoration: BoxDecoration(
-                        color: colorScheme.secondaryContainer,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Text(
-                        mockDoctor.specialty,
-                        style: TextStyle(
-                          color: colorScheme.onSecondaryContainer,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 13,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.local_hospital,
-                            size: 16, color: colorScheme.onSurfaceVariant),
-                        const SizedBox(width: 4),
-                        Text(
-                          mockDoctor.hospital,
-                          style: textTheme.bodySmall?.copyWith(
-                            color: colorScheme.onSurfaceVariant,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 4),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.star, size: 16, color: Colors.amber[700]),
-                        const SizedBox(width: 4),
-                        Text(
-                          context.t.doctor_connect.rating_experience
-                          .replaceAll('{rating}', mockDoctor.rating.toString())
-                          .replaceAll('{years}', mockDoctor.experienceYears.toString()),
-                          style: textTheme.bodySmall?.copyWith(
-                            color: colorScheme.onSurfaceVariant,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 20),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: OutlinedButton.icon(
-                            onPressed: () {},
-                            icon: const Icon(Icons.call),
-                            label: Text(context.t.doctor_connect.call),
-                            style: OutlinedButton.styleFrom(
-                              foregroundColor: colorScheme.primary,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: FilledButton.icon(
-                            onPressed: () {},
-                            icon: const Icon(Icons.chat),
-                            label: Text(context.t.doctor_connect.message),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(height: 16),
-            Text(
-              context.t.doctor_connect.send_report,
-              style: textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(Icons.description_outlined,
-                            color: colorScheme.primary),
-                        const SizedBox(width: 8),
-                        Text(
-                          context.t.doctor_connect.weekly_report,
-                          style: TextStyle(fontWeight: FontWeight.w600),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 8),
-                    Row(
-                      children: [
-                        _StatusChip(
-                          label: 'Oxirgi: 07.07.2026',
-                          color: AppColors.adherenceGreen,
-                        ),
-                        const SizedBox(width: 8),
-                        _StatusChip(
-                          label: 'Holat: Yaxshi',
-                          color: AppColors.adherenceYellow,
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
-                    SizedBox(
-                      width: double.infinity,
-                      child: OutlinedButton.icon(
-                        onPressed: () {},
-                        icon: const Icon(Icons.send),
-                        label: Text(context.t.doctor_connect.send_report),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(height: 8),
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(Icons.assignment_outlined,
-                            color: colorScheme.primary),
-                        const SizedBox(width: 8),
-                        Text(
-                          context.t.doctor_connect.health_diary,
-                          style: TextStyle(fontWeight: FontWeight.w600),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 8),
-                    Row(
-                      children: [
-                        _StatusChip(
-                          label: '07.07 — Bosim: 120/80',
-                          color: colorScheme.primary,
-                        ),
-                        const SizedBox(width: 8),
-                        _StatusChip(
-                          label: '06.07 — Puls: 72',
-                          color: colorScheme.primary,
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
-                    SizedBox(
-                      width: double.infinity,
-                      child: OutlinedButton.icon(
-                        onPressed: () {},
-                        icon: const Icon(Icons.add),
-                        label: Text(context.t.doctor_connect.new_entry),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+  State<DoctorConnectScreen> createState() => _DoctorConnectScreenState();
 }
 
-class _StatusChip extends StatelessWidget {
-  final String label;
-  final Color color;
+class _DoctorConnectScreenState extends State<DoctorConnectScreen> {
+  late final DoctorConnectCubit _cubit;
 
-  const _StatusChip({required this.label, required this.color});
+  @override
+  void initState() {
+    super.initState();
+    _cubit = DoctorConnectCubit()..loadDoctors();
+  }
+
+  @override
+  void dispose() {
+    _cubit.close();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.12),
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: color.withValues(alpha: 0.3)),
+    final t = Translations.of(context);
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return BlocProvider.value(
+      value: _cubit,
+      child: Scaffold(
+        appBar: AppBar(title: Text(t.doctor_connect.title)),
+        body: RefreshIndicator(
+          onRefresh: () async => _cubit.loadDoctors(),
+          child: BlocBuilder<DoctorConnectCubit, DoctorConnectState>(
+          builder: (context, state) {
+            if (state is DoctorConnectLoading) {
+              return const Center(child: CircularProgressIndicator());
+            }
+
+            if (state is DoctorConnectError) {
+              return ListView(
+                children: [
+                  SizedBox(
+                    height: 300,
+                    child: Center(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(state.message),
+                          const SizedBox(height: 12),
+                          ElevatedButton(
+                            onPressed: () => _cubit.loadDoctors(),
+                            child: const Text('Qayta urinish'),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            }
+
+            if (state is DoctorConnectLoaded) {
+              if (state.linkedDoctorId != null) {
+                final linkedDoctor = state.doctors
+                    .where((d) => d.uid == state.linkedDoctorId)
+                    .firstOrNull;
+
+                return Column(
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(16),
+                      color: colorScheme.primaryContainer.withValues(alpha: 0.3),
+                      child: Row(
+                        children: [
+                          Icon(Icons.check_circle, color: Colors.green[700]),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Text(
+                              linkedDoctor != null
+                                  ? 'Sizning shifokoringiz: ${linkedDoctor.name}'
+                                  : 'Shifokor ulangan ✅',
+                              style: const TextStyle(fontWeight: FontWeight.w600),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: _buildDoctorList(context, state),
+                    ),
+                  ],
+                );
+              }
+
+              return _buildDoctorList(context, state);
+            }
+
+            return const SizedBox.shrink();
+          },
+        ),
       ),
-      child: Text(
-        label,
-        style: TextStyle(fontSize: 11, color: color, fontWeight: FontWeight.w500),
       ),
+    );
+  }
+
+  Widget _buildDoctorList(BuildContext context, DoctorConnectLoaded state) {
+    if (state.doctors.isEmpty) {
+      return ListView(
+        children: [
+          SizedBox(
+            height: 300,
+            child: Center(child: Text('Shifokorlar topilmadi')),
+          ),
+        ],
+      );
+    }
+
+    return ListView.builder(
+      padding: const EdgeInsets.all(16),
+      itemCount: state.doctors.length,
+      itemBuilder: (context, index) {
+        final doctor = state.doctors[index];
+        final isLinked = doctor.uid == state.linkedDoctorId;
+        final colorScheme = Theme.of(context).colorScheme;
+
+        return Card(
+          margin: const EdgeInsets.only(bottom: 12),
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    CircleAvatar(
+                      radius: 28,
+                      backgroundColor: colorScheme.primaryContainer,
+                      child: Text(
+                        doctor.name.isNotEmpty ? doctor.name[0].toUpperCase() : 'D',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: colorScheme.onPrimaryContainer,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            doctor.name,
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          if (doctor.specialty != null) ...[
+                            const SizedBox(height: 2),
+                            Text(
+                              doctor.specialty!,
+                              style: TextStyle(
+                                fontSize: 13,
+                                color: colorScheme.onSurfaceVariant,
+                              ),
+                            ),
+                          ],
+                        ],
+                      ),
+                    ),
+                    if (isLinked)
+                      Chip(
+                        avatar: Icon(Icons.link, size: 16, color: Colors.green[700]),
+                        label: const Text('Ulangan', style: TextStyle(fontSize: 12)),
+                        backgroundColor: Colors.green[50],
+                      )
+                    else
+                      FilledButton(
+                        onPressed: state.isLinking
+                            ? null
+                            : () => _cubit.linkDoctor(doctor.uid),
+                        child: state.isLinking
+                            ? const SizedBox(
+                                width: 16,
+                                height: 16,
+                                child: CircularProgressIndicator(strokeWidth: 2),
+                              )
+                            : const Text('Ulash'),
+                      ),
+                  ],
+                ),
+                if (doctor.hospital != null) ...[
+                  const SizedBox(height: 8),
+                  Row(
+                    children: [
+                      Icon(Icons.local_hospital, size: 16, color: colorScheme.onSurfaceVariant),
+                      const SizedBox(width: 4),
+                      Text(doctor.hospital!, style: TextStyle(fontSize: 13, color: colorScheme.onSurfaceVariant)),
+                    ],
+                  ),
+                ],
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

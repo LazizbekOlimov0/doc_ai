@@ -42,6 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
       listenWhen: (prev, curr) =>
           curr.status == AuthStatus.error && curr.errorKey != null,
       listener: (context, state) {
+        final cubit = context.read<AuthCubit>();
         ScaffoldMessenger.of(context)
           ..hideCurrentSnackBar()
           ..showSnackBar(
@@ -52,12 +53,11 @@ class _LoginScreenState extends State<LoginScreen> {
               action: SnackBarAction(
                 label: t.ok,
                 textColor: colorScheme.onError,
-                onPressed: () =>
-                    context.read<AuthCubit>().clearError(),
+                onPressed: () => cubit.clearError(),
               ),
             ),
           );
-        context.read<AuthCubit>().clearError();
+        cubit.clearError();
       },
       builder: (context, state) {
         final isLoading = state.status == AuthStatus.loading;

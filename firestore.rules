@@ -4,7 +4,10 @@ service cloud.firestore {
   match /databases/{database}/documents {
 
     match /users/{userId} {
+      // Owner can read/write their own doc
       allow read, write: if request.auth != null && request.auth.uid == userId;
+      // Anyone authenticated can read basic info to find doctors
+      allow read: if request.auth != null;
 
       match /chats/{chatId} {
         allow read, write: if request.auth != null && request.auth.uid == userId;
@@ -20,6 +23,11 @@ service cloud.firestore {
       match /notifications/{notifId} {
         allow read, update: if request.auth != null && request.auth.uid == userId;
         allow create: if true;
+      }
+      
+      match /patientReports/{reportId} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+        allow create: if request.auth != null;
       }
     }
   }
